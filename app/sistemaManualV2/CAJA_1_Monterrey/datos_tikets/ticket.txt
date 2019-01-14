@@ -1,0 +1,4 @@
+-1
+[Error] Camara
+[Error] Devolvio un estado de ERROR ...
+[Error] Asegurate de conectar la camara.
