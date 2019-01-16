@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 import os
 import time
@@ -266,9 +267,31 @@ def interface():
 			self.bconfirmarplaza.clicked.connect(self.setConfig)
 			self.panelConfig()
 			self.datosEstacionamiento()
+			self.bcam.clicked.connect(self.scan)
+			self.bcam.setShortcut("Return")
 			
 			
 			
+			
+		def scan(self):
+			#thread3 = Thread(target=leerCodQR, args = ())
+			text=self.lscan.text()
+			text=text.replace("'","-")
+			text=text.replace("Ñ",":")
+			text=text.split(',')
+			#os.system("sudo nice -n -19 python3 archimp.py")
+			try:
+				leerArch = open("/home/pi/Documents/ticket.txt", "w")
+				leerArch.write(str(text[0])+"\n"+str(text[1])+"\n"+str(text[2])+"\n"+str(text[3])+"\n"+str(text[4]))
+				leerArch.close()
+				self.lscan.setText('')
+			except Exception as e:
+				print(e)
+				pass
+			#p=subprocess.Popen(['/home/pi/scanner/dsreader -l 1 -s 20 > /home/pi/Documents/ticket.txt'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
+			
+			#so=os.popen('~/bin/dsreader -l 1 -s 20 > /home/pi/Documents/ticket.txt')
+		
 		
 		def validaLogin(self):
 			global cur,accesoAcaja,USUARIO,correoUSUARIO,user,pswd
@@ -1856,17 +1879,8 @@ def leerArchivo():
 			if(folio != ''):
 				print("{}  ==  {}".format(folio,"Estacionamientos unicos de Mexico"))
 				#booleana=str("Estacionamientos unicos de Mexico") in str(folio)
-				booleana=str("ico") in str(folio)
-				booleana2=str("ico") in str(folio)
-				if(not booleana2):
-					#time.sleep(1)
-					#while so.get_busy():
-					#	pygame.time.delay(100)
-					#print("usic")
-					#p.terminate()
-					#os.system('omxplayer /home/pi/Downloads/beep-08b.wav -o local')
-					#botones.beep()
-					print(booleana)
+				booleana=str("M") in str(folio)
+				booleana2=str("M") in str(folio)
 				if(booleana):
 					#os.system('sudo python3 /home/pi/scanner/buz.py')
 					#mixer.music.play()

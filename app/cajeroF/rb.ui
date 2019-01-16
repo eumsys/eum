@@ -354,12 +354,27 @@ border-radius:150%</string>
       </size>
      </property>
     </widget>
+    <widget class="QLineEdit" name="lscan">
+     <property name="geometry">
+      <rect>
+       <x>810</x>
+       <y>750</y>
+       <width>421</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:white;
+color:black;</string>
+     </property>
+    </widget>
     <zorder>gcobrar_2</zorder>
     <zorder>label_17</zorder>
     <zorder>layoutWidget_8</zorder>
     <zorder>layoutWidget_23</zorder>
     <zorder>bcam</zorder>
     <zorder>breiniciar</zorder>
+    <zorder>lscan</zorder>
    </widget>
    <widget class="QWidget" name="page_6">
     <widget class="QGroupBox" name="groupBox_3">

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import time
 import leerBotones as botones
 import generarFolio as folio

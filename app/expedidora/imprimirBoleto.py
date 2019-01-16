@@ -113,7 +113,8 @@ def imprimirQR2(noBol,terminalEnt,fechaIn,horaEnt):
 		Generic.text('Expedidora #'+terminalEnt+'\n')
 		Generic.text('Folio:'+str(noBol)+'   '+fechaIn+' '+horaEnt +'\n')
 		#Generic.set(align=u'center', font=u'B')
-		Generic.qr("Estacionamientos unicos de Mexico\n"+noBol+"\n"+terminalEnt+"\n"+fechaIn+"\n"+horaEnt,ec=0,size=4)
+		#Generic.qr("Estacionamientos unicos de Mexico\n"+noBol+"\n"+terminalEnt+"\n"+fechaIn+"\n"+horaEnt,ec=0,size=4)
+		Generic.qr("M,"+noBol+","+terminalEnt+","+fechaIn+","+horaEnt,ec=0,size=5)
 		Generic.cut()
 		print("QR bien impresa")
 		return "ack"
