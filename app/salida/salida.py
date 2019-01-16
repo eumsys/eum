@@ -72,12 +72,12 @@ class Ui_ventanaAcceso(QDialog):
 		
 		
 		if("CHT" in text):
-			mensaje_envio = "1"
-			validacion = cliente.configSocket("gerencia", mensaje_envio)
-			botones.abrir()
-			print("Abriendo")
 			self.lscan.setText('')
 			print(text)
+			leerArch = open("datos.txt", "w")
+			leerArch.write(text)
+			leerArch.close()
+			
 		else:
 			#os.system("sudo nice -n -19 python3 archimp.py")
 			try:
@@ -278,8 +278,14 @@ class Ui_ventanaAcceso(QDialog):
 						print("Errrr  Toleeee",error)
 						pass
 				if gerencia==True:
+					archivo = open("datos.txt", "w")
+					archivo.close()
+					DATA = "1"
+					validacion = cliente.configSocket("gerencia", DATA)
+					print("Abriendo")
 					validacion="finalizado"
 					gerencia=False
+					
 				
 				
 				
@@ -343,12 +349,12 @@ class Ui_ventanaAcceso(QDialog):
 			pantalla_cont = 1
 			if reproduccion == 0:
 				self.lboleto.setText("---> Retire su boleto <---")
-				mixer.init()
-				mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensajeboleto.mp3')
-				mixer.music.play()
-				time.sleep(3.2)
-				mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje6.mp3')
-				mixer.music.play()
+				#mixer.init()
+				#mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensajeboleto.mp3')
+				#mixer.music.play()
+				#time.sleep(3.2)
+				#mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje6.mp3')
+				#mixer.music.play()
 				reproduccion = 1
 			if self.f3 == True and self.f4 == False and self.f5 == False  and self.f6 == False:
 				if self.f7 == False:
