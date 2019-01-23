@@ -1,6 +1,0 @@
-su postgres
-psql
-\i /home/pi/Documents/eum/app/sistemaManualV2/baseDatos/buildDBManual.sql
-
-
-PGPASSWORD=Postgres3UMd6 psql dbeum_manual -h localhost -U postgres < /home/pi/Documents/eum/app/sistemaManualV2/baseDatos/buildDBManual.sql
