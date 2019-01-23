@@ -3,7 +3,7 @@ import os
 import time
 import fechaUTC as hora
 import qrcode
-import pyglet
+#import pyglet
 
 #import cliente as Servidor
 #import imprimirBoleto as impresora
@@ -96,7 +96,7 @@ mensajeAyuda=0
 cartuchoRemovido=0
 preguntarPorEstado=0
 mostrarTiempoDeSalidaRestante=[0,'']
-conn = psycopg2.connect(database='CajerOk',user='postgres',password='Postgres3UMd6', host='localhost')
+conn = psycopg2.connect(database='caseta',user='postgres',password='Postgres3UMd6', host='localhost')
 cur = conn.cursor()
 tarifaVoluntaria=0
 vvol=""
@@ -3100,7 +3100,7 @@ if __name__ == "__main__":
 	#INICIALIZAMOS EL HILO DE LA INTERFAZ
 	thread1 = Thread(target=interface,args=())
 	#time.sleep(5)
-	thread3 = Thread(target=gif, args = ())
+	#thread3 = Thread(target=gif, args = ())
 	thread4 = Thread(target=leerArchivo, args=())
 	thread5 = Thread(target=contar, args=())
 	#os.system("sudo nice -n -19 python3 archimp.py")
@@ -3111,7 +3111,7 @@ if __name__ == "__main__":
 		thread4.start()
 		thread5.start()
 		time.sleep(.4)
-		thread3.start()
+		#thread3.start()
 
 
 
