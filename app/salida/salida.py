@@ -38,7 +38,7 @@ gerencia=False
 
 configuracion = []
 
-tolerancia=17
+tolerancia=0
 fechaIn	=fechaUTC.fechaConFormato()
 horaEnt=fechaUTC.tiempoConFormato()
 
