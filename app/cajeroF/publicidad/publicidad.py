@@ -18,7 +18,7 @@ import pygame
 import sys
 
 
-conn = psycopg2.connect(database='CajerOk',user='postgres',password='roldan', host='localhost')
+conn = psycopg2.connect(database='CajerOk',user='postgres',password='Postgres3UMd6', host='localhost')
 cur = conn.cursor()
 kill = 0
 configurandoPublicidad=0
@@ -41,7 +41,7 @@ def interface():
 			self.tablapublicidad.setColumnCount(4)
 			self.tablapublicidad.setHorizontalHeaderLabels(['','Id','Posicion','Ruta'])
 			botones.configurarPinesGPIO()
-			self.llenaTabla()
+			#self.llenaTabla()
 				
 		def apagando(self):
 			os.system("sudo shutdown 0")
