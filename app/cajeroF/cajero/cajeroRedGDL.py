@@ -1,5 +1,4 @@
-
-
+#!/usr/bin/env python3
 import sys
 import os
 import time
@@ -115,12 +114,31 @@ varc=0
 #green=248
 #blue=148
 rrr=0
-red=59
+"""red=59
 green=109
 blue=153
+"""
+red=125
+green=181
+blue=215
 comienzaLectura=0
 varl=0
 comienzaCobro=0
+registraPago=0
+
+
+configuracion = []
+camInicial=''
+USUARIO=''
+host=''
+ip=''
+noEquipo = 0
+plaza = ""
+localidad = ""
+user="eum"
+pswd="pi"
+
+aportacionConfirmada=0
 def interface():
 	class Ventana(QDialog):
 		conteo_final=0
@@ -135,18 +153,20 @@ def interface():
 			gui.contadorMiliSegundos()
 			fehoy=str(datetime.now().date()).split('-',2)
 			fehoy=fehoy[2]+"/"+fehoy[1]+"/"+fehoy[0]
-			self.ldate.setText(fehoy)
+			#self.ldate.setText(fehoy)
 			self.ldate2.setText(fehoy)
 
 			self.current_timer = None
 			self.prioridad=0
-			self.alerta.setVisible(False)
+			#self.alerta.setVisible(False)
 			self.lerror1.setVisible(False)
 
 			self.salirAdmin.clicked.connect(self.saliendoAdmin)
 
 			self.bntarifa.clicked.connect(lambda:self.cambia(7))
 			self.bcancelar.clicked.connect(lambda:self.cambia(6))
+			self.benter.setShortcut('Return')
+			self.bcancelarPago.setShortcut('c')
 			self.bsalirTarifas.clicked.connect(lambda:self.cambia(9))
 			self.bsalirntarifas.clicked.connect(lambda:self.cambia(9))
 			self.bconfirmartarifa.clicked.connect(self.tarifaConfirmada)
@@ -167,7 +187,7 @@ def interface():
 			#self.lnom.editingFinished.connect(lambda:self.holi(3))
 			#self.llol.editingFinished.connect(lambda:self.holi(6))
 
-			self.bconfirmarplaza.clicked.connect(self.cambiaNombre)
+			#self.bconfirmarplaza.clicked.connect(self.cambiaNombre)
 			self.salirplaza.clicked.connect(lambda:self.cambia(9))
 			self.salirCalibracion.clicked.connect(self.finalizarCalibracion)
 			self.salirCajon.clicked.connect(self.finalizarCorteCaja)
@@ -195,7 +215,7 @@ def interface():
 			self.bayuda.clicked.connect(lambda:self.mueveyManda(8))
 			self.bcancelarPago.clicked.connect(self.cancelandoPago)
 			self.bnoserie.clicked.connect(self.mostrarNoSerie)
-			self.bcam.clicked.connect(self.activaCamara)
+			#self.bcam.clicked.connect(self.activaCamara)
 
 
 			self.bentrar.clicked.connect(self.validaLogin)
@@ -224,6 +244,235 @@ def interface():
 			cur.execute("update \"CAJERO\" set \"idCajero\"="+NoCajero+" where \"idCajero\"="+str(idc))
 			conn.commit()
 
+
+
+	################MODS########
+			self.bapagar.clicked.connect(self.apagarRasp)
+			self.breiniciar.clicked.connect(self.reiniciarRasp)
+			self.bconfirmarIP.clicked.connect(self.cambiaIp)
+			self.bpanelconf.clicked.connect(self.muestraPanel)
+			self.bsalirConfig.clicked.connect(lambda:self.cambia(0))
+			self.bsalirLogin.clicked.connect(lambda:self.cambia(0))
+			self.bsalirsucursal.clicked.connect(lambda:self.cambia(17))
+			self.bsalirred.clicked.connect(lambda:self.cambia(17))
+			self.bsalirCambiarFecha.clicked.connect(lambda:self.cambia(17))
+			self.bsucursal.clicked.connect(lambda:self.cambia(16))
+			self.bred.clicked.connect(lambda:self.cambia(15))
+			self.breporte.clicked.connect(lambda:self.cambia(0))
+			self.bhora.clicked.connect(lambda:self.cambia(19))
+			
+			self.lerror1.setVisible(False)
+			self.bentrar.clicked.connect(self.validaLogin)
+			self.bcambiarFecha.clicked.connect(self.cambiaFecha)
+			#self.bguardar.clicked.connect(self.setConfig)
+			#self.bsalirConfig.clicked.connect(self.salirConf)
+			self.bconfirmarplaza.clicked.connect(self.setConfig)
+			self.panelConfig()
+			self.datosEstacionamiento()
+			self.bcam.clicked.connect(self.scan)
+			self.bcam.setShortcut("Return")
+			
+			
+			
+			
+		def scan(self):
+			#thread3 = Thread(target=leerCodQR, args = ())
+			text=self.lscan.text()
+			text=text.replace("'","-")
+			text=text.replace("Ñ",":")
+			text=text.split(',')
+			#os.system("sudo nice -n -19 python3 archimp.py")
+			try:
+				leerArch = open("/home/pi/Documents/ticket.txt", "w")
+				leerArch.write(str(text[0])+"\n"+str(text[1])+"\n"+str(text[2])+"\n"+str(text[3])+"\n"+str(text[4]))
+				leerArch.close()
+				self.lscan.setText('')
+			except Exception as e:
+				print(e)
+				pass
+			#p=subprocess.Popen(['/home/pi/scanner/dsreader -l 1 -s 20 > /home/pi/Documents/ticket.txt'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
+			
+			#so=os.popen('~/bin/dsreader -l 1 -s 20 > /home/pi/Documents/ticket.txt')
+		
+		
+		def validaLogin(self):
+			global cur,accesoAcaja,USUARIO,correoUSUARIO,user,pswd
+			nom=self.lusu.text()
+			rol_us=""
+			indice=0
+			contr=self.lcont.text()
+			if(nom==user):
+				if(contr==pswd):
+					self.cambia(18)
+				else:
+					self.lerror1.setText("usuario o contraseña incorrectos")
+					self.lerror1.setVisible(True)
+			else:
+				self.lerror1.setText("usuario o contraseña incorrectos")
+				self.lerror1.setVisible(True)
+			"""cur.execute("SELECT * FROM \"USUARIO\" WHERE usuario=%s and contra=%s order by \"idUsuario\" ASC",(nom,contr))
+
+			print("nom,contr=",nom,contr)
+			for reg in cur:
+				print(reg[1],reg[2],reg[3],reg[4],reg[5],reg[6])
+				rol_us=reg[1]
+				indice=1
+			if(indice==0):
+				self.lerror1.setText("usuario o contraseña incorrectos")
+				self.lerror1.setVisible(True)
+			else:
+				USUARIO=str(reg[0])
+				self.cambia(5)"""
+		
+		def cambiaFecha(self):
+			a=self.dtime.dateTime()
+			b=self.dtime.textFromDateTime(a)
+			print(b,type(b))
+			os.system("sudo date -s '"+b+"' ")
+			
+		def setConfig(self):
+			global plaza,localidad,noEquipo,host,ip,pol,pol1,pol2,pol3,pol4,pol5,impresora,anchoPapel
+			lenn=0
+			plaza=str(self.lnom.text())
+			localidad=str(self.lloc.text())
+			noEquipo=str(self.leq.text())
+			
+			
+			print(plaza,localidad)
+			dat=plaza+","+localidad+","+str(noEquipo)
+			infile = open("/home/pi/Documents/eum/app/cajeroF/cajero/archivos_config/datos.txt", 'w')
+			c=infile.write(dat)
+			
+			self.datosEstacionamiento()
+			self.cambia(0)
+			
+		
+			
+			
+			
+			
+		def datosEstacionamiento(self):
+			global plaza,localidad,noEquipo,host,ip,pol,pol1,pol2,pol3,pol4,pol5,impresora,anchoPapel
+			lenn=0
+			self.lnom.setText(plaza)
+			self.lloc.setText(localidad)
+			self.leq.setText(str(noEquipo))
+			self.nomPlaza_2.setText(plaza)
+			self.nomLoc_2.setText(localidad)
+			self.lhost.setText(host)
+			self.lip.setText(ip)
+			
+			
+		def panelConfig(self):
+			global plaza,localidad,noEquipo,host,ip
+			infile = open('/home/pi/Documents/eum/app/cajeroF/cajero/archivos_config/datos.txt','r')
+			datos= infile.readline()
+			arr=datos.split(',')
+			plaza=arr[0]
+			localidad=arr[1]
+			noEquipo=arr[2]
+			infile.close()
+			
+			infile = open('/home/pi/Documents/eum/app/cajeroF/cajero/archivos_config/red.txt','r')
+			datos= infile.readline()
+			arr=datos.split(',')
+			host=arr[0]
+			ip=arr[1]
+			infile.close()
+			
+			
+		def salirConf(self):
+			global panelConf
+			panelConf=0
+			self.cambia(0)
+			
+
+		
+		
+		
+		def sustituye(self,archivo,buscar,reemplazar):
+			"""
+
+			Esta simple función cambia una linea entera de un archivo
+
+			Tiene que recibir el nombre del archivo, la cadena de la linea entera a
+
+			buscar, y la cadena a reemplazar si la linea coincide con buscar
+
+			"""
+			with open(archivo, "r") as f:
+
+				# obtenemos las lineas del archivo en una lista
+
+				lines = (line.rstrip() for line in f)
+				print(lines)
+
+		 
+
+				# busca en cada linea si existe la cadena a buscar, y si la encuentra
+
+				# la reemplaza
+
+				
+
+				altered_lines = [reemplazar if line==buscar else line for line in lines]
+				f= open(archivo, "w+")
+				print(altered_lines[0],len(altered_lines))
+				for i in range(len(altered_lines)):
+					if(buscar in altered_lines[i]):
+						print (altered_lines[i])
+						cambia=altered_lines[i]
+						f.write(reemplazar+"\n")
+					else:
+						f.write(altered_lines[i]+"\n")
+				f.close()
+				
+				
+		def cambiaIp(self):
+			global host,ip
+			host=self.lhost.text()
+			ip=self.lip.text()
+
+			self.sustituye("/home/pi/Documents/eum/app/cajeroF/cajero/cliente.py","192.168","host = '"+host+"'")
+			self.sustituye("/etc/dhcpcd.conf","ip_address","static ip_address="+ip+"/24")
+			ip=ip.split(".")
+			ip=ip[0]+"."+ip[1]+"."+ip[2]+".1"
+			self.sustituye("/etc/dhcpcd.conf","routers","static routers="+ip)
+
+			
+			host=str(self.lhost.text())
+			ip=str(self.lip.text())
+			
+			
+			print(plaza,localidad)
+			dat=host+","+ip
+			infile = open("/home/pi/Documents/eum/app/cajeroF/cajero/archivos_config/red.txt", 'w')
+			c=infile.write(dat)
+			
+			self.datosEstacionamiento()
+			self.cambia(0)
+			
+			
+		def muestraPanel(self):
+			self.cambia(17)
+			#datos=obtenerPlazaYLocalidad()
+			#self.lno.setText(str(datos[0]))
+			#self.llo.setText(str(datos[1]))
+			#datos=obtenerTerminal()
+			self.lusu.setText('')
+			self.lcont.setText('')
+			self.lerror1.setText('')
+			
+		def cambia(self,val):
+			self.stackedWidget.setCurrentIndex(val)
+		
+		def apagarRasp(self):
+			print("apagando...")
+			os.system("sudo shutdown -P 0")
+		def reiniciarRasp(self):
+			print("apagando...")
+			os.system("sudo shutdown -r 0")
+			############################MODS FIN#################
 
 		def activaCamara(self):
 			#thread3 = Thread(target=leerCodQR, args = ())
@@ -408,14 +657,16 @@ def interface():
 
 
 		def leerBotones(self):
-			global cp,leido,opcionAdmin,accesoAcaja,NoCajero,accesoAcaja
+			global cp,leido,opcionAdmin,accesoAcaja,NoCajero,accesoAcaja,aux_tarifa,cambio
 			botones.configurarPinesGPIO()
 			#botones.prenderMonedero()
 			chapaMagnetica = botones.leerBotonesEntrada()
 			bnCancelar = botones.botonCancelar()
 			chapaMagnetica2=botones.leerBotonesEntrada2()
-			if(bnCancelar and aux_tarifa!=0):
+			if(bnCancelar):
+			#if(bnCancelar and aux_tarifa!=0):
 				cp=1
+				print("BOTON CANCELAR PRESIONADOO")
 			"""
 			if(chapaMagnetica==True):
 				print("Magnetizado")
@@ -705,14 +956,16 @@ def interface():
 
 
 		def volConfirmado(self):
-			global aux_tarifa
+			global aux_tarifa,cambio,aportacionConfirmada
+			aportacionConfirmada=1
 			if(self.valvol.text()=="$" or self.valvol.text()=="$0"):
-				self.alerta.setVisible(True)
+				aux_tarifa=0
+				#cambio=0
 			else:
 				valPropuesto=self.valvol.text()[1:]
 				print("valvol: ",valPropuesto)
 				aux_tarifa=int(self.valvol.text()[1:])
-				self.stackedWidget.setCurrentIndex(1)
+			self.stackedWidget.setCurrentIndex(1)
 			"""if(valPropuesto!=0):
 				print("ACA")
 				self.alerta.setVisible(True)
@@ -1055,10 +1308,7 @@ def interface():
 			mensajeBoletoPerdido=1
 
 		def montos(self):
-			#MEDIO MAL , SE ACTUALIZA CONSTANTEMENTE, PUEDE AFECTAR AL RENDIMIENTO....
-
-
-			global comienzaLectura,comienzaCambio,NoCajero,cajeroSuspendido,suspenderCajero,w,conteoPantallaPrincipal,inicioPago,imprime,cambiaColor,nom,loc,nivelDeCambio,cambio,leido,total,aux_cambio,aux_cambio1,pagado,config,monedas,monedasTotal,dineroTotal,avis,dineroTotalB,billetesTotales,billetes,tarifaVoluntaria,mensajeBoletoUsado,mensajeBoletoPerdido,mostrarTiempoDeSalidaRestante,mensajeError,mensajeAyuda
+			global cp,registraPago,comienzaLectura,comienzaCambio,NoCajero,cajeroSuspendido,suspenderCajero,w,conteoPantallaPrincipal,inicioPago,imprime,cambiaColor,nom,loc,nivelDeCambio,cambio,leido,total,aux_cambio,aux_cambio1,pagado,config,monedas,monedasTotal,dineroTotal,avis,dineroTotalB,billetesTotales,billetes,tarifaVoluntaria,mensajeBoletoUsado,mensajeBoletoPerdido,mostrarTiempoDeSalidaRestante,mensajeError,mensajeAyuda
 			#self.cambio.display(aux_cambio)
 			self.lcobrar.setText("$"+str(aux_tarifa))
 			self.ldepositar.setText("$"+str(total))
@@ -1067,11 +1317,14 @@ def interface():
 			self.he.setText(hh)
 			self.hs.setText(hsalida)
 			self.ttotal.setText(aux_dif)
+			self.he2.setText(hh)
+			self.hs2.setText(hsalida)
+			self.ttotal2.setText(aux_dif)
 
-			self.nomPlaza.setText(nom)
-			self.nomLoc.setText(loc)
-			self.nomPlaza_2.setText(nom)
-			self.nomLoc_2.setText(loc)
+			#self.nomPlaza.setText(nom)
+			#self.nomLoc.setText(loc)
+			#self.nomPlaza_2.setText(nom)
+			#self.nomLoc_2.setText(loc)
 
 			#self.aviso.setText(str(avis))
 			if(cambiaColor==1):
@@ -1112,20 +1365,27 @@ def interface():
 				self.lcobrar.setStyleSheet("background-color:rgb(255, 255, 255);")"""
 				#pagado=1
 				pass
+			if(cajeroSuspendido==1):
+				self.stackedWidget.setCurrentIndex(14)
+				cajeroSuspendido=0
+				
 				
 			if(pagado==1):
 				
 				pagado=0
-
+			
 			if(pagado==2):
 				pagado=0
 				if(cajeroSuspendido==1):
-					self.stackedWidget.setCurrentIndex(13)
+					self.stackedWidget.setCurrentIndex(14)
 					conteoPantallaPrincipal=1
 					inicioPago=0
 					w=0
 				else:
-					self.stackedWidget.setCurrentIndex(2)
+					if(cp==1):
+						self.stackedWidget.setCurrentIndex(13)
+					else:
+						self.stackedWidget.setCurrentIndex(2)
 					conteoPantallaPrincipal=1
 					inicioPago=0
 					w=0
@@ -1160,6 +1420,7 @@ def interface():
 				self.aviso2.setText("")
 				#self.gav.setStyleSheet("background-color:rgb(101, 179, 0);border-radius:10%;")
 			if(tarifaVoluntaria==1):
+				os.system("wmctrl -a 'Dialog'")
 				self.stackedWidget.setCurrentIndex(8)
 				self.valvol.setText("$")
 				tarifaVoluntaria=0
@@ -1216,13 +1477,14 @@ def interface():
 
 
 		def contadorSegundos(self):
-			global varc,comienzaCambio,cajeroSuspendido,suspenderCajero,tarifasAplicadas,ma,preguntarPorEstado,accesoAcaja,c,conteoPantallaPrincipal,aux_cambio,cambio,total,w,killer,aux_tarifa,inicioPago,tiempoAgotadoDePago,cs2,cs1,v,a,p,q,y,z,mostrarTiempoDeSalidaRestante,mensajeBoletoPerdido,mensajeBoletoUsado,mensajeError,mensajeAyuda
+			global cp,varc,comienzaCambio,cajeroSuspendido,suspenderCajero,tarifasAplicadas,ma,preguntarPorEstado,accesoAcaja,c,conteoPantallaPrincipal,aux_cambio,cambio,total,w,killer,aux_tarifa,inicioPago,tiempoAgotadoDePago,cs2,cs1,v,a,p,q,y,z,mostrarTiempoDeSalidaRestante,mensajeBoletoPerdido,mensajeBoletoUsado,mensajeError,mensajeAyuda
 			#QtCore.QTimer.singleShot(1000,self.contadorSegundos)
+			
 			fehoy=str(datetime.now().date()).split('-',2)
 			fehoy=fehoy[2]+"/"+fehoy[1]+"/"+fehoy[0]
-			self.ldate.setText(fehoy)
+			#self.ldate.setText(fehoy)
 			self.ldate2.setText(fehoy)
-			self.ltime.setText(time.strftime("%H:%M:%S"))
+			#self.ltime.setText(time.strftime("%H:%M:%S"))
 			self.ltime2.setText(time.strftime("%H:%M:%S"))
 			
 			if(suspenderCajero==1):
@@ -1286,6 +1548,7 @@ def interface():
 					total = 0
 					aux_tarifa=0
 					aux_cambio=0
+					registraPago=0
 					tarifasAplicadas=""
 					self.aviso1.setText("")
 					self.stackedWidget.setCurrentIndex(0)
@@ -1301,14 +1564,18 @@ def interface():
 					aux_tarifa = 0
 					aux_tarifa1 = 0
 					total = 0
+					cp=0
+					self.lscan.setText('')
+					registraPago=0
 					aux_tarifa=0
 					aux_cambio=0
 					tarifasAplicadas=""
 					self.aviso1.setText("")
 					self.lcambio.setText("$0")
+					os.system("wmctrl -a 'zbar'")
 					#self.labelCambio.setText("$0")
 					if(cajeroSuspendido==1):
-						self.stackedWidget.setCurrentIndex(13)
+						self.stackedWidget.setCurrentIndex(14)
 					else:
 						self.stackedWidget.setCurrentIndex(0)
 					leerArch = open("/home/pi/Documents/ticket.txt", "w")
@@ -1424,7 +1691,6 @@ def interface():
 				if(varc==10):
 					varc=0
 					pagado=1
-				
 					#red=17
 					#green=58
 					#blue=8
@@ -1508,11 +1774,12 @@ def calculaTarifa(tiempoEstacionado,descuento):
 	print("El descuento ES:::::::::",descuento,type(descuento))
 	if(descuento==1):
 		print("-.-.-.NO DESCUENTO",descuento)
-		cur.execute("select * from \"TARIFA\" where estado=1 order by prioridad Desc")
+		#cur.execute("select * from \"TARIFA\" where estado=1 order by costo Asc")
+		cur.execute("select * from \"TARIFA\" where estado=1 and descuento=%s order by prioridad Desc",(str(descuento)))
 	else:
 		print("-.-.-.SI DESCUENTO",descuento)
 		cur.execute("select * from \"TARIFA\" where estado=1 and descuento=%s order by prioridad Desc",(str(descuento)))
-		aplicaDescuento=1
+		#aplicaDescuento=1
 
 
 	for reg in cur:
@@ -1567,10 +1834,23 @@ def calculaTarifa(tiempoEstacionado,descuento):
 	return tarifaSeleccionada,horasRestantes
 
 
-
+def buscaCamara():
+	global camInicial
+	while(1):
+		lee2 = os.system("sudo find /dev -name 'video*' > cam.txt")
+		a = open("cam.txt", "r")
+		cam=(a.readline().rstrip("\n")).lstrip("\x00")
+		a.close()
+		a = open("cam.txt", "w")
+		a.write('')
+		#time.sleep(1)
+		#print('Cammmmmmmmm',cam,camInicial)
+		if(cam!=camInicial):
+			#print('Camara desconectadaaaaaaaaa')
+			os.system("sudo pkill zbarcam")
 
 def leerArchivo():
-	global cajeroSuspendido,preguntarPorEstado,leido,fo,pe,fe,hh,hsalida,kill,killer,killbill,config,fechaAMD,nivelDeCambio,h,nivelActual,aux_tarifa,imprime,NoCajero,tarifaSeleccionada,mostrarTiempoDeSalidaRestante,mensajeBoletoPerdido,mensajeBoletoUsado,tarifasAplicadas,mensajeError
+	global aportacionConfirmada,tarifaVoluntaria,cajeroSuspendido,preguntarPorEstado,leido,fo,pe,fe,hh,hsalida,kill,killer,killbill,config,fechaAMD,nivelDeCambio,h,nivelActual,aux_tarifa,imprime,NoCajero,tarifaSeleccionada,mostrarTiempoDeSalidaRestante,mensajeBoletoPerdido,mensajeBoletoUsado,tarifasAplicadas,mensajeError
 	tarifaSeleccionada=0
 	A=0
 	mixer.init()
@@ -1602,24 +1882,15 @@ def leerArchivo():
 			if(folio != ''):
 				print("{}  ==  {}".format(folio,"Estacionamientos unicos de Mexico"))
 				#booleana=str("Estacionamientos unicos de Mexico") in str(folio)
-				booleana=str("ico") in str(folio)
-				booleana2=str("ico") in str(folio)
-				if(not booleana2):
+				booleana=str("M") in str(folio)
+				booleana2=str("M") in str(folio)
+				if(booleana):
+					#os.system('sudo python3 /home/pi/scanner/buz.py')
+					#mixer.music.play()
+					#time.sleep(1)
 					mixer.init()
 					mixer.music.load('/home/pi/Downloads/beep-08b.wav')
 					mixer.music.play()
-					#time.sleep(1)
-					#while so.get_busy():
-					#	pygame.time.delay(100)
-					#print("usic")
-					#p.terminate()
-					#os.system('omxplayer /home/pi/Downloads/beep-08b.wav -o local')
-					#botones.beep()
-				print(booleana)
-				if(booleana):
-					#os.system('sudo python3 /home/pi/scanner/buz.py')
-					mixer.music.play()
-					#time.sleep(1)
 					
 					print(folio)
 					if(folio == 'boleto perdido'):
@@ -1635,7 +1906,7 @@ def leerArchivo():
 								aux_tarifa=reg[8]
 								leido = 1
 								enable_coin(ser)
-								#enable_sequence(ser)
+								enable_sequence(ser)
 								killbill = 0
 								billf()
 					else:
@@ -1663,7 +1934,7 @@ def leerArchivo():
 						fe = readQR[2].rstrip("\n")
 						#Se obtiene hora actual
 						
-						
+						"""
 						#####CONVERSON DATASYMBOL
 						fo=fo.split(",")
 						rango=range(0,len(fo))
@@ -1700,7 +1971,7 @@ def leerArchivo():
 						h=horaBol
 						fe = fechaBol
 						#####FIN CONVERSION
-
+						"""
 						print(h)
 						leerArch.close()
 						leerArch = open("/home/pi/Documents/ticket.txt", "w")
@@ -1727,27 +1998,46 @@ def leerArchivo():
 									nivelActual[2]=r[6]
 									nivelActual[3]=r[7]
 
-									if(r[4]<10):
+									#Si el nivel es bajo , se muestra advertencia en pantalla
+
+									if(r[4]<20):
 										nivelDeCambio=1
-									elif(r[5]<10):
-										nivelDeCambio=2
-									elif(r[6]<10):
-										nivelDeCambio=5
-									elif(r[7]<10):
-										nivelDeCambio=10
+									elif(r[5]<20):
+										nivelDeCambio=1
+									elif(r[6]<20):
+										nivelDeCambio=1
+									elif(r[7]<20):
+										nivelDeCambio=1
 									else:
 										nivelDeCambio=0
 									
 									if(nivelDeCambio!=0):
 										mensaje=str("ayuda@ayuda.com")+","+str(NoCajero)+",3,"+"Cambio bajo"+","+"0:0"
 										resultado=Servidor.configSocket("log inicial", mensaje)
+									
+
+									##Si el nivel es muy bajo , se muestra advertencia en pantalla
+
+									if(r[4]<10):
+										suspenderCajero=1
+									elif(r[5]<10):
+										suspenderCajero=1
+									elif(r[6]<10):
+										suspenderCajero=1
+									elif(r[7]<10):
+										suspenderCajero=1
+									else:
+										pass
+
+
+
 										
 									ser.parity = change_parity(0x00, 0)
 									ser.write(b'\x00')
 									break
 
-						#if(str("Admin") in str(fo)):
-						if(int(fo)==1566):
+						if(str("Admin") in str(fo)):
+						#if(int(fo)==1566):
 
 							print("Modo admin ON")
 							config=1
@@ -1766,6 +2056,8 @@ def leerArchivo():
 						else:
 							if(cajeroSuspendido==1):
 								A=-1
+								#self.cambia(13)
+								pass
 							else:
 								h1=str(hora.mostrarHoraSinFormato()[0])+":"+str(hora.mostrarHoraSinFormato()[1])+":"+str(hora.mostrarHoraSinFormato()[2])
 								#Se obtiene la cantidad de horas y minutos que el cliente estuvo en el estacionamiento
@@ -1794,9 +2086,9 @@ def leerArchivo():
 									tiempoEstacionado=horas
 									if(dias!=0):
 										tiempoEstacionado=15
-									if(descuento==6):
+									if(descuento==2):
 										A=0
-										respuesta=calculaTarifa(tiempoEstacionado,6)
+										respuesta=calculaTarifa(tiempoEstacionado,2)
 										tarifasAplicadas=tarifasAplicadas+str(respuesta[0])
 									elif(int(estadoBoleto)==1):
 										A=0
@@ -1843,11 +2135,22 @@ def leerArchivo():
 							print("Iniciando cobro....",aux_tarifa,tarifasAplicadas)
 							while(aux_tarifa==0):
 								time.sleep(.5)
-							leido = 1
-							enable_coin(ser)
-							enable_sequence(ser)
-							killbill = 0
-							billf()
+								if(aportacionConfirmada==1):
+									aportacionConfirmada=0
+									
+									break
+							
+							if(aux_tarifa==0):
+								count(ser)
+							else:
+								leido = 1
+								os.system("wmctrl -a 'Dialog'")
+								enable_coin(ser)
+								enable_sequence(ser)
+								killbill = 0
+								billf()
+								
+							
 						else:
 							killer=0
 
@@ -1862,13 +2165,15 @@ def leerArchivo():
 
 
 def billf():
-	global cp,tiempoAgotadoDePago,cambiaColor,total,bill,cambio,tarifa,aux_cambio,aux,rep,estatus,ser,killbill,aux_tarifa,bill,pagado,billetesTotales,dineroTotal,billetes,dineroTotalB,billetesPago
+	global tarifaVoluntaria,cp,tiempoAgotadoDePago,cambiaColor,total,bill,cambio,tarifa,aux_cambio,aux,rep,estatus,ser,killbill,aux_tarifa,bill,pagado,billetesTotales,dineroTotal,billetes,dineroTotalB,billetesPago
 
 	print("Otra y otra")
 	while(killbill == 0):
+		#count(ser)
 		#time.sleep(.050)
 		if(cp==1):
 			count(ser)
+		
 		else:	
 			ser.parity = change_parity(0x0B, 1)
 			ser.write(b'\x0B')
@@ -1940,7 +2245,7 @@ def billf():
 					total = total+ bill
 					dineroTotalB=dineroTotalB+bill
 
-					print("ingresado:",total)
+					print(total)
 					#time.sleep(.005)
 					ser.parity = change_parity(0x00, 0)
 					ser.write(b'\x00')
@@ -1981,7 +2286,7 @@ def enable_sequence(ser):
 		ser.write(b'\x36')
 		time.sleep(.09)
 		ask = ser.read(2)
-		print("enabseq1",ask)
+		print(ask)
 		if (ask):
 			if(ask[0]==254):
 				print("Pila llena")
@@ -2009,9 +2314,9 @@ def enable_sequence(ser):
 		ser.parity = change_parity(0x42, 0)
 		ser.write(b'\x42')
 		ask = ser.read(1)
-		print("enableseq",ask)
+		print(ask)
 		if (ask):
-			print("Bill Habilitado")
+			print("Bill Habilitado",ask)
 			if(ask==b'\x00'):
 				time.sleep(.09)
 				break
@@ -2167,7 +2472,7 @@ def disable_coin(ser):
 		ser.parity = change_parity(0x0C, 0)
 		ser.write(b'\x0C')
 		r = ser.read(1)
-		print("disablecoin",r)
+		print(r)
 		if(r):
 			if (r[0] == 0):  # Verificar la respuesta <----------
 				print("Deshabilitacion de Monedas Exitosa")
@@ -2199,7 +2504,7 @@ def enable_coin(ser):
 		ser.write(bytes([int(ckInt)]))
 		#time.sleep(.05)
 		r = ser.read(1)
-		print("enablecoin",r)
+		print(r)
 		if(r):
 			if (r[0] == 0):  # Verificar la respuesta <----------
 				print("Habilitacion de Monedas Exitosa")
@@ -2269,7 +2574,7 @@ def Init(ser):
 		ser.write(b'\x0F')
 		time.sleep(.2)
 		r = ser.read(33)  # Verificar en el simulador se ve que devuelve 34
-		print("init",r)
+		print(r)
 		if (r):
 			if (r[0] == 77):  # Verificar la respuesta (4D = M, 45 = E, 49 = I) <----------
 				ser.parity = change_parity(0x00, 0)
@@ -2308,7 +2613,7 @@ def Init(ser):
 
 
 def count(ser):
-	global comienzaCobro,comienzaCambio,Sinpago,DA,costillo,cajeroSuspendido,cs2,suspenderCajero,cp,total,bill,cambio,tarifa,aux_cambio,killbill,pagado,monedas,monedasTotal,dineroTotal,nivelDeCambio,imprime,monedasPago,billetesPago,NoCajero,tarifasAplicadas,fechaAMD,fo,pe,h,monedasCambio
+	global registraPago,comienzaCobro,comienzaCambio,Sinpago,DA,costillo,cajeroSuspendido,cs2,suspenderCajero,cp,total,bill,cambio,tarifa,aux_cambio,killbill,pagado,monedas,monedasTotal,dineroTotal,nivelDeCambio,imprime,monedasPago,billetesPago,NoCajero,tarifasAplicadas,fechaAMD,fo,pe,h,monedasCambio
 	i=-1
 	comienzaCobro=1
 	registraPago=0
@@ -2334,7 +2639,7 @@ def count(ser):
 		imprime=1
 		comienzaCambio=1
 		#dineroTotal=dineroTotal+aux_tarifa
-		#disable_sequence(ser)
+		disable_sequence(ser)
 		print(ser.inWaiting())
 		ser.flushOutput()
 		ser.flushInput()
@@ -2441,13 +2746,13 @@ def count(ser):
 								ser.write(b'\x00')
 								break
 
-
+		
 		if(cp==1):
-			print("Pago cancelado")
-			cp=0
+			print("Pago canceladoA")
+			#cp=0
 		else:
 			registraPago=1
-
+	print("1111cp",cp," registrapago-",registraPago,"CAMBIO...",cambio)
 	if(cambio==0): # if(total==aux_tarifa):
 		imprime=1
 		killbill = 1
@@ -2456,11 +2761,12 @@ def count(ser):
 		pagado=2
 		if(cp==1):
 			print("Pago cancelado")
-			cp=0
+			#cp=0
+			
 		else:
 			registraPago=1
 		disable_coin(ser)
-		#disable_sequence(ser)
+		disable_sequence(ser)
 
 	if(registraPago==1):
 		#REGISTRAR PAGO EN SERVIDOR
@@ -2537,7 +2843,7 @@ def count(ser):
 		tarifasAplicadas=""
 	else:
 		print("pausillaJA",aux_tarifa,aux_cambio)
-	print("pausilla",DA,Sinpago)
+	print("pausilla",DA,Sinpago,"cp",cp," registrapago-",registraPago)
 	
 
 
@@ -2564,7 +2870,7 @@ def darCambioManual(ser,valor):
 		time.sleep(.005)
 		k = ser.read(4)
 		if(k):
-			print("cambioman",k)
+			print(k)
 			if(k.__sizeof__()==18):
 				if(k[0]==2):
 					print("insistir",k)
@@ -2690,13 +2996,54 @@ def leerCodQR():
 	print("Mensaje bandera camara !!!!!!!!********")
 	#lee = os.system("zbarcam --raw  --nodisplay /dev/video0 > /home/pi/Documents/ticket.txt")
 	try:
-		so=os.system("./dsreader -l 1 -s 20 > /home/pi/Documents/ticket.txt")
+		#so=os.system("./dsreader -l 1 -s 500 > /home/pi/Documents/ticket.txt")
 		#lee = os.system("zbarcam --raw --prescale=10x10  /dev/video0 > /home/pi/Documents/ticket.txt")
-		#lee = os.system("zbarcam --raw  --prescale=10x10 /dev/video0 > /home/pi/Documents/ticket.txt")
+		lee = os.system("zbarcam --raw  --prescale=280x150 /dev/video0 > /home/pi/Documents/ticket.txt")
 		pass
 	except e:
 		mensajeError=1
 		print("Error al crear el socket: ",e)
+		
+def leerCodQR2():
+	global camInicial
+	#time.sleep(1)
+	lee2 = os.system("sudo find /dev -name 'video*' > cam.txt")
+	a = open("cam.txt", "r")
+	cam=(a.readline().rstrip("\n")).lstrip("\x00")
+	a.close()
+	a = open("cam.txt", "w")
+	a.write('')
+	camInicial=cam
+	print('CamInicial',camInicial)
+	while(1):
+		time.sleep(1)
+		lee2 = os.system("sudo find /dev -name 'video*' > cam.txt")
+		a = open("cam.txt", "r")
+		cam=(a.readline().rstrip("\n")).lstrip("\x00")
+		a.close()
+		a = open("cam.txt", "w")
+		a.write('')
+		print('Cam',cam,camInicial)
+		if(cam==camInicial):
+
+			try:
+				#print('Camara Detectada')
+				lee = os.system("zbarcam --raw --prescale=280x150   "+cam+" > /home/pi/Documents/ticket.txt")
+				#lee = os.system("zbarcam --raw  --prescale=10x10 /dev/video0 > /home/pi/Documents/eum/app/caseta/ticket.txt")
+				#lee = os.system("/home/pi/Documents/eum/app/caseta/dsreader -l 27 -b 14 -r 30 -s 100 -u 50  > /home/pi/Documents/eum/app/caseta/ticket.txt")
+				#lee = os.system("cd /home/pi/scanner/dsreader")
+				#lee = os.system("./dsreader -l 27 -b 14 -r 30 -s 100 -u 50  > /home/pi/Documents/eum/app/caseta/ticket.txt")
+
+			except e:
+				mensajeTolerancia=1
+				#print("Error al crear el socket: ",e)
+		else:
+			
+			if(cam!=''):
+				camInicial=cam
+			else:
+				#print('Camara desconectada')
+				pass
 
 def disable_sequence(ser):
 #Bill-type-
@@ -2716,7 +3063,7 @@ def disable_sequence(ser):
 		ser.parity = change_parity(0x34, 0)
 		ser.write(b'\x34')
 		ask = ser.read(1)
-		print("disableseq1",ask)
+		print(ask)
 		if (ask):
 			if(ask==b'\x00'):
 				time.sleep(.25)
@@ -2741,20 +3088,24 @@ if __name__ == "__main__":
 
 	Init(ser)
 	#enable_coin(ser)
-	#disable_sequence(ser)
+	disable_sequence(ser)
 	#INICIALIZAMOS EL HILO DE LA INTERFAZ
 	thread1 = Thread(target=interface,args=())
 	#time.sleep(5)
 	thread3 = Thread(target=leerCodQR, args = ())
+	#thread5 = Thread(target=buscaCamara, args=())
 	thread4 = Thread(target=leerArchivo, args=())
+	
 	#os.system("sudo nice -n -19 python3 archimp.py")
 	try:
 
 		thread1.start()
 		time.sleep(.4)
-		thread4.start()
+		
+		#thread5.start()
 		time.sleep(.4)
 		thread3.start()
+		thread4.start()
 
 
 

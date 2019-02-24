@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 import os
 import time
@@ -74,9 +75,13 @@ dineroTotalB=0
 billetesTotales=0
 billetes=[0,0,0,0]
 mensajeBoletoUsado=0
+mensajeBoletoSellado=0
 mensajeBoletoPerdido=0
 mensajeError=0
 suspenderCajero=0
+tiempoBillExc=0
+tiempoLimBill=0
+tl=0
 mensajeAyuda=0
 cartuchoRemovido=0
 preguntarPorEstado=0
@@ -104,6 +109,7 @@ w=0
 q=0
 v=0
 c=0
+sel=0
 USUARIO=0
 correoUSUARIO=""
 NoCajero=0
@@ -164,6 +170,8 @@ def interface():
 
 			self.bntarifa.clicked.connect(lambda:self.cambia(7))
 			self.bcancelar.clicked.connect(lambda:self.cambia(6))
+			self.benter.setShortcut('Return')
+			self.bcancelarPago.setShortcut('c')
 			self.bsalirTarifas.clicked.connect(lambda:self.cambia(9))
 			self.bsalirntarifas.clicked.connect(lambda:self.cambia(9))
 			self.bconfirmartarifa.clicked.connect(self.tarifaConfirmada)
@@ -266,9 +274,40 @@ def interface():
 			self.bconfirmarplaza.clicked.connect(self.setConfig)
 			self.panelConfig()
 			self.datosEstacionamiento()
+			self.bcam.clicked.connect(self.scan)
+			self.bcam.setShortcut("Return")
 			
 			
 			
+			
+		def scan(self):
+			global mensajeBoletoUsado
+			#thread3 = Thread(target=leerCodQR, args = ())
+			text=self.lscan.text()
+			codigo=text[0:1]
+			print(codigo)
+			if(codigo == 'M' or codigo == 'L'):
+				text=text.replace("'","-")
+				text=text.replace("Ñ",":")
+				text=text.split(',')
+				#os.system("sudo nice -n -19 python3 archimp.py")
+				try:
+					
+					leerArch = open("/home/pi/Documents/ticket.txt", "w")
+					leerArch.write(str(text[0])+"\n"+str(text[1])+"\n"+str(text[2])+"\n"+str(text[3])+"\n"+str(text[4]))
+					leerArch.close()
+					self.lscan.setText('')
+				except Exception as e:
+					print(e)
+					pass
+				print('boleto valido')
+
+			else:
+				mensajeBoletoUsado = 1
+				self.lscan.setText('')
+				print('boleto invalido')
+			
+		
 		
 		def validaLogin(self):
 			global cur,accesoAcaja,USUARIO,correoUSUARIO,user,pswd
@@ -1283,7 +1322,7 @@ def interface():
 			mensajeBoletoPerdido=1
 
 		def montos(self):
-			global cp,registraPago,comienzaLectura,comienzaCambio,NoCajero,cajeroSuspendido,suspenderCajero,w,conteoPantallaPrincipal,inicioPago,imprime,cambiaColor,nom,loc,nivelDeCambio,cambio,leido,total,aux_cambio,aux_cambio1,pagado,config,monedas,monedasTotal,dineroTotal,avis,dineroTotalB,billetesTotales,billetes,tarifaVoluntaria,mensajeBoletoUsado,mensajeBoletoPerdido,mostrarTiempoDeSalidaRestante,mensajeError,mensajeAyuda
+			global mensajeBoletoSellado,cp,registraPago,comienzaLectura,comienzaCambio,NoCajero,cajeroSuspendido,suspenderCajero,w,conteoPantallaPrincipal,inicioPago,imprime,cambiaColor,nom,loc,nivelDeCambio,cambio,leido,total,aux_cambio,aux_cambio1,pagado,config,monedas,monedasTotal,dineroTotal,avis,dineroTotalB,billetesTotales,billetes,tarifaVoluntaria,mensajeBoletoUsado,mensajeBoletoPerdido,mostrarTiempoDeSalidaRestante,mensajeError,mensajeAyuda
 			#self.cambio.display(aux_cambio)
 			self.lcobrar.setText("$"+str(aux_tarifa))
 			self.ldepositar.setText("$"+str(total))
@@ -1371,8 +1410,11 @@ def interface():
 				self.stackedWidget.setCurrentIndex(9)
 
 			if(mostrarTiempoDeSalidaRestante[0]==1):
-				self.avisoInserta.setText("El pago expira en "+mostrarTiempoDeSalidaRestante[1]+" minutos")
+				self.avisoInserta.setText(mostrarTiempoDeSalidaRestante[1]+" MINUTOS PARA SALIR")
 
+			if(mensajeBoletoSellado==1):
+				self.avisoInserta.setText("DESCUENTO APLICADO")
+			
 			if(mensajeBoletoUsado==1):
 				self.avisoInserta.setText("Este boleto ya fue usado")
 
@@ -1452,7 +1494,7 @@ def interface():
 
 
 		def contadorSegundos(self):
-			global cp,varc,comienzaCambio,cajeroSuspendido,suspenderCajero,tarifasAplicadas,ma,preguntarPorEstado,accesoAcaja,c,conteoPantallaPrincipal,aux_cambio,cambio,total,w,killer,aux_tarifa,inicioPago,tiempoAgotadoDePago,cs2,cs1,v,a,p,q,y,z,mostrarTiempoDeSalidaRestante,mensajeBoletoPerdido,mensajeBoletoUsado,mensajeError,mensajeAyuda
+			global tiempoBillExc,tl,tiempoLimBill,cp,varc,comienzaCambio,cajeroSuspendido,suspenderCajero,tarifasAplicadas,ma,preguntarPorEstado,accesoAcaja,c,conteoPantallaPrincipal,aux_cambio,cambio,total,w,killer,aux_tarifa,inicioPago,tiempoAgotadoDePago,cs2,cs1,v,a,p,q,y,z,mostrarTiempoDeSalidaRestante,mensajeBoletoPerdido,mensajeBoletoUsado,mensajeBoletoSellado,sel,mensajeError,mensajeAyuda
 			#QtCore.QTimer.singleShot(1000,self.contadorSegundos)
 			
 			fehoy=str(datetime.now().date()).split('-',2)
@@ -1469,6 +1511,14 @@ def interface():
 					suspenderCajero=0
 					cajeroSuspendido=1
 					
+			if(tiempoLimBill==1):
+				tl=tl+1
+				if(tl==10): #3 MINUTOS TOLERANCIA
+					tl=0
+					tiempoLimBill=0
+					tiempoBillExc=1
+					print("Tiempo EXcedido Billetero")
+					
 			if(preguntarPorEstado==0):
 				cs1=cs1+1
 				if(cs1==1): #3 MINUTOS TOLERANCIA
@@ -1479,7 +1529,7 @@ def interface():
 				if(v==3): #3 MINUTOS TOLERANCIA
 					v=0
 					mensajeError=0
-					self.avisoInserta.setText("---> Inserta tu boleto <---")
+					self.avisoInserta.setText("---> PAGO DE ESTACIONAMIENTO <---")
 
 			if(mensajeAyuda==1):
 				ma=ma+1
@@ -1489,28 +1539,35 @@ def interface():
 					self.bayudaCliente.setEnabled(True)
 					self.bayudaCliente2.setEnabled(True)
 					#botones.prenderMonedero()
-					self.avisoInserta.setText("---> Inserta tu boleto <---")
+					self.avisoInserta.setText("INSERTE EL TICKET")
 
 			if(mensajeBoletoUsado==1):
 				p=p+1
 				if(p==3): #3 MINUTOS TOLERANCIA
 					p=0
 					mensajeBoletoUsado=0
-					self.avisoInserta.setText("---> Inserta tu boleto <---")
+					self.avisoInserta.setText("INSERTE EL TICKET")
+					
+			if(mensajeBoletoSellado==1):
+				sel=sel+1
+				if(sel==3): #3 MINUTOS TOLERANCIA
+					sel=0
+					mensajeBoletoSellado=0
+					self.avisoInserta.setText("INSERTE EL TICKET")
 
 			if(mensajeBoletoPerdido==1):
 				c=c+1
 				if(c==3): #3 MINUTOS TOLERANCIA
 					c=0
 					mensajeBoletoPerdido=0
-					self.avisoInserta.setText("---> Inserta tu boleto <---")
+					self.avisoInserta.setText("INSERTE EL TICKET")
 
 			if(mostrarTiempoDeSalidaRestante[0]==1):
 				q=q+1
 				if(q==3): #3 MINUTOS TOLERANCIA
 					q=0
 					mostrarTiempoDeSalidaRestante[0]=0
-					self.avisoInserta.setText("---> Inserta tu boleto <---")
+					self.avisoInserta.setText("INSERTE EL TICKET")
 
 			if(inicioPago==1):
 				w=w+1
@@ -1540,6 +1597,8 @@ def interface():
 					aux_tarifa1 = 0
 					total = 0
 					cp=0
+					tiempoBillExc=0
+					self.lscan.setText('')
 					registraPago=0
 					aux_tarifa=0
 					aux_cambio=0
@@ -1824,7 +1883,7 @@ def buscaCamara():
 			os.system("sudo pkill zbarcam")
 
 def leerArchivo():
-	global aportacionConfirmada,tarifaVoluntaria,cajeroSuspendido,preguntarPorEstado,leido,fo,pe,fe,hh,hsalida,kill,killer,killbill,config,fechaAMD,nivelDeCambio,h,nivelActual,aux_tarifa,imprime,NoCajero,tarifaSeleccionada,mostrarTiempoDeSalidaRestante,mensajeBoletoPerdido,mensajeBoletoUsado,tarifasAplicadas,mensajeError
+	global aportacionConfirmada,tarifaVoluntaria,cajeroSuspendido,preguntarPorEstado,leido,fo,pe,fe,hh,hsalida,kill,killer,killbill,config,fechaAMD,nivelDeCambio,h,nivelActual,aux_tarifa,imprime,NoCajero,tarifaSeleccionada,mostrarTiempoDeSalidaRestante,mensajeBoletoPerdido,mensajeBoletoUsado,mensajeBoletoSellado,tarifasAplicadas,mensajeError
 	tarifaSeleccionada=0
 	A=0
 	mixer.init()
@@ -1856,25 +1915,11 @@ def leerArchivo():
 			if(folio != ''):
 				print("{}  ==  {}".format(folio,"Estacionamientos unicos de Mexico"))
 				#booleana=str("Estacionamientos unicos de Mexico") in str(folio)
-				booleana=str("ico") in str(folio)
-				booleana2=str("ico") in str(folio)
-				if(not booleana2):
-					#time.sleep(1)
-					#while so.get_busy():
-					#	pygame.time.delay(100)
-					#print("usic")
-					#p.terminate()
-					#os.system('omxplayer /home/pi/Downloads/beep-08b.wav -o local')
-					#botones.beep()
-					print(booleana)
-				if(booleana):
+				if(str("M") in str(folio)):
 					#os.system('sudo python3 /home/pi/scanner/buz.py')
 					#mixer.music.play()
 					#time.sleep(1)
-					mixer.init()
-					mixer.music.load('/home/pi/Downloads/beep-08b.wav')
-					mixer.music.play()
-					
+					pass
 					print(folio)
 					if(folio == 'boleto perdido'):
 						leerArch.close()
@@ -1996,7 +2041,7 @@ def leerArchivo():
 									
 									if(nivelDeCambio!=0):
 										mensaje=str("ayuda@ayuda.com")+","+str(NoCajero)+",3,"+"Cambio bajo"+","+"0:0"
-										resultado=Servidor.configSocket("log inicial", mensaje)
+										#resultado=Servidor.configSocket("log inicial", mensaje)
 									
 
 									##Si el nivel es muy bajo , se muestra advertencia en pantalla
@@ -2058,8 +2103,21 @@ def leerArchivo():
 									A=-1
 									mensajeError=1
 								else:
+									#Verificando sello de boleto
+									leerArch = open("/home/pi/Documents/descuento.txt", "r")
+									sello=leerArch.readline().rstrip("\n")
+									print("sellado =",sello)
+									if(int(sello) == 1):
+										descuento=2
+									else:
+										descuento=1
+									leerArch.close()
+									leerArch = open("/home/pi/Documents/descuento.txt", "w")
+									leerArch.write('0')
+									leerArch.close()
+									#Verificando sello de boleto Fin
 									estadoBoleto=int(resultado[1])#ESTADO=2,FECHA=MINUTOS RESTANTES PARA SALIR....E=4,F=NULL,D=0....E=1,COBRAR NORMAL....
-									descuento=int(resultado[0])
+									
 									fechaBoleto=resultado[2]
 									print(fechaAMD,horaBoleto)
 									dh=restar_hora(horaBoleto,fechaAMD.split('-'))
@@ -2137,6 +2195,21 @@ def leerArchivo():
 						else:
 							killer=0
 
+				elif(str("L") in str(folio)):
+					#Si existe el descuento entonces 1
+					descuento = 1
+					leerArch = open("/home/pi/Documents/descuento.txt", "w")
+					if (descuento):
+						mensajeBoletoSellado = 1
+						leerArch.write('1')
+						leerArch.close()
+					else:
+						leerArch.write('0')
+						leerArch.close()
+					leerArch = open("/home/pi/Documents/ticket.txt", "w")
+					leerArch.write('')
+					leerArch.close()
+
 				else:
 					leerArch.close()
 					leerArch = open("/home/pi/Documents/ticket.txt", "w")
@@ -2191,53 +2264,61 @@ def billf():
 							#rep=1
 					if (r[0] == 0):
 						rep = 0
-			time.sleep(.002)
-			time.sleep(.002)
-			ser.parity = change_parity(0x33, 1)
-			ser.write(b'\x33')
-			ser.parity = change_parity(0x33, 0)
-			ser.write(b'\x33')
-			time.sleep(.05)
-			rBill = ser.read(6)
-			print("bi",rBill)
-			if(rBill):
-				if(rBill[0]==144 or rBill[0]==145 or rBill[0]==146 or rBill[0]==147 or rBill[0]==148):
-					billeteConfirmado=1
-					#cambiaColor=1
-					disable_coin(ser)
-					cambio = 0
-					if(rBill[0]==144):
-						bill = 20
-						billetes[0]=billetes[0]+1
-						billetesPago[0]=billetesPago[0]+1
-					if(rBill[0]==145):
-						bill = 50
-						billetes[1]=billetes[1]+1
-						billetesPago[1]=billetesPago[1]+1
-					if(rBill[0]==146):
-						bill = 100
-						billetes[2]=billetes[2]+1
-						billetesPago[2]=billetesPago[2]+1
-					if(rBill[0]==147):
-						bill = 200
-						billetes[3]=billetes[3]+1
-						billetesPago[3]=billetesPago[3]+1
-					if(rBill[0]==148):
-						bill = 500
+			
+			if(killbill==1):
+				pass
+			else:
+			
+				print("c")
+				time.sleep(.002)
+				time.sleep(.002)
+				ser.parity = change_parity(0x33, 1)
+				ser.write(b'\x33')
+				ser.parity = change_parity(0x33, 0)
+				ser.write(b'\x33')
+				time.sleep(.05)
+				rBill = ser.read(6)
+				print("bi",rBill)
+				if(rBill):
+					if(rBill[0]==144 or rBill[0]==145 or rBill[0]==146 or rBill[0]==147 or rBill[0]==148):
+						billeteConfirmado=1
+						#cambiaColor=1
+						disable_coin(ser)
+						cambio = 0
+						if(rBill[0]==144):
+							bill = 20
+							billetes[0]=billetes[0]+1
+							billetesPago[0]=billetesPago[0]+1
+						if(rBill[0]==145):
+							bill = 50
+							billetes[1]=billetes[1]+1
+							billetesPago[1]=billetesPago[1]+1
+						if(rBill[0]==146):
+							bill = 100
+							billetes[2]=billetes[2]+1
+							billetesPago[2]=billetesPago[2]+1
+						if(rBill[0]==147):
+							bill = 200
+							billetes[3]=billetes[3]+1
+							billetesPago[3]=billetesPago[3]+1
+						if(rBill[0]==148):
+							bill = 500
 
-					total = total+ bill
-					dineroTotalB=dineroTotalB+bill
+						total = total+ bill
+						dineroTotalB=dineroTotalB+bill
 
-					print(total)
-					#time.sleep(.005)
-					ser.parity = change_parity(0x00, 0)
-					ser.write(b'\x00')
-					cambio = total - aux_tarifa
-					accept_sequence(ser)
-					count(ser)
-					if(aux_cambio<0):
-						enable_coin(ser)
-						#enable_sequence(ser)
+						print(total)
+						#time.sleep(.005)
+						ser.parity = change_parity(0x00, 0)
+						ser.write(b'\x00')
+						cambio = total - aux_tarifa
+						accept_sequence(ser)
+						count(ser)
+						if(aux_cambio<0):
+							enable_coin(ser)
+							enable_coin(ser)
+							enable_coin(ser)
+							#enable_sequence(ser)
 
 def monitorearChanger():
 	global cartuchoRemovido
@@ -2383,6 +2464,7 @@ def palPoll(ser,r1,r):
 
 
 def accept_sequence(ser):
+	global tiempoBillExc,tiempoLimBill
 	time.sleep(.3)
 	while(1):
 		ser.parity = change_parity(0x35, 1)
@@ -2396,6 +2478,7 @@ def accept_sequence(ser):
 		time.sleep(.005)
 		if(r==b'\x00'):
 			break
+			
 	while(1):
 		ser.parity = change_parity(0x33, 1)
 		ser.write(b'\x33')
@@ -2408,20 +2491,26 @@ def accept_sequence(ser):
 			aux = BitArray(r)
 			if(aux.bin[0:4]=="1000"):
 					ser.parity = change_parity(0x00,0)
-					#ser.write(b'\x00')
+					ser.write(b'\x00')
+					print("2:","1000")
 					break
 			elif(aux.bin[0:4]=="1001"):
 					ser.parity = change_parity(0x00,0)
-					#ser.write(b'\x00')
+					ser.write(b'\x00')
+					print("2:","1001")
 					break
 			elif(aux.bin[0:4]=="1010"):
 					ser.parity = change_parity(0x00,0)
-					#ser.write(b'\x00')
+					ser.write(b'\x00')
+					print("2:","1010")
 					break
 			elif(aux.bin[0:4]=="1100"):
 					ser.parity = change_parity(0x00,0)
-					#ser.write(b'\x00')
+					ser.write(b'\x00')
+					print("2:","1200")
 					break
+
+					
 	while(1):
 		ser.parity = change_parity(0x33, 1)
 		ser.write(b'\x33')
@@ -2437,7 +2526,10 @@ def accept_sequence(ser):
 			aux = BitArray(r)
 			if(aux.bin[0:4]=="1000"):"""
 			if(r==b'\x00'):
+				tiempoLimBill=0
 				break
+		
+
 
 def disable_coin(ser):
 	while (1):
