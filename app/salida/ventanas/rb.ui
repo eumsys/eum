@@ -826,6 +826,23 @@ border-radius:20%;</string>
       </size>
      </property>
     </widget>
+    <widget class="QLineEdit" name="lscan">
+     <property name="geometry">
+      <rect>
+       <x>870</x>
+       <y>870</y>
+       <width>421</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color:rrgb(255,255,255);
+background-color:white</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
     <zorder>gcobrar_2</zorder>
     <zorder>label</zorder>
     <zorder>label_17</zorder>
@@ -838,6 +855,7 @@ border-radius:20%;</string>
     <zorder>label_97</zorder>
     <zorder>balza</zorder>
     <zorder>bpanelconf</zorder>
+    <zorder>lscan</zorder>
    </widget>
    <widget class="QWidget" name="page_6">
     <widget class="QGroupBox" name="groupBox_122">

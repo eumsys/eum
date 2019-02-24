@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import time
 import leerBotones as botones
 import RPi.GPIO as GPIO
@@ -37,7 +38,7 @@ gerencia=False
 
 configuracion = []
 
-tolerancia=17
+tolerancia=0
 fechaIn	=fechaUTC.fechaConFormato()
 horaEnt=fechaUTC.tiempoConFormato()
 
@@ -56,11 +57,42 @@ class Ui_ventanaAcceso(QDialog):
 		self.leerBotones()
 		self.bapagar.clicked.connect(lambda:self.apagarRasp())
 		self.breiniciar.clicked.connect(lambda:self.reiniciarRasp())
-		self.bcamara.clicked.connect(lambda:self.cam())
+		#self.bcamara.clicked.connect(lambda:self.cam())
 		self.balza.clicked.connect(self.alza)
 		self.datosEstacionamiento()
+		self.bcamara.clicked.connect(self.scan)
+		self.bcamara.setShortcut("Return")
 		
 		
+	def scan(self):
+		#thread3 = Thread(target=leerCodQR, args = ())
+		text=self.lscan.text()
+		text=text.replace("'","-")
+		text=text.replace("Ñ",":")
+		
+		
+		if("CHT" in text):
+			self.lscan.setText('')
+			print(text)
+			leerArch = open("datos.txt", "w")
+			leerArch.write(text)
+			leerArch.close()
+			
+		else:
+			#os.system("sudo nice -n -19 python3 archimp.py")
+			try:
+				
+				text=text.split(',')
+				leerArch = open("datos.txt", "w")
+				leerArch.write(str(text[0])+"\n"+str(text[1])+"\n"+str(text[2])+"\n"+str(text[3])+"\n"+str(text[4]))
+				leerArch.close()
+				self.lscan.setText('')
+				print(text)
+			except Exception as e:
+
+				print(e,text)
+				pass
+
 
 	def configurarPinesGPIO(self):
 		botones.configurarPinesGPIO()
@@ -144,7 +176,7 @@ class Ui_ventanaAcceso(QDialog):
 						banner2 = False
 						#IF para validar que el boleto se pudo leer de manera correcta
 						for linea in contenido:
-							if linea == "Estacionamientos unicos de Mexico\n" or (str("CHT") in str(linea)):
+							if "M" in str(linea) or (str("CHT") in str(linea)):
 									banner2 = True
 						archivo.close()
 						if banner2 == True:
@@ -165,7 +197,7 @@ class Ui_ventanaAcceso(QDialog):
 									fecBol = linea
 								if i == 4:
 									horBol = linea
-								if linea == "Estacionamientos unicos de Mexico\n":
+								if "M" in str(linea):
 									banner = True
 								if (str("CHT") in str(linea)):
 									gerencia=True
@@ -246,8 +278,14 @@ class Ui_ventanaAcceso(QDialog):
 						print("Errrr  Toleeee",error)
 						pass
 				if gerencia==True:
+					archivo = open("datos.txt", "w")
+					archivo.close()
+					DATA = "1"
+					validacion = cliente.configSocket("gerencia", DATA)
+					print("Abriendo")
 					validacion="finalizado"
 					gerencia=False
+					
 				
 				
 				
@@ -311,12 +349,12 @@ class Ui_ventanaAcceso(QDialog):
 			pantalla_cont = 1
 			if reproduccion == 0:
 				self.lboleto.setText("---> Retire su boleto <---")
-				mixer.init()
-				mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensajeboleto.mp3')
-				mixer.music.play()
-				time.sleep(3.2)
-				mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje6.mp3')
-				mixer.music.play()
+				#mixer.init()
+				#mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensajeboleto.mp3')
+				#mixer.music.play()
+				#time.sleep(3.2)
+				#mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje6.mp3')
+				#mixer.music.play()
 				reproduccion = 1
 			if self.f3 == True and self.f4 == False and self.f5 == False  and self.f6 == False:
 				if self.f7 == False:
