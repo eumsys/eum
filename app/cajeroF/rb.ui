@@ -533,30 +533,6 @@ color:rgb(82, 82, 82)</string>
      <zorder>horizontalSpacer_68</zorder>
      <zorder>layoutWidget_28</zorder>
     </widget>
-<<<<<<< HEAD
-=======
-    <widget class="QLineEdit" name="lscan">
-     <property name="geometry">
-      <rect>
-       <x>810</x>
-       <y>750</y>
-       <width>421</width>
-       <height>33</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color:white;
-color:black;</string>
-     </property>
-    </widget>
-    <zorder>gcobrar_2</zorder>
-    <zorder>label_17</zorder>
-    <zorder>layoutWidget_8</zorder>
-    <zorder>layoutWidget_23</zorder>
-    <zorder>bcam</zorder>
-    <zorder>breiniciar</zorder>
-    <zorder>lscan</zorder>
->>>>>>> 7c5567d0fb899d71e9448f1e869d68f6cc207702
    </widget>
    <widget class="QWidget" name="page_6">
     <widget class="QGroupBox" name="groupBox_3">

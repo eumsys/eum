@@ -281,7 +281,6 @@ def interface():
 			
 			
 		def scan(self):
-<<<<<<< HEAD
 			global mensajeBoletoUsado
 			#thread3 = Thread(target=leerCodQR, args = ())
 			text=self.lscan.text()
@@ -308,25 +307,6 @@ def interface():
 				self.lscan.setText('')
 				print('boleto invalido')
 			
-=======
-			#thread3 = Thread(target=leerCodQR, args = ())
-			text=self.lscan.text()
-			text=text.replace("'","-")
-			text=text.replace("Ñ",":")
-			text=text.split(',')
-			#os.system("sudo nice -n -19 python3 archimp.py")
-			try:
-				leerArch = open("/home/pi/Documents/ticket.txt", "w")
-				leerArch.write(str(text[0])+"\n"+str(text[1])+"\n"+str(text[2])+"\n"+str(text[3])+"\n"+str(text[4]))
-				leerArch.close()
-				self.lscan.setText('')
-			except Exception as e:
-				print(e)
-				pass
-			#p=subprocess.Popen(['/home/pi/scanner/dsreader -l 1 -s 20 > /home/pi/Documents/ticket.txt'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
-			
-			#so=os.popen('~/bin/dsreader -l 1 -s 20 > /home/pi/Documents/ticket.txt')
->>>>>>> 7c5567d0fb899d71e9448f1e869d68f6cc207702
 		
 		
 		def validaLogin(self):
@@ -1935,13 +1915,7 @@ def leerArchivo():
 			if(folio != ''):
 				print("{}  ==  {}".format(folio,"Estacionamientos unicos de Mexico"))
 				#booleana=str("Estacionamientos unicos de Mexico") in str(folio)
-<<<<<<< HEAD
 				if(str("M") in str(folio)):
-=======
-				booleana=str("M") in str(folio)
-				booleana2=str("M") in str(folio)
-				if(booleana):
->>>>>>> 7c5567d0fb899d71e9448f1e869d68f6cc207702
 					#os.system('sudo python3 /home/pi/scanner/buz.py')
 					#mixer.music.play()
 					#time.sleep(1)
