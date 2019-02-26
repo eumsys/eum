@@ -16,6 +16,11 @@ from threading import Thread
 import sys
 from escposprinter import *
 from datetime import datetime, timedelta
+import requests
+import json
+
+sucursal_id=4
+
 
 GPIO.setmode(GPIO.BCM)
 espera = 0
@@ -109,7 +114,7 @@ class Ui_ventanaAcceso(QDialog):
 		botones.abrir()		
 
 	def leerBotones(self):
-		global espera,pantalla_cont,reproduccion,red,green,blue,rrr,iface,tolerancia,gerencia
+		global espera,pantalla_cont,reproduccion,red,green,blue,rrr,iface,tolerancia,gerencia,sucursal_id
 		
 		if(red<50):
 			rrr=1
@@ -142,7 +147,8 @@ class Ui_ventanaAcceso(QDialog):
 					self.stackedWidget.setCurrentIndex(0)
 					self.lboleto.setText("---> Inserte su boleto <---")
 					pantalla_cont = 0
-			if botones.leerMasa() == 1:
+			#if botones.leerMasa() == 1:
+			if 1:
 				if self.error == 0 and botones.leerAyuda() == 1:
 					#Agregar dato desde la BD
 					mensaje_envio = str(idSal) + "," + str(1) + "," + str("iniciado") + ","
@@ -277,14 +283,36 @@ class Ui_ventanaAcceso(QDialog):
 					except Exception as error:
 						print("Errrr  Toleeee",error)
 						pass
+				nombre=""
 				if gerencia==True:
 					archivo = open("datos.txt", "w")
 					archivo.close()
-					DATA = "1"
-					validacion = cliente.configSocket("gerencia", DATA)
-					print("Abriendo")
-					validacion="finalizado"
-					gerencia=False
+					print("Qr Data", linea)
+					folio = str(linea[3:4])
+					endpoint="https://parkingtip.pythonanywhere.com/api/suscripciones/"+str(sucursal_id)+"/?clave="+str(folio)
+					try:
+						r = requests.get(endpoint)
+						data = json.loads(r.text)[0]
+						if(r.status_code==200):
+							vigencia=data["activo"]
+							nombre=data["nombre"]
+							print("dataaaa",data, endpoint, vigencia,nombre)
+							if(vigencia):
+								print("Candado vigente, puede salir")
+								validacion = cliente.configSocket("gerencia", folio)
+								print("Abriendo")
+								validacion="salida excepcion"
+								gerencia=False
+							else:
+								print("Candado expirado")
+								validacion="Candado Expirado"
+						else:
+							print("Cliente no encontrado")
+					except:
+						print("error endpoint suscrpicion")
+						validacion = "Candado Expirado"
+						
+					
 					
 				
 				
@@ -296,6 +324,8 @@ class Ui_ventanaAcceso(QDialog):
 				
 				#self.lboleto.setText(validacion)
 				if validacion == "finalizado":
+					self.f2 = self.f3 = True
+				elif validacion == "salida excepcion":
 					self.f2 = self.f3 = True
 				elif validacion == "volver a pagar":
 					self.lboleto.setText("---> 	Tiempo de salida excedido <---")
@@ -337,10 +367,8 @@ class Ui_ventanaAcceso(QDialog):
 					self.f1 = False
 					#self.stackedWidget.setCurrentIndex(5)
 					pantalla_cont = 1
-				elif validacion == "error":
-					mixer.init()
-					mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje5.mp3')
-					mixer.music.play()
+				elif validacion == "Candado Expirado":
+					self.lboleto.setText("Lo siento, renueva tu candado")
 					self.f1 = False
 					#self.stackedWidget.setCurrentIndex(5)
 					pantalla_cont = 1
@@ -348,7 +376,10 @@ class Ui_ventanaAcceso(QDialog):
 			#self.stackedWidget.setCurrentIndex(6)
 			pantalla_cont = 1
 			if reproduccion == 0:
-				self.lboleto.setText("---> Retire su boleto <---")
+				if(validacion=="finalizado"):
+					self.lboleto.setText("VUELVA PRONTO")
+				else:
+					self.lboleto.setText("Hasta pronto "+nombre)
 				#mixer.init()
 				#mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensajeboleto.mp3')
 				#mixer.music.play()
@@ -412,8 +443,8 @@ class Ui_ventanaAcceso(QDialog):
 	def datosEstacionamiento(self):
 		#self.nomPlaza_2.setText(plaza)
 		#self.nomLoc_2.setText(localidad)
-		self.nomPlaza_2.setText(" WALMART")
-		self.nomLoc_2.setText("JIUTEPEC")
+		self.nomPlaza_2.setText(" TERRANOVA")
+		self.nomLoc_2.setText("GUADALAJARA")
 
 	def cam(self):
 		print("reiniciando...")
