@@ -73,8 +73,8 @@ class Ui_ventanaAcceso(QDialog):
 		self.stackedWidget.setCurrentIndex(0)
 		self.configurarPinesGPIO()
 		
-		self.pushButton.clicked.connect(lambda:self.reiniciarRasp())
-		self.pushButton_2.clicked.connect(lambda:self.apagarRasp())
+		self.breiniciar.clicked.connect(lambda:self.reiniciarRasp())
+		self.bapagar.clicked.connect(lambda:self.apagarRasp())
 		self.pushButton_3.clicked.connect(lambda:self.reiniciarRasp())
 		self.pushButton_4.clicked.connect(lambda:self.apagarRasp())
 		self.pushButton_5.clicked.connect(lambda:self.reinicioConteo())
@@ -112,19 +112,12 @@ class Ui_ventanaAcceso(QDialog):
 		rol_us=""
 		indice=0
 		contr=self.lcont.text()
-		cur.execute("SELECT * FROM \"USUARIO\" WHERE usuario=%s and contra=%s order by \"idUsuario\" ASC",(nom,contr))
-
-		print("nom,contr=",nom,contr)
-		for reg in cur:
-			print(reg[1],reg[2],reg[3],reg[4],reg[5],reg[6])
-			rol_us=reg[1]
-			indice=1
-		if(indice==0):
+		if(nom == "eum" and contr == "pi"):
+			self.cambia(5)
+		else:
 			self.lerror1.setText("usuario o contraseña incorrectos")
 			self.lerror1.setVisible(True)
-		else:
-			USUARIO=str(reg[0])
-			self.cambia(5)
+			
 	
 	def cambiaFecha(self):
 		a=self.dtime.dateTime()

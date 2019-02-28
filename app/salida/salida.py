@@ -43,6 +43,15 @@ gerencia=False
 
 configuracion = []
 
+
+USUARIO=''
+host=''
+ip=''
+noEquipo = 0
+plaza = ""
+localidad = ""
+user="eum"
+pswd="pi"
 tolerancia=0
 fechaIn	=fechaUTC.fechaConFormato()
 horaEnt=fechaUTC.tiempoConFormato()
@@ -67,6 +76,189 @@ class Ui_ventanaAcceso(QDialog):
 		self.datosEstacionamiento()
 		self.bcamara.clicked.connect(self.scan)
 		self.bcamara.setShortcut("Return")
+		
+		################MODS########
+		self.bapagar.clicked.connect(lambda:self.apagarRasp())
+		self.breiniciar.clicked.connect(lambda:self.reiniciarRasp())
+		self.bconfirmarIP.clicked.connect(self.cambiaIp)
+		self.bpanelconf.clicked.connect(self.muestraPanel)
+		self.bsalirConfig.clicked.connect(lambda:self.cambia(0))
+		self.bsalirLogin.clicked.connect(lambda:self.cambia(0))
+		self.bsalirsucursal.clicked.connect(lambda:self.cambia(4))
+		self.bsalirred.clicked.connect(lambda:self.cambia(4))
+		self.bsalirCambiarFecha.clicked.connect(lambda:self.cambia(4))
+		self.bsucursal.clicked.connect(lambda:self.cambia(3))
+		self.bred.clicked.connect(lambda:self.cambia(2))
+		self.breporte.clicked.connect(lambda:self.cambia(0))
+		self.bhora.clicked.connect(lambda:self.cambia(6))
+		
+		self.lerror1.setVisible(False)
+		self.bentrar.clicked.connect(self.validaLogin)
+		self.bcambiarFecha.clicked.connect(self.cambiaFecha)
+		#self.bguardar.clicked.connect(self.setConfig)
+		#self.bsalirConfig.clicked.connect(self.salirConf)
+		self.bconfirmarplaza.clicked.connect(self.setConfig)
+		self.panelConfig()
+		self.datosEstacionamiento()
+		
+		
+		
+	
+	def validaLogin(self):
+		global cur,accesoAcaja,USUARIO,correoUSUARIO,user,pswd
+		nom=self.lusu.text()
+		rol_us=""
+		indice=0
+		contr=self.lcont.text()
+		if(nom==user):
+			if(contr==pswd):
+				self.cambia(5)
+			else:
+				self.lerror1.setText("usuario o contraseña incorrectos")
+				self.lerror1.setVisible(True)
+		else:
+			self.lerror1.setText("usuario o contraseña incorrectos")
+			self.lerror1.setVisible(True)
+
+	
+	def cambiaFecha(self):
+		a=self.dtime.dateTime()
+		b=self.dtime.textFromDateTime(a)
+		print(b,type(b))
+		os.system("sudo date -s '"+b+"' ")
+		
+	def setConfig(self):
+		global plaza,localidad,noEquipo,host,ip,pol,pol1,pol2,pol3,pol4,pol5,impresora,anchoPapel
+		lenn=0
+		plaza=str(self.lnom.text())
+		localidad=str(self.lloc.text())
+		noEquipo=str(self.leq.text())
+		
+		
+		print(plaza,localidad)
+		dat=plaza+","+localidad+","+str(noEquipo)
+		infile = open("/home/pi/Documents/eum/app/salida/archivos_config/datos.txt", 'w')
+		c=infile.write(dat)
+		
+		self.datosEstacionamiento()
+		self.cambia(0)
+
+		
+	def datosEstacionamiento(self):
+		global plaza,localidad,noEquipo,host,ip,pol,pol1,pol2,pol3,pol4,pol5,impresora,anchoPapel
+		lenn=0
+		self.lnom.setText(plaza)
+		self.lloc.setText(localidad)
+		self.leq.setText(str(noEquipo))
+		self.nomPlaza.setText(plaza)
+		self.nomLoc.setText(localidad)
+		self.lhost.setText(host)
+		self.lip.setText(ip)
+		
+		
+	def panelConfig(self):
+		global plaza,localidad,noEquipo,host,ip
+		infile = open('/home/pi/Documents/eum/app/salida/archivos_config/datos.txt','r')
+		datos= infile.readline()
+		arr=datos.split(',')
+		plaza=arr[0]
+		localidad=arr[1]
+		noEquipo=arr[2]
+		infile.close()
+		
+		infile = open('/home/pi/Documents/eum/app/salida/archivos_config/red.txt','r')
+		datos= infile.readline()
+		arr=datos.split(',')
+		host=arr[0]
+		ip=arr[1]
+		infile.close()
+		
+		
+	def salirConf(self):
+		global panelConf
+		panelConf=0
+		self.cambia(1)
+		
+
+	
+	
+	
+	def sustituye(self,archivo,buscar,reemplazar):
+		"""
+
+		Esta simple función cambia una linea entera de un archivo
+
+		Tiene que recibir el nombre del archivo, la cadena de la linea entera a
+
+		buscar, y la cadena a reemplazar si la linea coincide con buscar
+
+		"""
+		with open(archivo, "r") as f:
+
+			# obtenemos las lineas del archivo en una lista
+
+			lines = (line.rstrip() for line in f)
+			print(lines)
+
+	 
+
+			# busca en cada linea si existe la cadena a buscar, y si la encuentra
+
+			# la reemplaza
+
+			
+
+			altered_lines = [reemplazar if line==buscar else line for line in lines]
+			f= open(archivo, "w+")
+			print(altered_lines[0],len(altered_lines))
+			for i in range(len(altered_lines)):
+				if(buscar in altered_lines[i]):
+					print (altered_lines[i])
+					cambia=altered_lines[i]
+					f.write(reemplazar+"\n")
+				else:
+					f.write(altered_lines[i]+"\n")
+			f.close()
+			
+			
+	def cambiaIp(self):
+		global host,ip
+		host=self.lhost.text()
+		ip=self.lip.text()
+
+		self.sustituye("/home/pi/Documents/eum/app/salida/cliente.py","192.168","host = '"+host+"'")
+		self.sustituye("/etc/dhcpcd.conf","ip_address","static ip_address="+ip+"/24")
+		ip=ip.split(".")
+		ip=ip[0]+"."+ip[1]+"."+ip[2]+".1"
+		self.sustituye("/etc/dhcpcd.conf","routers","static routers="+ip)
+
+		
+		host=str(self.lhost.text())
+		ip=str(self.lip.text())
+		
+		
+		print(plaza,localidad)
+		dat=host+","+ip
+		infile = open("/home/pi/Documents/eum/app/salida/archivos_config/red.txt", 'w')
+		c=infile.write(dat)
+		
+		self.datosEstacionamiento()
+		self.cambia(0)
+		
+		
+	def muestraPanel(self):
+		self.cambia(4)
+		#datos=obtenerPlazaYLocalidad()
+		#self.lno.setText(str(datos[0]))
+		#self.llo.setText(str(datos[1]))
+		#datos=obtenerTerminal()
+		self.lusu.setText('')
+		self.lcont.setText('')
+		self.lerror1.setText('')
+		
+	def cambia(self,val):
+		self.stackedWidget.setCurrentIndex(val)
+		############################MODS FIN#################
 		
 		
 	def scan(self):
@@ -440,11 +632,7 @@ class Ui_ventanaAcceso(QDialog):
 		
 		
 		
-	def datosEstacionamiento(self):
-		#self.nomPlaza_2.setText(plaza)
-		#self.nomLoc_2.setText(localidad)
-		self.nomPlaza_2.setText(" TERRANOVA")
-		self.nomLoc_2.setText("GUADALAJARA")
+	
 
 	def cam(self):
 		print("reiniciando...")
@@ -467,21 +655,7 @@ class Ui_ventanaAcceso(QDialog):
 		os.system("sudo shutdown 0")
 
 def obtenerPlazaYLocalidad():
-	global plaza, localidad
-	try:
-		connection = psycopg2.connect(user=usuario, password=contrasenia, database=bd, host='localhost')
-		with connection.cursor() as cursor:
-			cursor.execute(
-				' SELECT nombre_plaza,estado FROM plaza WHERE idplaza = 1')
-			row = cursor.fetchone()
-			if row is not None:
-				print("columns: {}, {}".format(row[0], row[1]))
-				plaza = str(row[0])
-				localidad = str(row[1])
-				connection.commit()
-				connection.close()
-	except (Exception, psycopg2.DatabaseError) as error:
-		print(error)
+	pass
 
 def obtenerIdSal():
 	global idSal
@@ -592,7 +766,6 @@ def activarFuncion():
 if __name__ == "__main__":
 	hilos()
 	obtenerIdSal()
-	obtenerPlazaYLocalidad()
 	time.sleep(3)
 	#os.system("sudo wmctrl -r 'Dialog' -e 0,0,430,1900,50")
 
