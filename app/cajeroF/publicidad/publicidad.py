@@ -217,7 +217,8 @@ def reproduceVideo():
 							print('m',video)
 							ruta=str(USB)+str("/"+video)
 							#j=os.system("omxplayer -o local --win \"0 0 800 1360\" "+ruta+"")
-							j=os.system("lxterminal --geometry=100x2 -e omxplayer -o local --win \"0 0 800 1360\" "+ruta+"")
+							#j=os.system("lxterminal --geometry=100x2 -e omxplayer -o local --win \"0 0 800 1360\" "+ruta+"")
+							j=os.system("lxterminal --geometry=100x2 -e omxplayer -o local --win \"0 0 1100 1700\" "+ruta+"")
 				
 							if(j==768):
 								print(j)
