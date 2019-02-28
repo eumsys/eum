@@ -108,6 +108,10 @@ while not salir:
 			sustituye("/home/pi/.config/lxsession/LXDE-pi/autostart","python3","@/usr/bin/python3 /home/pi/Documents/eum/app/cajeroF/publicidad/publicidad.py")
 			sustituye("/home/pi/.config/lxsession/LXDE-pi/autostart","lxterminal","@/usr/bin/python3 /home/pi/Documents/eum/app/cajeroF/publicidad/publicidad.py")
 			sustituye("/home/pi/.bashrc","python3","")
+			num = pedirNumeroEntero("Ingresa un numero de Rotacion (0 al 3) ")
+			sustituye("/boot/config.txt","display","display_rotate="+str(num)+"")
+			print ("Rotate: ",num)
+			tecla()
 		else:
 			print ("Opcion Invalida: ")
 		tecla()
