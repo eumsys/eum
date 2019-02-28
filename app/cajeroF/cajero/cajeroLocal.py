@@ -2105,7 +2105,7 @@ def leerArchivo():
 									mensajeError=1
 								else:
 									#Verificando sello de boleto
-									leerArch = open("/home/pi/Documents/descuento.txt", "r")
+									leerArch = open("/home/pi/Documents/eum/sys/descuento.txt", "r")
 									sello=leerArch.readline().rstrip("\n")
 									print("sellado =",sello)
 									if(int(sello) == 1):
@@ -2113,13 +2113,14 @@ def leerArchivo():
 									else:
 										descuento=1
 									leerArch.close()
-									leerArch = open("/home/pi/Documents/descuento.txt", "w")
+									leerArch = open("/home/pi/Documents/eum/sys/descuento.txt", "w")
 									leerArch.write('0')
 									leerArch.close()
 									#Verificando sello de boleto Fin
-									estadoBoleto=int(resultado[1])#ESTADO=2,FECHA=MINUTOS RESTANTES PARA SALIR....E=4,F=NULL,D=0....E=1,COBRAR NORMAL....
+									#estadoBoleto=int(resultado[1])#ESTADO=2,FECHA=MINUTOS RESTANTES PARA SALIR....E=4,F=NULL,D=0....E=1,COBRAR NORMAL....
+									estadoBoleto=int(1)#ESTADO=2,FECHA=MINUTOS RESTANTES PARA SALIR....E=4,F=NULL,D=0....E=1,COBRAR NORMAL....
 									
-									fechaBoleto=resultado[2]
+									fechaBoleto=1
 									print(fechaAMD,horaBoleto)
 									dh=restar_hora(horaBoleto,fechaAMD.split('-'))
 									#ESTE IF ES PARA APLICAR TARIFA MAXIMA
@@ -2199,7 +2200,7 @@ def leerArchivo():
 				elif(str("L") in str(folio)):
 					#Si existe el descuento entonces 1
 					descuento = 1
-					leerArch = open("/home/pi/Documents/descuento.txt", "w")
+					leerArch = open("/home/pi/Documents/eum/sys/descuento.txt", "w")
 					if (descuento):
 						mensajeBoletoSellado = 1
 						leerArch.write('1')
