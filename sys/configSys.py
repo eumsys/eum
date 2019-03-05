@@ -81,6 +81,9 @@ while not salir:
 	if opcion == 1:
 		num = pedirNumeroEntero("Ingresa el No. de Sucursal:")
 		print ("Sucursal: ",num)
+		escribeArch = open("/home/pi/Documents/eum/sys/sucursal.txt","w")
+		escribeArch.write(str(num))
+		escribeArch.close()	
 		tecla()
 	elif opcion == 2:
 		os.system('clear')
@@ -117,8 +120,6 @@ while not salir:
 		tecla()
 
 	elif opcion == 3:
-		num = pedirNumeroEntero("Parametros: ")
-		print ("Sucursal: ",num)
 		tecla()
 	elif opcion == 4:
 		salir = True

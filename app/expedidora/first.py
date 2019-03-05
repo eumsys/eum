@@ -426,7 +426,7 @@ class Ui_ventanaAcceso(QDialog):
 			else:
 				if botones.leerMasa() == 1:
 					if self.f1 == False:
-						print("------Preguntar Botones --------")
+						print("------Presencia Auto --------")
 						self.f1 = botones.leerBotonesEntrada()
 					if self.f1 == True and self.f2 == False and self.f3 == False and self.f4 == False and self.f5 == False:
 						if boleto_previo == False:

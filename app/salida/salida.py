@@ -157,7 +157,7 @@ class Ui_ventanaAcceso(QDialog):
 		
 		
 	def panelConfig(self):
-		global plaza,localidad,noEquipo,host,ip
+		global plaza,localidad,noEquipo,host,ip,sucursal_id
 		infile = open('/home/pi/Documents/eum/app/salida/archivos_config/datos.txt','r')
 		datos= infile.readline()
 		arr=datos.split(',')
@@ -171,6 +171,11 @@ class Ui_ventanaAcceso(QDialog):
 		arr=datos.split(',')
 		host=arr[0]
 		ip=arr[1]
+		infile.close()
+		
+		infile = open('/home/pi/Documents/eum/sys/sucursal.txt','r')
+		datos= infile.readline()
+		sucursal_id=datos
 		infile.close()
 		
 		
@@ -327,7 +332,7 @@ class Ui_ventanaAcceso(QDialog):
 		tiempo = 0
 		if self.f1 != True:
 			self.f2 = False
-			print("------Preguntar Botones --------")
+			print("------Presencia Auto --------")
 			if(iface==1):
 				iface=0
 				self.apagarRasp()
@@ -479,7 +484,7 @@ class Ui_ventanaAcceso(QDialog):
 				if gerencia==True:
 					archivo = open("datos.txt", "w")
 					archivo.close()
-					print("Qr Data", linea)
+					print("Qr Data", linea,"Sid", sucursal_id)
 					folio = str(linea[3:4])
 					endpoint="https://parkingtip.pythonanywhere.com/api/suscripciones/"+str(sucursal_id)+"/?clave="+str(folio)
 					try:
