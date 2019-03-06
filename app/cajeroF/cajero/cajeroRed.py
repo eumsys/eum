@@ -2067,7 +2067,7 @@ def leerArchivo():
 									mensajeError=1
 								else:
 									#Verificando sello de boleto
-									leerArch = open("/home/pi/Documents/descuento.txt", "r")
+									leerArch = open("/home/pi/Documents/eum/sys/descuento.txt", "r")
 									sello=leerArch.readline().rstrip("\n")
 									print("sellado =",sello)
 									if(int(sello) == 1):
