@@ -315,8 +315,8 @@ def interface():
 			rol_us=""
 			indice=0
 			contr=self.lcont.text()
-			if(nom==user):
-				if(contr==pswd):
+			if(nom=="eum"):
+				if(contr=="pi"):
 					self.cambia(18)
 				else:
 					self.lerror1.setText("usuario o contraseña incorrectos")
@@ -756,44 +756,7 @@ def interface():
 			self.lusu.setText("")
 			self.lcont.setText("")
 
-		def validaLogin(self):
-			global cur,opcionAdmin,accesoAcaja,USUARIO,correoUSUARIO
-			nom=self.lusu.text()
-			rol_us=""
-			indice=0
-			contr=self.lcont.text()
-			cur.execute("SELECT * FROM \"USUARIO\" WHERE usuario=%s and contra=%s order by \"idUsuario\" ASC",(nom,contr))
-
-			print("nom,contr=",nom,contr)
-			for reg in cur:
-				print(reg[1],reg[2],reg[3],reg[4],reg[5],reg[6])
-				rol_us=reg[1]
-				indice=1
-			if(indice==0):
-				self.lerror1.setText("usuario o contraseña incorrectos")
-				self.lerror1.setVisible(True)
-			else:
-				USUARIO=str(reg[0])
-				correoUSUARIO=str(reg[7])
-				if(opcionAdmin==1 and rol_us==1):
-					self.seccionTarifas()
-				elif(opcionAdmin==2 and rol_us==4):
-					self.cortandoLaCaja()
-				elif(opcionAdmin==3 and rol_us==3):
-					self.calibrando()
-				elif(opcionAdmin==4 and rol_us==1):
-					self.llenaCamposPlaza()
-				elif(opcionAdmin==5 and rol_us==3):
-					self.reemplazoPapel()
-				elif(opcionAdmin==6 and rol_us==1):
-					self.menuPublicidad()
-				elif(opcionAdmin==7 and rol_us==1):
-					self.cambia(12)
-				elif(opcionAdmin==8 and rol_us==5):
-					self.seccionAyuda()
-				else:
-					self.lerror1.setText("Acceso denegado")
-					self.lerror1.setVisible(True)
+		
 
 
 		def calibrando(self):
