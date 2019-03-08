@@ -2062,9 +2062,77 @@ def leerArchivo():
 								resultado=Servidor.configSocket("informacion boleto", mensaje)
 
 								if(resultado==-1):
-									print("ERROR EN LA COMUNICACION")
-									A=-1
-									mensajeError=1
+									#print("ERROR EN LA COMUNICACION")
+									#A=-1
+									#mensajeError=1
+									
+									
+									leerArch = open("/home/pi/Documents/eum/sys/descuento.txt", "r")
+									sello=leerArch.readline().rstrip("\n")
+									print("sellado =",sello)
+									if(int(sello) == 1):
+										descuento=2
+									else:
+										descuento=1
+									leerArch.close()
+									leerArch = open("/home/pi/Documents/descuento.txt", "w")
+									leerArch.write('0')
+									leerArch.close()
+									#Verificando sello de boleto Fin
+									estadoBoleto=1
+									
+									#fechaBoleto=resultado[2]
+									print(fechaAMD,horaBoleto)
+									dh=restar_hora(horaBoleto,fechaAMD.split('-'))
+									#ESTE IF ES PARA APLICAR TARIFA MAXIMA
+									dias=dh[0]
+									horas=dh[1]
+									tiempoEstacionado=horas
+									if(dias!=0):
+										tiempoEstacionado=15
+									if(descuento==2):
+										A=0
+										respuesta=calculaTarifa(tiempoEstacionado,2)
+										tarifasAplicadas=tarifasAplicadas+str(respuesta[0])
+									elif(int(estadoBoleto)==1):
+										A=0
+										print("<<<<>>>> DIAS, TE , Estado B,descuento :",dias,tiempoEstacionado,estadoBoleto,descuento)
+										#BOLETO NO PAGADO, SI PAGADO=AUN TIENES TIEMPO X PARA SALIR, TIEMPO EXCEDIDO, BOLETO USADO
+										respuesta=calculaTarifa(tiempoEstacionado,descuento)
+										tarifasAplicadas=tarifasAplicadas+str(respuesta[0])
+										print(tarifasAplicadas)
+										if(respuesta[1]<0):
+											print("respuesta de tarifa =",respuesta)
+										else:
+											segundaRespuesta=calculaTarifa(respuesta[1],1)
+											tarifasAplicadas=tarifasAplicadas+";"+str(segundaRespuesta[0])
+									elif(int(estadoBoleto)==2):
+										A=-1
+										mostrarTiempoDeSalidaRestante[0]=1
+										mostrarTiempoDeSalidaRestante[1]=str(resultado[2])
+									elif(int(estadoBoleto)==3):
+										A=0
+										fechaBoleto=fechaBoleto.split(" ",1)
+										fechaAMD=fechaBoleto[0].split('-',2)
+										fechaAMD=fechaAMD[0]+"-"+fechaAMD[1]+"-"+fechaAMD[2]
+										#fechaAMD=fechaAMD[2]+"-"+fechaAMD[1]+"-"+fechaAMD[0]
+										print(fechaBoleto[1].split(':',2),fechaAMD)
+										dh2=restar_hora(fechaBoleto[1].split(':',2),fechaAMD.split('-'))
+										dias=dh2[0]
+										horas=dh2[1]
+										if(dias!=0):
+											tiempoEstacionado=23
+										tiempoEstacionado=horas
+										r=calculaTarifa(tiempoEstacionado,1)
+										tarifasAplicadas=str(r[0])
+									elif(int(estadoBoleto)==4):
+										A=-1
+										mensajeBoletoUsado=1
+									elif(int(estadoBoleto)==5):
+										A=0
+										respuesta=calculaTarifa(tiempoEstacionado,1)
+										tarifasAplicadas=tarifasAplicadas+str(respuesta[0])
+								
 								else:
 									#Verificando sello de boleto
 									leerArch = open("/home/pi/Documents/eum/sys/descuento.txt", "r")
