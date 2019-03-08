@@ -2075,7 +2075,7 @@ def leerArchivo():
 									else:
 										descuento=1
 									leerArch.close()
-									leerArch = open("/home/pi/Documents/descuento.txt", "w")
+									leerArch = open("/home/pi/Documents/eum/sys/descuento.txt", "w")
 									leerArch.write('0')
 									leerArch.close()
 									#Verificando sello de boleto Fin
@@ -2143,7 +2143,7 @@ def leerArchivo():
 									else:
 										descuento=1
 									leerArch.close()
-									leerArch = open("/home/pi/Documents/descuento.txt", "w")
+									leerArch = open("/home/pi/Documents/eum/sys/descuento.txt", "w")
 									leerArch.write('0')
 									leerArch.close()
 									#Verificando sello de boleto Fin
@@ -2229,7 +2229,7 @@ def leerArchivo():
 				elif(str("L") in str(folio)):
 					#Si existe el descuento entonces 1
 					descuento = 1
-					leerArch = open("/home/pi/Documents/descuento.txt", "w")
+					leerArch = open("/home/pi/Documents/eum/sys/descuento.txt", "w")
 					if (descuento):
 						mensajeBoletoSellado = 1
 						leerArch.write('1')
