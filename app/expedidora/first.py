@@ -439,11 +439,54 @@ class Ui_ventanaAcceso(QDialog):
 							''' Operacion 1.- Registro de boleto'''
 							#mensaje = (idBoleto,idExpedidora,FechaExpedicion, idestado, idtipodescuento, idSalida)
 							mensaje = noBolF + "," + str(noEquipo) + "," + fechatimestamp + "," + str(1) + "," + str(1) + "," + str(0)
-							validacion = clientes.configSocket("registro boleto")
-							if validacion == "error":
-								self.f1 = self.f2 = self.f3 = self.f4 = self.f5 = False
-								self.pantalla = 1
+							validacion=1
+							print("validacion",validacion)
+							#if validacion == "error":
+							#	self.f1 = self.f2 = self.f3 = self.f4 = self.f5 = False
+							#	self.pantalla = 1
+							conexionServ=os.system("ping -c 1 192.168.1.129")
+							print("conexionServ",conexionServ)
+							#if validacion == "error":
+							if conexionServ != 0:
+								valor = 1
+								
+								if valor == "error":
+									self.f1 = self.f2 = self.f3 = self.f4 = self.f5 = False
+									self.pantalla = 1
+								else:
+									self.insertarBoleto(plaza,noEquipo,noBolF,fechatimestamp,'DEFAULT-ESCOM')
+									folio.escribirArchivoFolios(noBolF)
+									self.inicioImpresion()
+									#respuesta = imprimir.imprimirHeader()
+									respuesta = imprimir.imprimirQR2(noBolF,str(noEquipo),str(fechaIn),str(horaEnt))
+									self.finImpresion()
+									if respuesta == "No esta conectada la impresora":
+										mensaje = str(noEquipo) + "," + str(4) + "," + str("iniciada")
+										#validacion = clientes.configSocket("log expedidora")
+										#clientes.logExpedidora(validacion,"log expedidora",mensaje)
+										self.error = 3
+										self.pantalla = 1
+									else:
+
+										if(respuesta=="ack"):
+											papel_cont = self.conteoBoletos()
+											if papel_cont == limite_impresiones:
+												#MANDAR MENSAJE AL SERVIDOR DE PAPEL CASI AGOTADO
+												mensaje = str(noEquipo) + "," + str(3) + "," + str("iniciada")
+												#validacion = clientes.configSocket("log expedidora")
+												#clientes.logExpedidora(validacion,"log expedidora",mensaje)
+											papel_cont = papel_cont + 1
+											self.aumentoConteo(papel_cont)
+											
+											mixer.init()
+											mixer.music.load('/home/pi/Documents/eum/app/expedidora/sonidos/mensaje1.mp3')
+											mixer.music.play()
+											boleto_previo = True
+											self.f2 = True
+										else:
+											print("PRESIONE NUEVAMENTE")
 							else:
+								validacion = clientes.configSocket("registro boleto")
 								valor = clientes.enviarMensaje(validacion,mensaje)
 								if valor == "error":
 									self.f1 = self.f2 = self.f3 = self.f4 = self.f5 = False
