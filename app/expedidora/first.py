@@ -458,7 +458,7 @@ class Ui_ventanaAcceso(QDialog):
 									folio.escribirArchivoFolios(noBolF)
 									self.inicioImpresion()
 									#respuesta = imprimir.imprimirHeader()
-									respuesta = imprimir.imprimirQR2(noBolF,str(noEquipo),str(fechaIn),str(horaEnt))
+									respuesta = imprimir.imprimirQR2(noBolF,str(3),str(fechaIn),str(horaEnt))
 									self.finImpresion()
 									if respuesta == "No esta conectada la impresora":
 										mensaje = str(noEquipo) + "," + str(4) + "," + str("iniciada")
