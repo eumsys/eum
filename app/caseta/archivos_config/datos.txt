@@ -1,1 +1,1 @@
-samsz1,satelitez,5
+Exhibicion,.,5

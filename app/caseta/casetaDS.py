@@ -264,6 +264,7 @@ def interface():
 			self.bborrar.clicked.connect(self.borrando)
 			#self.bcamara.clicked.connect(self.camara)
 			self.bcamara.clicked.connect(self.scan)
+			self.bcamara.setShortcut("Return")
 			self.bnotodobien.clicked.connect(lambda:self.cambia(17))
 			#self.bmanual.clicked.connect(self.manual)
 			self.bconfirmaPropina.clicked.connect(lambda:self.verificarPropina(5))
@@ -1585,8 +1586,8 @@ def interface():
 
 			if(pagado==2):
 				pagado=0
-				self.cambia(7)				
-				#self.ticketsino(2)
+				#self.cambia(7)	COMPROBANTE?				
+				self.ticketsino(2)
 				#conteoPantallaPrincipal=1
 				inicioPago=0
 				w=0
@@ -1684,7 +1685,7 @@ def interface():
 				if(v==50): #3 MINUTOS TOLERANCIA
 					v=0
 					mensajeTolerancia=0
-					self.avisoInserta.setText("---> pague con su boleto <---")
+					self.avisoInserta.setText("")
 
 			if(mensajeAyuda==1):
 				ma=ma+1
@@ -1693,28 +1694,28 @@ def interface():
 					mensajeAyuda=0
 					self.bayudaCliente2.setEnabled(True)
 					#botones.prenderMonedero()
-					self.avisoInserta.setText("---> Inserta tu boleto <---")
+					self.avisoInserta.setText("")
 
 			if(mensajeBoletoUsado==1):
 				p=p+1
 				if(p==50): #3 MINUTOS TOLERANCIA
 					p=0
 					mensajeBoletoUsado=0
-					self.avisoInserta.setText("---> Inserta tu boleto <---")
+					self.avisoInserta.setText("")
 
 			if(mensajeBoletoPerdido==1):
 				c=c+1
 				if(c==3): #3 MINUTOS TOLERANCIA
 					c=0
 					mensajeBoletoPerdido=0
-					self.avisoInserta.setText("---> Inserta tu boleto <---")
+					self.avisoInserta.setText("")
 
 			if(mostrarTiempoDeSalidaRestante[0]==1):
 				q=q+1
 				if(q==3): #3 MINUTOS TOLERANCIA
 					q=0
 					mostrarTiempoDeSalidaRestante[0]=0
-					self.avisoInserta.setText("---> Inserta tu boleto <---")
+					self.avisoInserta.setText("")
 
 			if(inicioPago==1):
 				w=w+1
@@ -2112,7 +2113,7 @@ def leerArchivo():
 							print("fechas----->",fe,fechaAMD)
 							fechaAMD=fechaAMD[2]+"-"+fechaAMD[1]+"-"+fechaAMD[0]
 							if(resultado==-1):
-								print("ERROR EN LA COMUNICACION")
+								print("Boleto Usado")
 								A=-1
 								mensajeBoletoUsado=1
 							else:
