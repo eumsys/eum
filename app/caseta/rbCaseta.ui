@@ -77,9 +77,6 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -100,6 +97,9 @@ color:rgb(222, 222, 222);
        <width>20</width>
        <height>20</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QGroupBox" name="groupBox_45">
@@ -508,7 +508,7 @@ color:red</string>
        <enum>Qt::PlainText</enum>
       </property>
       <property name="pixmap">
-       <pixmap>../../../../Downloads/qr6.png</pixmap>
+       <pixmap>../iconos/qr1.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1841,9 +1841,6 @@ border-radius:30%;</string>
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -1864,6 +1861,9 @@ border-radius:80%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QPushButton" name="bsalirLogin">
@@ -1888,9 +1888,6 @@ border-radius:80%</string>
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -1911,6 +1908,9 @@ border-radius:80%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QLabel" name="ltime_48">
@@ -2168,9 +2168,6 @@ color:rgb(222, 222, 222);
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -2191,6 +2188,9 @@ border-radius:80%</string>
         <width>40</width>
         <height>40</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
      <widget class="QPushButton" name="bconfirmarplaza">
@@ -2215,9 +2215,6 @@ border-radius:80%</string>
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -2238,6 +2235,9 @@ border-radius:80%</string>
         <width>40</width>
         <height>40</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
      <widget class="QLabel" name="ltime_53">
@@ -2532,9 +2532,6 @@ color:rgb(101, 179, 0)</string>
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -2555,6 +2552,9 @@ border-radius:80%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QPushButton" name="bsucursal">
@@ -2654,9 +2654,6 @@ color:BLAcK;;
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -2677,6 +2674,9 @@ border-radius:80%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QLabel" name="ltime_59">
@@ -2884,9 +2884,6 @@ color:rgb(222, 222, 222);
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -2907,6 +2904,9 @@ border-radius:80%</string>
         <width>40</width>
         <height>40</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
      <widget class="QCheckBox" name="ch1">
@@ -3039,9 +3039,6 @@ color:black;</string>
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -3062,6 +3059,9 @@ border-radius:80%</string>
         <width>40</width>
         <height>40</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
     </widget>
@@ -3105,9 +3105,6 @@ border-radius:80%</string>
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -3128,6 +3125,9 @@ border-radius:80%</string>
         <width>40</width>
         <height>40</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
      <widget class="QLabel" name="ltime_67">
@@ -3218,9 +3218,6 @@ color:rgb(59, 109, 153);
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -3241,6 +3238,9 @@ border-radius:80%</string>
         <width>40</width>
         <height>40</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
     </widget>
@@ -3287,9 +3287,6 @@ border-radius:80%</string>
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -3310,6 +3307,9 @@ border-radius:10%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QPushButton" name="bno">
@@ -3334,9 +3334,6 @@ border-radius:10%</string>
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -3357,6 +3354,9 @@ border-radius:10%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QLabel" name="valvol_3">
@@ -3834,7 +3834,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Button">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -3910,7 +3910,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Base">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -3923,7 +3923,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -3983,7 +3983,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Button">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -4059,7 +4059,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Base">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -4072,7 +4072,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -4132,7 +4132,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Button">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -4208,7 +4208,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Base">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -4221,7 +4221,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -4383,7 +4383,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Button">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -4459,7 +4459,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Base">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -4472,7 +4472,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -4532,7 +4532,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Button">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -4608,7 +4608,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Base">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -4621,7 +4621,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -4681,7 +4681,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Button">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -4757,7 +4757,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Base">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -4770,7 +4770,7 @@ color:white</string>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -5108,7 +5108,7 @@ color:rgb(101, 179, 0)</string>
         </colorrole>
         <colorrole role="Button">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -5184,7 +5184,7 @@ color:rgb(101, 179, 0)</string>
         </colorrole>
         <colorrole role="Base">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -5197,7 +5197,7 @@ color:rgb(101, 179, 0)</string>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -5257,7 +5257,7 @@ color:rgb(101, 179, 0)</string>
         </colorrole>
         <colorrole role="Button">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -5333,7 +5333,7 @@ color:rgb(101, 179, 0)</string>
         </colorrole>
         <colorrole role="Base">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -5346,7 +5346,7 @@ color:rgb(101, 179, 0)</string>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -5406,7 +5406,7 @@ color:rgb(101, 179, 0)</string>
         </colorrole>
         <colorrole role="Button">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -5482,7 +5482,7 @@ color:rgb(101, 179, 0)</string>
         </colorrole>
         <colorrole role="Base">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -5495,7 +5495,7 @@ color:rgb(101, 179, 0)</string>
         </colorrole>
         <colorrole role="Window">
          <brush brushstyle="LinearGradientPattern">
-          <gradient startx="0.000000000000000" starty="0.005681820000000" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradient startx="0.000000000000000" starty="0.005681820213795" endx="1.000000000000000" endy="1.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
            <gradientstop position="1.000000000000000">
             <color alpha="0">
              <red>255</red>
@@ -6765,9 +6765,6 @@ border-radius:15%</string>
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -6788,6 +6785,9 @@ border-radius:10%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QPushButton" name="bsalirTarifas">
@@ -6812,9 +6812,6 @@ border-radius:10%</string>
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -6835,6 +6832,9 @@ border-radius:10%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QSpinBox" name="idtar1">
@@ -10577,9 +10577,6 @@ color:rgb(58, 58, 58)</string>
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -10600,6 +10597,9 @@ border-radius:10%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QPushButton" name="bconfirmartarifa">
@@ -10624,9 +10624,6 @@ border-radius:10%</string>
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -10647,6 +10644,9 @@ border-radius:10%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QLabel" name="label_78">
@@ -13036,9 +13036,6 @@ color:rgb(236, 236, 236);
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -13059,6 +13056,9 @@ border-radius:10%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QPushButton" name="bimprimeEventos">
@@ -13083,9 +13083,6 @@ border-radius:10%</string>
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -13106,6 +13103,9 @@ border-radius:10%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QPushButton" name="bborrar">
@@ -13130,9 +13130,6 @@ border-radius:10%</string>
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -13153,6 +13150,9 @@ border-radius:10%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QPushButton" name="salirReportes">
@@ -13177,9 +13177,6 @@ border-radius:10%</string>
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -13200,6 +13197,9 @@ border-radius:10%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QLabel" name="ltime_66">
@@ -13459,14 +13459,11 @@ border-radius:40%</string>
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
       <property name="autoFillBackground">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
       <property name="styleSheet">
        <string notr="true">
@@ -13493,6 +13490,9 @@ border-radius:40%;</string>
       </property>
       <property name="flat">
        <bool>true</bool>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
      <widget class="QLabel" name="hs">
@@ -13574,9 +13574,6 @@ color:rgb(206, 206, 206)
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -13600,6 +13597,9 @@ border-radius:30%;</string>
         <width>70</width>
         <height>70</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
      <widget class="QLabel" name="ttotal">
@@ -13681,9 +13681,6 @@ color:rgb(0, 0, 0)
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -13707,6 +13704,9 @@ border-radius:30%;</string>
         <width>70</width>
         <height>70</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
      <widget class="QLabel" name="hs_47">
@@ -13761,9 +13761,6 @@ color:rgb(206, 206, 206)
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -13787,6 +13784,9 @@ border-radius:30%;</string>
         <width>70</width>
         <height>70</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
      <widget class="QLabel" name="hs_48">
@@ -13838,9 +13838,6 @@ color:rgb(206, 206, 206)
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -13860,6 +13857,9 @@ border-radius:40%;</string>
         <width>250</width>
         <height>250</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
      <widget class="QLabel" name="label_101">
@@ -14059,9 +14059,6 @@ color:rgb(101, 179, 0)</string>
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -14082,6 +14079,9 @@ border-radius:150%</string>
         <width>40</width>
         <height>40</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
      <widget class="QLabel" name="valvol3">
@@ -14151,9 +14151,6 @@ border-radius:40%</string>
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -14174,6 +14171,9 @@ border-radius:40%;
         <width>30</width>
         <height>30</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
      <widget class="QPushButton" name="bvolverPropina">
@@ -14198,9 +14198,6 @@ border-radius:40%;
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -14222,6 +14219,9 @@ border-radius:30%;</string>
         <width>40</width>
         <height>40</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
     </widget>
@@ -14402,9 +14402,6 @@ border-radius:40%</string>
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -14424,6 +14421,9 @@ border-radius:40%;</string>
         <width>250</width>
         <height>250</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
      <widget class="QLabel" name="hs_2">
@@ -14505,9 +14505,6 @@ color:rgb(206, 206, 206)
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -14531,6 +14528,9 @@ border-radius:30%;</string>
         <width>70</width>
         <height>70</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
      <widget class="QLabel" name="ttotal_2">
@@ -14612,9 +14612,6 @@ color:rgb(0, 0, 0)
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -14638,6 +14635,9 @@ border-radius:30%;</string>
         <width>70</width>
         <height>70</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
      <widget class="QLabel" name="hs_51">
@@ -14692,9 +14692,6 @@ color:rgb(206, 206, 206)
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -14718,6 +14715,9 @@ border-radius:30%;</string>
         <width>70</width>
         <height>70</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
      <widget class="QLabel" name="hs_52">
@@ -14853,9 +14853,6 @@ border-radius:40%</string>
       <property name="toolTip">
        <string>Ayuda</string>
       </property>
-      <property name="toolTipDuration">
-       <number>3</number>
-      </property>
       <property name="whatsThis">
        <string extracomment="help"/>
       </property>
@@ -14875,6 +14872,9 @@ border-radius:40%;</string>
         <width>250</width>
         <height>250</height>
        </size>
+      </property>
+      <property name="toolTipDuration" stdset="0">
+       <number>3</number>
       </property>
      </widget>
     </widget>
@@ -14902,9 +14902,6 @@ border-radius:40%;</string>
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -14925,6 +14922,9 @@ border-radius:10%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QPushButton" name="btodobien">
@@ -14949,9 +14949,6 @@ border-radius:10%</string>
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -14972,6 +14969,9 @@ border-radius:10%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QPushButton" name="lll">
@@ -15002,9 +15002,6 @@ border-radius:10%</string>
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -15026,6 +15023,9 @@ background-position:center;
        <width>50</width>
        <height>50</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
    </widget>
@@ -15094,9 +15094,6 @@ border-radius:40%</string>
      <property name="toolTip">
       <string>Ayuda</string>
      </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
      <property name="whatsThis">
       <string extracomment="help"/>
      </property>
@@ -15117,6 +15114,9 @@ border-radius:10%</string>
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTipDuration" stdset="0">
+      <number>3</number>
      </property>
     </widget>
     <widget class="QSpinBox" name="i2_2">
