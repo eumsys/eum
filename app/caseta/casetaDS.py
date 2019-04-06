@@ -316,23 +316,27 @@ def interface():
 		def scan(self):
 			#thread3 = Thread(target=leerCodQR, args = ())
 			text=self.lscan.text()
-			
-			text=text.split(',')
-			
-			
-			#os.system("sudo nice -n -19 python3 archimp.py")
-			try:
-				leerArch = open("/home/pi/Documents/eum/app/caseta/ticket.txt", "w")
-				leerArch.write(str(text[0])+"\n"+str(text[1])+"\n"+str(text[2])+"\n"+str(text[3])+"\n"+str(text[4]))
-				leerArch.close()
+			if('M' in text):
+				text=text.replace("'","-")
+				text=text.replace("Ñ",":")
+				text=text.split(',')
+				#os.system("sudo nice -n -19 python3 archimp.py")
+				#os.system("sudo nice -n -19 python3 archimp.py")
+				try:
+					leerArch = open("/home/pi/Documents/eum/app/caseta/ticket.txt", "w")
+					leerArch.write(str(text[0])+"\n"+str(text[1])+"\n"+str(text[2])+"\n"+str(text[3])+"\n"+str(text[4]))
+					leerArch.close()
+					self.lscan.setText('')
+				except Exception as e:
+					print(e)
+					pass
+				#p=subprocess.Popen(['/home/pi/scanner/dsreader -l 1 -s 20 > /home/pi/Documents/ticket.txt'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
+				
+				#so=os.popen('~/bin/dsreader -l 1 -s 20 > /home/pi/Documents/ticket.txt')
+			else:
+				mensajeBoletoUsado = 1
 				self.lscan.setText('')
-			except Exception as e:
-				print(e)
-				pass
-			#p=subprocess.Popen(['/home/pi/scanner/dsreader -l 1 -s 20 > /home/pi/Documents/ticket.txt'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
-			
-			#so=os.popen('~/bin/dsreader -l 1 -s 20 > /home/pi/Documents/ticket.txt')
-			
+				print('boleto invalido')
 		
 			
 		def validaLogin(self):
