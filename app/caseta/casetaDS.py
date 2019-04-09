@@ -2593,7 +2593,7 @@ def Init(ser):
 	c=infile.readline()
 	arr=c.split(',', 1 )
 	infile.close()
-	obtenerPlazaYLocalidad()
+	#obtenerPlazaYLocalidad()
 	infile = open("/home/pi/Documents/NoCajero.txt", 'r')
 	NoCajero=infile.readline()
 	infile.close()
@@ -3093,7 +3093,7 @@ if __name__ == "__main__":
 	#ser.timeout = .005 GOOD
 	#ser.timeout = .004
 	
-	obtenerPlazaYLocalidad()
+	#obtenerPlazaYLocalidad()
 	leerArch = open("/home/pi/Documents/eum/app/caseta/ticket.txt", "w")
 	leerArch.write('')
 	leerArch.close()
