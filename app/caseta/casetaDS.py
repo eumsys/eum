@@ -511,10 +511,9 @@ def interface():
 
 		def imprimeCorteCaja(self):
 			global val
-			
-
+			valor = 1
 			os.system("sudo python3 /home/pi/Documents/eum/app/caseta/corte/rt2.py")
-			self.lll.setStyleSheet("background-image: url(/home/pi/Documents/eum/app/iconos/outputQR2.png); background-attachment: fixed;background-repeat:no-repeat;background-position:center;")
+			#self.lll.setStyleSheet("background-image: url(/home/pi/Documents/eum/app/iconos/outputQR2.png); background-attachment: fixed;background-repeat:no-repeat;background-position:center;")
 			self.cambia(21)
 
 		def todobien(self):
@@ -1541,7 +1540,7 @@ def interface():
 			#MEDIO MAL , SE ACTUALIZA CONSTANTEMENTE, PUEDE AFECTAR AL RENDIMIENTO....
 				
 
-			global segundoCosto,val,pagoCompletado,contador,w,conteoPantallaPrincipal,inicioPago,imprime,cambiaColor,nom,loc,nivelDeCambio,cambio,leido,total,aux_cambio,aux_cambio1,pagado,config,monedas,monedasTotal,dineroTotal,avis,dineroTotalB,billetesTotales,billetes,tarifaVoluntaria,mensajeBoletoUsado,mensajeBoletoPerdido,mostrarTiempoDeSalidaRestante,mensajeTolerancia,mensajeAyuda
+			global plaza,localidad,segundoCosto,val,pagoCompletado,contador,w,conteoPantallaPrincipal,inicioPago,imprime,cambiaColor,nom,loc,nivelDeCambio,cambio,leido,total,aux_cambio,aux_cambio1,pagado,config,monedas,monedasTotal,dineroTotal,avis,dineroTotalB,billetesTotales,billetes,tarifaVoluntaria,mensajeBoletoUsado,mensajeBoletoPerdido,mostrarTiempoDeSalidaRestante,mensajeTolerancia,mensajeAyuda
 			#self.cambio.display(aux_cambio)
 			#self.cambia(1)
 
@@ -1560,10 +1559,10 @@ def interface():
 			aya=aya[0]
 			self.ttotal.setText(aya)
 
-			self.nomPlaza.setText(nom)
-			self.nomLoc.setText(loc)
-			self.nomPlaza_2.setText(nom)
-			self.nomLoc_2.setText(loc)
+			self.nomPlaza.setText(plaza)
+			self.nomLoc.setText(localidad)
+			self.nomPlaza_2.setText(plaza)
+			self.nomLoc_2.setText(localidad)
 
 			#self.aviso.setText(str(avis))
 			if(cambiaColor==1):

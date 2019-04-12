@@ -18,14 +18,18 @@ import psycopg2, psycopg2.extras
 import fechaUTC as hora
 import datetime
 import qrcode
+import requests
+import json
+import os,sys
 
-
-
+sucursal="6"
+fechaHoy=time.strftime("%Y-%m-%d")
+horaHoy=time.strftime("%H:%M:%S")
 PATH_NOMBRE_PLAZA=str(archivoConfiguracion.getName()).replace('\n','')
 PATH_NUMERO_TERMINAL=str(archivoConfiguracion.getNumTer()).replace('\n','')
 PATH_CODIGOS_QR="/home/pi/Documents/eum/app/caseta/EUM_EXPE/CodigosQR/outputQR.png"
 dats=''
-conn = psycopg2.connect(database='CajerOk',user='postgres',password='Postgres3UMd6', host='localhost')
+conn = psycopg2.connect(database='caseta',user='postgres',password='Postgres3UMd6', host='localhost')
 cur = conn.cursor()
 
 
@@ -157,8 +161,8 @@ def informacionEXT():
 	Generic.text("Bienvenido\n\n")
 	
 def checale(fecha1,fecha2,turno,folio):
-	global cur,generic,dats,tipos
-	boletaje=''
+	global cur,generic,dats,tipos,sucursal,fechaHoy,horaHoy
+	boletaje='-'
 	fecha=hora.mostrarFechayHora()
 	
 	infile = open('/home/pi/Documents/eum/app/caseta/archivos_config/datos.txt','r')
@@ -197,7 +201,7 @@ def checale(fecha1,fecha2,turno,folio):
 		else:
 			tot=int(reg[0])
 	#print(dats)
-	conn = psycopg2.connect(database='CajerOk',user='postgres',password='Postgres3UMd6', host='localhost')
+	conn = psycopg2.connect(database='caseta',user='postgres',password='Postgres3UMd6', host='localhost')
 	cur = conn.cursor()
 	cur2 = conn.cursor()
 	print(fecha1,fecha2)
@@ -238,18 +242,58 @@ def checale(fecha1,fecha2,turno,folio):
 	anticipoDeDepositos='0'
 	
 	dats=folio+";"+plaza+"; ;"+fecha+";"+str(idCajero)+";"+turno+";"+str(sinSello)+";"+str(tipos[5])+";"+str(tipos[6])+";"+str(tipos[4])+";"+str(tipos[7])+";"+locales+";"+cancelados+";"+proovedores+";"+tolerancias+";"+str(tipos[2])+";"+str(tot)+";"+boletaje+";"+cortesias+";"+gastos+";"+nomina+";"+bonos+";"+dobletes+";"+anticipoDeDepositos
+	##tipos[5]:Cobrados,tipos6:Incompletos,tipos4:propina, tipos7:s/propina, tipos2: Perdidos
 	qr= qrcode.QRCode(
 		version=4,
 		box_size=7,
 		border=4,
 	)
-	qr.add_data(dats)
-	qr.make(fit=True)
-	img= qr.make_image(back_color='black')
-	f = open("/home/pi/Documents/eum/app/iconos/outputQR2.png", "wb")
-	img.save(f)
-	f.close()
-
+	conexionServ=os.system("ping -c 1 parkingtip.pythonanywhere.com")
+	print("conexionServ",conexionServ)
+	if conexionServ != 0:
+		try:
+			qr.add_data(dats)
+			qr.make(fit=True)
+			img= qr.make_image(back_color='black')
+			f = open("/home/pi/Documents/eum/app/iconos/outputQR2.png", "wb")
+			img.save(f)
+			f.close()
+		except:
+			print("Error de registro del corte privado")
+			return "Error registro corte privado"
+	else:
+		try:
+			print("turno:",turno)
+			if("V" in turno):
+				turno="Vespertino"
+			else:
+				turno="Matutino"
+			payload = {
+			"turno": turno,
+			"boletaje": "0",
+			"recuperados": str(tipos[5]),
+			"sellados": "0",
+			"noSellados": str(sinSello),
+			"incompletos": str(tipos[6]),
+			"propina": str(tipos[4]),
+			"sinpropina": str(tipos[7]),
+			"cortesias": "0",
+			"tolerancias": tolerancias,
+			"locatarios": locales,
+			"caja": str(idCajero),
+			"created": fechaHoy+"T"+horaHoy,
+			"ingreso": str(tot),
+			"detalles": boletaje,
+			"encargado": "1",
+			"sucursal_id": sucursal
+			}
+			r = requests.post("https://parkingtip.pythonanywhere.com/api/cortes/create/", json=payload)
+			#r = requests.post("http://127.0.0.1:8000/api/cortes/create/", json=payload)
+			print("Result...:",r.text,", turno:",turno)
+		except:
+			print("Error de registro del corte publico")
+			return "Error registro corte publico"
+		
 
 
 
