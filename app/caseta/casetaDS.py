@@ -40,7 +40,7 @@ pagoCompletado=0
 
 #clock = sched.schedconuler(time.time, time.sleep)
 cobroIniciado=0
-tolerancia=15
+tolerancia=0
 cp=0
 #global ser
 ser=0
