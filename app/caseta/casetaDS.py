@@ -328,7 +328,7 @@ def interface():
 				#os.system("sudo nice -n -19 python3 archimp.py")
 				try:
 					leerArch = open("/home/pi/Documents/eum/app/caseta/ticket.txt", "w")
-					leerArch.write(str(text[0])+"\n"+str(text[1])+"\n"+str(text[2])+"\n"+str(text[3])+"\n"+str(text[4]))
+					leerArch.write(str(text[0])+"\n"+str(text[1])+"\n"+str(text[2])+"\n"+str(text[3])+"\n"+str(text[4])[:8])
 					leerArch.close()
 					self.lscan.setText('')
 				except Exception as e:
