@@ -285,7 +285,9 @@ def interface():
 			
 			
 			conn.commit()
-
+			self.bEsc1.setShortcut("Return")
+			self.bEsc2.setShortcut("Return")
+			self.bEsc3.setShortcut("Return")
 
 	################MODS########
 			self.bapagar.clicked.connect(lambda:self.apagarRasp())
@@ -312,11 +314,13 @@ def interface():
 			
 			
 			
+			
 		
 		def scan(self):
 			#thread3 = Thread(target=leerCodQR, args = ())
 			text=self.lscan.text()
-			if('M' in text):
+			text2char=text[:2]
+			if('M,' == text2char):
 				text=text.replace("'","-")
 				text=text.replace("Ñ",":")
 				text=text.split(',')
@@ -336,7 +340,7 @@ def interface():
 			else:
 				mensajeBoletoUsado = 1
 				self.lscan.setText('')
-				print('boleto invalido')
+				print('boleto invalido',text,text2char)
 		
 			
 		def validaLogin(self):
@@ -513,7 +517,7 @@ def interface():
 			global val
 			valor = 1
 			os.system("sudo python3 /home/pi/Documents/eum/app/caseta/corte/rt2.py")
-			#self.lll.setStyleSheet("background-image: url(/home/pi/Documents/eum/app/iconos/outputQR2.png); background-attachment: fixed;background-repeat:no-repeat;background-position:center;")
+			self.lll.setStyleSheet("background-image: url(/home/pi/Documents/eum/app/iconos/outputQR2.png); background-attachment: fixed;background-repeat:no-repeat;background-position:center;")
 			self.cambia(21)
 
 		def todobien(self):
@@ -1879,15 +1883,16 @@ def calculaTarifa(tiempoEstacionado,descuento):
 	print("El descuento ES:::::::::",descuento,type(descuento))
 	if(descuento==1):
 		print("-.-.-.NO DESCUENTO",descuento)
-		cur.execute("select * from \"TARIFA\" where estado=1 order by prioridad Asc")
+		cur.execute("select * from \"TARIFA\" where estado=1 order by prioridad Asc,costo Asc")
 	else:
 		print("-.-.-.SI DESCUENTO",descuento)
-		cur.execute("select * from \"TARIFA\" where estado=1 and descuento=%s order by prioridad Desc",(str(descuento)))
+		cur.execute("select * from \"TARIFA\" where estado=1 and descuento=%s order by prioridad Desc,costo Desc",(str(descuento)))
 		aplicaDescuento=1
 
 
 	for reg in cur:
 		print(reg[0],reg[1],reg[2],reg[3],reg[4],reg[5],reg[6],reg[7],reg[8],reg[9],reg[10],reg[11])
+		"""
 		if(str(reg[2])!="None"):
 			if(fechaActual>=reg[2] and fechaActual<=reg[3]):
 				print("FECHA ENTRA")
@@ -1904,7 +1909,7 @@ def calculaTarifa(tiempoEstacionado,descuento):
 				print("Dia de la semana entra")
 			else:
 				indicador=indicador+1
-
+		"""
 		if(str(reg[9])!="None"):
 			if(tiempoEstacionado>=int(reg[9]) and tiempoEstacionado<int(reg[10])):
 				print("INTERVALO ENTRA")
