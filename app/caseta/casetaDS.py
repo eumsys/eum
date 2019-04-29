@@ -3090,14 +3090,14 @@ def gif():
 #MAIN
 if __name__ == "__main__":
 	global ser
-	time.sleep(3)
-	ser = serial.Serial("/dev/hidraw2")  # Open named port
-	ser.baudrate = 9600  # Set baud rate
-	ser.parity = serial.PARITY_NONE
-	ser.stopbits = serial.STOPBITS_ONE
-	ser.bytesize = serial.EIGHTBITS
+	#time.sleep(3)
+	#ser = serial.Serial("/dev/hidraw2")  # Open named port
+	#ser.baudrate = 9600  # Set baud rate
+	#ser.parity = serial.PARITY_NONE
+	#ser.stopbits = serial.STOPBITS_ONE
+	#ser.bytesize = serial.EIGHTBITS
 	#ser.timeout = .005 GOOD
-	ser.timeout = .004
+	#ser.timeout = .004
 	
 	obtenerPlazaYLocalidad()
 	leerArch = open("/home/pi/Documents/eum/app/caseta/ticket.txt", "w")
