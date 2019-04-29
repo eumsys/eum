@@ -22,7 +22,7 @@ import requests
 import json
 import os,sys
 
-sucursal="6"
+sucursal="7"
 fechaHoy=time.strftime("%Y-%m-%d")
 horaHoy=time.strftime("%H:%M:%S")
 PATH_NOMBRE_PLAZA=str(archivoConfiguracion.getName()).replace('\n','')

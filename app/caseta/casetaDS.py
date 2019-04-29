@@ -327,12 +327,15 @@ def interface():
 				#os.system("sudo nice -n -19 python3 archimp.py")
 				#os.system("sudo nice -n -19 python3 archimp.py")
 				try:
+					print(str(text[3])+" "+str(text[4]),'datetime...')
+					fecha = datetime.strptime(str(text[3])+" "+str(text[4]), '%d-%m-%Y %H:%M:%S')
 					leerArch = open("/home/pi/Documents/eum/app/caseta/ticket.txt", "w")
 					leerArch.write(str(text[0])+"\n"+str(text[1])+"\n"+str(text[2])+"\n"+str(text[3])+"\n"+str(text[4])[:8])
 					leerArch.close()
 					self.lscan.setText('')
 				except Exception as e:
-					print(e)
+					print(e,'datetime incorrecto')
+					self.lscan.setText('')
 					pass
 				#p=subprocess.Popen(['/home/pi/scanner/dsreader -l 1 -s 20 > /home/pi/Documents/ticket.txt'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
 				
@@ -3047,7 +3050,8 @@ def my_callback(channel):
 	
 	import time
 	import sys
-	if(habilitaMonedero):
+	#########if(habilitaMonedero):
+	if(1):
 		contador = contador +1
 		print(contador)
 		val=contador
@@ -3055,11 +3059,9 @@ def my_callback(channel):
 		if(contador>=aux_tarifa):
 			#contador=0
 			#aux_tarifa=contador
-			
 			#pagoCompletado=1
 			print("Pago completado")
 		
-
 def contar():
 	GPIO.add_event_detect(22, GPIO.RISING, callback=my_callback,bouncetime=100)  
 	input("Press Enter Para salir del programa \n") 
@@ -3089,13 +3091,13 @@ def gif():
 if __name__ == "__main__":
 	global ser
 	time.sleep(3)
-	ser = serial.Serial("/dev/ttyAMA0")  # Open named port
-	#ser.baudrate = 9600  # Set baud rate
-	#ser.parity = serial.PARITY_NONE
-	#ser.stopbits = serial.STOPBITS_ONE
-	#ser.bytesize = serial.EIGHTBITS
+	ser = serial.Serial("/dev/hidraw2")  # Open named port
+	ser.baudrate = 9600  # Set baud rate
+	ser.parity = serial.PARITY_NONE
+	ser.stopbits = serial.STOPBITS_ONE
+	ser.bytesize = serial.EIGHTBITS
 	#ser.timeout = .005 GOOD
-	#ser.timeout = .004
+	ser.timeout = .004
 	
 	obtenerPlazaYLocalidad()
 	leerArch = open("/home/pi/Documents/eum/app/caseta/ticket.txt", "w")

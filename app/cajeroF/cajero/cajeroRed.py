@@ -220,7 +220,6 @@ def interface():
 			self.bayuda.clicked.connect(lambda:self.mueveyManda(8))
 			self.bcancelarPago.clicked.connect(self.cancelandoPago)
 			self.bnoserie.clicked.connect(self.mostrarNoSerie)
-			#self.bcam.clicked.connect(self.activaCamara)
 
 
 			self.bentrar.clicked.connect(self.validaLogin)
@@ -282,7 +281,6 @@ def interface():
 			
 		def scan(self):
 			global mensajeBoletoUsado
-			#thread3 = Thread(target=leerCodQR, args = ())
 			text=self.lscan.text()
 			codigo=text[0:1]
 			print(codigo)
@@ -407,28 +405,12 @@ def interface():
 		def sustituye(self,archivo,buscar,reemplazar):
 			"""
 
-			Esta simple función cambia una linea entera de un archivo
-
-			Tiene que recibir el nombre del archivo, la cadena de la linea entera a
-
-			buscar, y la cadena a reemplazar si la linea coincide con buscar
+			Esta funcion permite sustituir una linea de un archivo por otra
 
 			"""
 			with open(archivo, "r") as f:
-
-				# obtenemos las lineas del archivo en una lista
-
 				lines = (line.rstrip() for line in f)
 				print(lines)
-
-		 
-
-				# busca en cada linea si existe la cadena a buscar, y si la encuentra
-
-				# la reemplaza
-
-				
-
 				altered_lines = [reemplazar if line==buscar else line for line in lines]
 				f= open(archivo, "w+")
 				print(altered_lines[0],len(altered_lines))
@@ -469,10 +451,6 @@ def interface():
 			
 		def muestraPanel(self):
 			self.cambia(17)
-			#datos=obtenerPlazaYLocalidad()
-			#self.lno.setText(str(datos[0]))
-			#self.llo.setText(str(datos[1]))
-			#datos=obtenerTerminal()
 			self.lusu.setText('')
 			self.lcont.setText('')
 			self.lerror1.setText('')
@@ -488,22 +466,6 @@ def interface():
 			os.system("sudo shutdown -r 0")
 			############################MODS FIN#################
 
-		def activaCamara(self):
-			#thread3 = Thread(target=leerCodQR, args = ())
-			thread3 = Thread(target=leerCodQR, args = ())
-			#os.system("sudo nice -n -19 python3 archimp.py")
-			try:
-			
-				thread3.start()
-
-
-
-			except Exception as e:
-				pass
-			#p=subprocess.Popen(['/home/pi/scanner/dsreader -l 1 -s 20 > /home/pi/Documents/ticket.txt'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
-			
-			#so=os.popen('~/bin/dsreader -l 1 -s 20 > /home/pi/Documents/ticket.txt')
-			
 			
 		def mostrarNoSerie(self):
 			global accesoAcaja,NoCajero,mensajeAyuda
@@ -943,13 +905,6 @@ def interface():
 				print("valvol: ",valPropuesto)
 				aux_tarifa=int(self.valvol.text()[1:])
 			self.stackedWidget.setCurrentIndex(1)
-			"""if(valPropuesto!=0):
-				print("ACA")
-				self.alerta.setVisible(True)
-			else:
-				print("ALLA")
-				aux_tarifa=int(self.valvol.text()[1:])
-				self.stackedWidget.setCurrentIndex(1)"""
 
 
 
@@ -1176,12 +1131,6 @@ def interface():
 				dsem=dsem.lstrip(",")
 				dsem2=dsem2+dsem
 				dsem2=dsem2+"'"
-				#segundoIndicador=segundoIndicador+"D"
-
-
-
-
-
 				dsem=dsem.rstrip(",")
 				dsemok=",dia_sem"
 				print(dsem)
@@ -1285,25 +1234,16 @@ def interface():
 			mensajeBoletoPerdido=1
 
 		def montos(self):
+			#Este metodo Actualiza la interfaz cada cierto tiempo
 			global mensajeBoletoSellado,cp,registraPago,comienzaLectura,comienzaCambio,NoCajero,cajeroSuspendido,suspenderCajero,w,conteoPantallaPrincipal,inicioPago,imprime,cambiaColor,nom,loc,nivelDeCambio,cambio,leido,total,aux_cambio,aux_cambio1,pagado,config,monedas,monedasTotal,dineroTotal,avis,dineroTotalB,billetesTotales,billetes,tarifaVoluntaria,mensajeBoletoUsado,mensajeBoletoPerdido,mostrarTiempoDeSalidaRestante,mensajeError,mensajeAyuda
-			#self.cambio.display(aux_cambio)
 			self.lcobrar.setText("$"+str(aux_tarifa))
 			self.ldepositar.setText("$"+str(total))
-			#self.fol.setText(fo)
-			#self.pen.setText(pe)
 			self.he.setText(hh)
 			self.hs.setText(hsalida)
 			self.ttotal.setText(aux_dif)
 			self.he2.setText(hh)
 			self.hs2.setText(hsalida)
 			self.ttotal2.setText(aux_dif)
-
-			#self.nomPlaza.setText(nom)
-			#self.nomLoc.setText(loc)
-			#self.nomPlaza_2.setText(nom)
-			#self.nomLoc_2.setText(loc)
-
-			#self.aviso.setText(str(avis))
 			if(cambiaColor==1):
 				cambiaColor=0
 				self.gdepositar.setStyleSheet("background-color: rgb(48, 48, 48,80%);")
@@ -1321,25 +1261,6 @@ def interface():
 				
 				
 			if(comienzaCambio==1):
-				
-				"""self.gcambio.setStyleSheet("background-color:rgb(17, 58, 8);")
-				time.sleep(.2)
-				self.gcambio.setStyleSheet("background-color:rgb(27, 68, 18);")
-				time.sleep(.2)
-				self.gcambio.setStyleSheet("background-color:rgb(37, 78, 28);")
-				self.gcambio.setStyleSheet("background-color:rgb(47, 88, 38);")
-				self.gcambio.setStyleSheet("background-color:rgb(57, 98, 48);")
-				self.gcambio.setStyleSheet("background-color:rgb(67, 10, 58);")
-				time.sleep(.2)
-				self.gcambio.setStyleSheet("background-color:rgb(67, 10, 58);")
-				time.sleep(.2)
-				self.gcambio.setStyleSheet("background-color:rgb(77, 118, 68);")
-				self.gcambio.setStyleSheet("background-color:rgb(87, 128, 78);")
-				time.sleep(.2)
-				self.gcambio.setStyleSheet("background-color:rgb(97, 138, 88);")
-				self.gcambio.setStyleSheet("background-color:rgb(107, 148, 98);")
-				self.gdepositar.setStyleSheet("background-color:rgb(255, 255, 255);")
-				self.lcobrar.setStyleSheet("background-color:rgb(255, 255, 255);")"""
 				#pagado=1
 				pass
 			if(cajeroSuspendido==1):
@@ -1731,13 +1652,6 @@ def interface():
 
 def restar_hora(horab,fechab):
 		global aux_dif
-		"""formato = "%H:%M:%S"
-		h1 = datetime.strptime(hora1, formato)
-		h2 = datetime.strptime(hora2, formato)
-		resultado = h1 - h2
-		aux_dif=str(resultado)
-		print("res:",h1,h2,resultado,type(str(resultado)))
-		return str(resultado)"""
 		fechaBoleto = datetime.strptime(str(fechab[0]) + str(fechab[1]) + str(fechab[2]), '%Y%m%d').date()
 		horaBoleto = datetime.strptime(str(horab[0]) +':'+str(horab[1]) +':'+ str(horab[2]), '%H:%M:%S').time()
 		fechaActual=datetime.now().date()
@@ -1830,20 +1744,7 @@ def calculaTarifa(tiempoEstacionado,descuento):
 	return tarifaSeleccionada,horasRestantes
 
 
-def buscaCamara():
-	global camInicial
-	while(1):
-		lee2 = os.system("sudo find /dev -name 'video*' > cam.txt")
-		a = open("cam.txt", "r")
-		cam=(a.readline().rstrip("\n")).lstrip("\x00")
-		a.close()
-		a = open("cam.txt", "w")
-		a.write('')
-		#time.sleep(1)
-		#print('Cammmmmmmmm',cam,camInicial)
-		if(cam!=camInicial):
-			#print('Camara desconectadaaaaaaaaa')
-			os.system("sudo pkill zbarcam")
+
 
 def leerArchivo():
 	global aportacionConfirmada,tarifaVoluntaria,cajeroSuspendido,preguntarPorEstado,leido,fo,pe,fe,hh,hsalida,kill,killer,killbill,config,fechaAMD,nivelDeCambio,h,nivelActual,aux_tarifa,imprime,NoCajero,tarifaSeleccionada,mostrarTiempoDeSalidaRestante,mensajeBoletoPerdido,mensajeBoletoUsado,mensajeBoletoSellado,tarifasAplicadas,mensajeError
@@ -2040,10 +1941,6 @@ def leerArchivo():
 								killer=0
 							print("Modo admin OFF")
 							break
-
-							#	time.sleep(0.005)
-							#Init(ser)
-							#return
 						else:
 							if(cajeroSuspendido==1):
 								A=-1
@@ -3097,59 +2994,8 @@ def checkSum(arr):
 		j=j+1
 	return 255&sum
 
-def leerCodQR():
-	global mensajeError
-	print("Mensaje bandera camara !!!!!!!!********")
-	#lee = os.system("zbarcam --raw  --nodisplay /dev/video0 > /home/pi/Documents/ticket.txt")
-	try:
-		#so=os.system("./dsreader -l 1 -s 500 > /home/pi/Documents/ticket.txt")
-		#lee = os.system("zbarcam --raw --prescale=10x10  /dev/video0 > /home/pi/Documents/ticket.txt")
-		lee = os.system("zbarcam --raw  --prescale=280x150 /dev/video0 > /home/pi/Documents/ticket.txt")
-		pass
-	except e:
-		mensajeError=1
-		print("Error al crear el socket: ",e)
-		
-def leerCodQR2():
-	global camInicial
-	#time.sleep(1)
-	lee2 = os.system("sudo find /dev -name 'video*' > cam.txt")
-	a = open("cam.txt", "r")
-	cam=(a.readline().rstrip("\n")).lstrip("\x00")
-	a.close()
-	a = open("cam.txt", "w")
-	a.write('')
-	camInicial=cam
-	print('CamInicial',camInicial)
-	while(1):
-		time.sleep(1)
-		lee2 = os.system("sudo find /dev -name 'video*' > cam.txt")
-		a = open("cam.txt", "r")
-		cam=(a.readline().rstrip("\n")).lstrip("\x00")
-		a.close()
-		a = open("cam.txt", "w")
-		a.write('')
-		print('Cam',cam,camInicial)
-		if(cam==camInicial):
 
-			try:
-				#print('Camara Detectada')
-				lee = os.system("zbarcam --raw --prescale=280x150   "+cam+" > /home/pi/Documents/ticket.txt")
-				#lee = os.system("zbarcam --raw  --prescale=10x10 /dev/video0 > /home/pi/Documents/eum/app/caseta/ticket.txt")
-				#lee = os.system("/home/pi/Documents/eum/app/caseta/dsreader -l 27 -b 14 -r 30 -s 100 -u 50  > /home/pi/Documents/eum/app/caseta/ticket.txt")
-				#lee = os.system("cd /home/pi/scanner/dsreader")
-				#lee = os.system("./dsreader -l 27 -b 14 -r 30 -s 100 -u 50  > /home/pi/Documents/eum/app/caseta/ticket.txt")
 
-			except e:
-				mensajeTolerancia=1
-				#print("Error al crear el socket: ",e)
-		else:
-			
-			if(cam!=''):
-				camInicial=cam
-			else:
-				#print('Camara desconectada')
-				pass
 
 def disable_sequence(ser):
 #Bill-type-
@@ -3197,18 +3043,13 @@ if __name__ == "__main__":
 	disable_sequence(ser)
 	#INICIALIZAMOS EL HILO DE LA INTERFAZ
 	thread1 = Thread(target=interface,args=())
-	#time.sleep(5)
 	thread3 = Thread(target=leerCodQR, args = ())
-	#thread5 = Thread(target=buscaCamara, args=())
 	thread4 = Thread(target=leerArchivo, args=())
 	
-	#os.system("sudo nice -n -19 python3 archimp.py")
 	try:
 
 		thread1.start()
 		time.sleep(.4)
-		
-		#thread5.start()
 		time.sleep(.4)
 		thread3.start()
 		thread4.start()

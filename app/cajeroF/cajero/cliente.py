@@ -205,6 +205,7 @@ def configSocket(operacion,mensaje):
 	# Bloque try - catch para crear el socket
 	try:
 		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		
 	except socket.error as e:
 		print("Error al crear el socket: {}".format(e))
 		return -1
