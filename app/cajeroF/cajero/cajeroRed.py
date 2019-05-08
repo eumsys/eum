@@ -3043,7 +3043,7 @@ if __name__ == "__main__":
 	disable_sequence(ser)
 	#INICIALIZAMOS EL HILO DE LA INTERFAZ
 	thread1 = Thread(target=interface,args=())
-	thread3 = Thread(target=leerCodQR, args = ())
+	#thread3 = Thread(target=leerCodQR, args = ())
 	thread4 = Thread(target=leerArchivo, args=())
 	
 	try:
@@ -3051,7 +3051,7 @@ if __name__ == "__main__":
 		thread1.start()
 		time.sleep(.4)
 		time.sleep(.4)
-		thread3.start()
+		#thread3.start()
 		thread4.start()
 
 
