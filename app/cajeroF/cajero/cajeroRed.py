@@ -1957,7 +1957,7 @@ def leerArchivo():
 								print(mensaje,type(mensaje))
 								#return 2
 								resultado=Servidor.configSocket("informacion boleto", mensaje)
-
+								print("resultado",resultado)
 								if(resultado==-1):
 									#print("ERROR EN LA COMUNICACION")
 									#A=-1
@@ -2030,6 +2030,9 @@ def leerArchivo():
 										respuesta=calculaTarifa(tiempoEstacionado,1)
 										tarifasAplicadas=tarifasAplicadas+str(respuesta[0])
 								
+								elif(resultado[0]==''):
+									A=-1
+									mensajeBoletoUsado=1
 								else:
 									#Verificando sello de boleto
 									leerArch = open("/home/pi/Documents/eum/sys/descuento.txt", "r")
