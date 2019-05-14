@@ -728,12 +728,22 @@ def interface():
 				self.abrela()
 			if(tipo==5):
 				
+				print("aaaa",contador,aux_tarifa2,aux_tarifa)
+				contador =  self.tiempoEsperaMoneda()
+							
+				
+				
+				aux_tarifa = contador
+				tmp = contador
+				print("Depositado:",aux_tarifa,aux_tarifa2)
+							
+				
 				if(result==1):
 					print("FOLIO YA REGISTRADO")
 					mensajeBoletoUsado=1	
 				else:
 					self.volConfirmado()
-					consu="insert into \"BOLETO\" (folio,tipo,costo,tarifa,cajero,estado,pago,expedidora,\"fechaExpedicion\",expedido) values("+str(fo)+","+str(tipo)+","+str(aux_tarifa)+","+str(tarifaSeleccionada)+","+str(NoCajero)+",2,1,'"+str(pe)+"','"+fec+" "+horaHoy+"','"+fecBoleto+"')"
+					consu="insert into \"BOLETO\" (folio,tipo,costo,tarifa,cajero,estado,pago,expedidora,\"fechaExpedicion\",expedido) values("+str(fo)+","+str(tipo)+","+str(tmp)+","+str(tarifaSeleccionada)+","+str(NoCajero)+",2,1,'"+str(pe)+"','"+fec+" "+horaHoy+"','"+fecBoleto+"')"
 					#consu="insert into \"BOLETO\"(tipo,costo,tarifa,cajero,estado,pago,expedidora,\"fechaExpedicion\") values("+str(tipo)+",100,"+str(tarifaSeleccionada)+","+str(NoCajero)+",2,1,'"+str(pe)+"','"+fe+" "+horaHoy+"')"
 					print(consu)
 					cur.execute(consu)
@@ -743,23 +753,12 @@ def interface():
 					
 			if(tipo==6):
 				print("aaaa",contador,aux_tarifa2,aux_tarifa)
-				#Inicia la cuenta regresiva para esperar que se acaben de recibir los pulsos de la moneda
-				tmp = contador
-				timer_stop = datetime.utcnow() +timedelta(seconds=1) 
-				while True: 
-					if (contador != tmp):
-							tmp = contador
-							timer_stop = datetime.utcnow() +timedelta(seconds=1)  
-							print ("Moneda detectada, se reinicia conteo") 
-					if (datetime.utcnow() > timer_stop): 
-							print ("Tiempo completado, iniciando registro") 
-							break
-
+				contador =  self.tiempoEsperaMoneda()
 				if(aux_tarifa2<aux_tarifa):
 					tipo=7
 				aux_tarifa = contador
 				tmp = contador
-				contador = 0
+				
 				print("Depositado:",aux_tarifa,aux_tarifa2)
 				if(result==1):
 					print("FOLIO YA REGISTRADO")
@@ -788,8 +787,27 @@ def interface():
 					#self.abrela()
 					
 			#self.valvol.text()=="$"
+			contador = 0
 			self.bnunmedio.setEnabled(True)
 			cobroIniciado=1
+			
+
+		
+		def tiempoEsperaMoneda(self): 
+			global contador
+			"""
+			Inicia la cuenta regresiva para esperar que se acaben de recibir los pulsos de la moneda
+			"""
+			tmp = contador
+			timer_stop = datetime.utcnow() +timedelta(seconds=1) 
+			while True: 
+				if (contador != tmp):
+						tmp = contador
+						timer_stop = datetime.utcnow() +timedelta(seconds=1)  
+						print ("Moneda detectada, se reinicia conteo") 
+				if (datetime.utcnow() > timer_stop): 
+						print ("Tiempo completado, iniciando registro") 
+						return contador
 			
 			
 		def cerrarBarrera(self): 
