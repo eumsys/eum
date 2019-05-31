@@ -279,7 +279,7 @@ def checale(fecha1,fecha2,turno,folio):
 			"sinpropina": str(tipos[7]),
 			"cortesias": "0",
 			"tolerancias": tolerancias,
-			"locatarios": locales,
+			"locatarios": str(tipos[1]),
 			"caja": str(idCajero),
 			"created": fechaHoy+"T"+horaHoy,
 			"ingreso": str(tot),

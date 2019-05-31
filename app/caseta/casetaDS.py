@@ -4,7 +4,7 @@ import time
 import fechaUTC as hora
 import qrcode
 #import pyglet
-
+import time, datetime 
 #import cliente as Servidor
 #import imprimirBoleto as impresora
 from threading import Timer,Thread
@@ -664,7 +664,7 @@ def interface():
 				self.valvol.setText("$")
 				self.valvol3.setText("$")
 				killer=0
-			contador=0
+			#contador=0
 			os.system("wmctrl -a 'zbar'")
 			
 			
@@ -677,7 +677,7 @@ def interface():
 			GPIO.output(13, False) # Turns the GPIO logical Low
 			
 		def abrirBarrera(self,tipo):
-			global cobroIniciado,pagado,tarifaSeleccionada,NoCajero,pe,fe,costillo,hh,fo,mensajeBoletoUsado,aux_tarifa,aux_tarifa2
+			global contador,cobroIniciado,pagado,tarifaSeleccionada,NoCajero,pe,fe,costillo,hh,fo,mensajeBoletoUsado,aux_tarifa,aux_tarifa2
 			pagado=2
 			horaHoy=time.strftime("%H:%M:%S")
 			fecha=datetime.now().date()
@@ -718,7 +718,7 @@ def interface():
 					print(consu)
 					cur.execute(consu)
 					conn.commit()
-					self.abrela()
+					#self.abrela()
 			if(tipo==3):
 				consu="insert into \"BOLETO\" (folio,tipo,costo,tarifa,cajero,estado,pago,expedidora,\"fechaExpedicion\",expedido) values("+str(fo)+","+str(tipo)+",100,"+str(tarifaSeleccionada)+","+str(NoCajero)+",2,1,'"+str(pe)+"','"+fec+" "+horaHoy+"','"+fecBoleto+"')"
 				#consu="insert into \"BOLETO\"(tipo,costo,tarifa,cajero,estado,pago,expedidora,\"fechaExpedicion\") values("+str(tipo)+",100,"+str(tarifaSeleccionada)+","+str(NoCajero)+",2,1,'"+str(pe)+"','"+fe+" "+horaHoy+"')"
@@ -742,21 +742,36 @@ def interface():
 				
 					
 			if(tipo==6):
-				print("aaaa",aux_tarifa2,aux_tarifa)
+				print("aaaa",contador,aux_tarifa2,aux_tarifa)
+				#Inicia la cuenta regresiva para esperar que se acaben de recibir los pulsos de la moneda
+				tmp = contador
+				timer_stop = datetime.utcnow() +timedelta(seconds=1) 
+				while True: 
+					if (contador != tmp):
+							tmp = contador
+							timer_stop = datetime.utcnow() +timedelta(seconds=1)  
+							print ("Moneda detectada, se reinicia conteo") 
+					if (datetime.utcnow() > timer_stop): 
+							print ("Tiempo completado, iniciando registro") 
+							break
+
 				if(aux_tarifa2<aux_tarifa):
 					tipo=7
-				aux_tarifa = aux_tarifa2
+				aux_tarifa = contador
+				tmp = contador
+				contador = 0
+				print("Depositado:",aux_tarifa,aux_tarifa2)
 				if(result==1):
 					print("FOLIO YA REGISTRADO")
 					mensajeBoletoUsado=1	
 				else:
 					self.volConfirmado()
-					consu="insert into \"BOLETO\" (folio,tipo,costo,tarifa,cajero,estado,pago,expedidora,\"fechaExpedicion\",expedido) values("+str(fo)+","+str(tipo)+","+str(aux_tarifa)+","+str(tarifaSeleccionada)+","+str(NoCajero)+",2,1,'"+str(pe)+"','"+fec+" "+horaHoy+"','"+fecBoleto+"')"
+					consu="insert into \"BOLETO\" (folio,tipo,costo,tarifa,cajero,estado,pago,expedidora,\"fechaExpedicion\",expedido) values("+str(fo)+","+str(tipo)+","+str(tmp)+","+str(tarifaSeleccionada)+","+str(NoCajero)+",2,1,'"+str(pe)+"','"+fec+" "+horaHoy+"','"+fecBoleto+"')"
 					#consu="insert into \"BOLETO\"(tipo,costo,tarifa,cajero,estado,pago,expedidora,\"fechaExpedicion\") values("+str(tipo)+",100,"+str(tarifaSeleccionada)+","+str(NoCajero)+",2,1,'"+str(pe)+"','"+fe+" "+horaHoy+"')"
 					print(consu)
 					cur.execute(consu)
 					conn.commit()
-					self.abrela()
+					#self.abrela()
 					
 			
 					
@@ -1740,7 +1755,7 @@ def interface():
 					val=0
 					total = 0
 					aux_tarifa=0
-					contador=0
+					#contador=0
 					aux_cambio=0
 					self.cambia(0)
 					leerArch = open("/home/pi/Documents/eum/app/caseta/ticket.txt", "w")
@@ -1759,7 +1774,7 @@ def interface():
 					aux_tarifa1 = 0
 					total = 0
 					aux_tarifa=0
-					contador=0
+					#contador=0
 					aux_cambio=0
 					self.cambia(0)
 					leerArch = open("/home/pi/Documents/eum/app/caseta/ticket.txt", "w")
