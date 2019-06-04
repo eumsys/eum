@@ -7,21 +7,29 @@ import time
 #import codigoQR as codigoGenerar
 import psycopg2
 import signal
-from usb.core import USBError
-from escpos.printer import Usb
-
-
 import os
 import sys
 import errno
+import fechaUTC
+from usb.core import USBError
+
+from escpos.printer import Usb
+
+
 
 usuario = 'postgres'
 contrasenia = 'Postgres3UMd6'
 db = 'dbeum_tecamac'
 
+PATH_NOMBRE_PLAZA=str(archivoConfiguracion.getName()).replace('\n','')
+PATH_NUMERO_TERMINAL=str(archivoConfiguracion.getNumTer()).replace('\n','')
+PATH_CODIGOS_QR="/home/pi/Documents/EUM_EXPE/CodigosQR/outputQR.png"
+
+
 def instanciarImpresora():
 	try:
 		Generic = Usb(0x0519, 0x0001, timeout=400)
+		#Generic = Usb(0x04b8, 0x0202, timeout=400)
 		return Generic
 	except Exception as error:
 		return "No esta conectada la impresora"
@@ -30,9 +38,6 @@ def imprimirHeader():
 	nom_plaza = ""
 	politicas = ""
 	try:
-		Generic = instanciarImpresora()
-		if Generic == "No esta conectada la impresora":
-			return Generic
 		connection = psycopg2.connect(user=usuario, password=contrasenia, database=db, host='localhost')
 		with connection.cursor() as cursor:
 			cursor.execute(' SELECT nombre_plaza FROM plaza WHERE idplaza = 1')
@@ -57,17 +62,14 @@ def imprimirHeader():
 		Generic = instanciarImpresora()
 		if Generic == "No esta conectada la impresora":
 			return Generic
-		#Generic.set(size='2x', align='center')
-		Generic.set(align=u'CENTER', font=u'B',width=2,height=2)
+		Generic.set(size='2x', align='center')
 		Generic.text('Bienvenido \n'+str(nom_plaza)+'\n')
-		Generic.set(align=u'center', font=u'B')
-		#Generic.set(size='normal',align='center')
+		Generic.set(size='normal',align='center')
 		palabra = ""
 		for letra in politicas:
 			if letra != "|":
 				palabra = palabra + letra
 			else:
-				print(palabra)
 				Generic.text(palabra)
 				Generic.text(" \n")
 				palabra = ""
@@ -78,50 +80,73 @@ def imprimirHeader():
 	except TimeoutException:
 		return "No se pudo imprimir"
 
-def imprimirQR2DS(noBol,terminalEnt,fechaIn,horaEnt):
+def imprimirQR6():
+	print("emp22")
+	try:
+		Generic = instanciarImpresora()
+		if Generic == "No esta conectada la impresora":
+			return Generic
+		#Generic.text('Bienvenido \n'+str(nom_plaza)+'\n')
+		Generic.image("/home/pi/Documents/eum/app/expedidora/bo.jpg")
+		Generic.cut()
+	except Exception as error:
+		print("ERROR AL IMPRIMIR QR",error)
+		return "No se pudo imprimir"
+		
+def imprimirQR22(noBol,terminalEnt,fechaIn,horaEnt,plaza,localidad,pol):
+	print("emp")
 	try:
 		Generic = instanciarImpresora()
 		if Generic == "No esta conectada la impresora":
 			return Generic
 		
-		Generic.text('Expedidora #'+terminalEnt+'\n')
-		Generic.text('Folio:'+str(noBol)+'   '+fechaIn+' '+horaEnt +'\n')
-		Generic.qr("Estacionamientos unicos de Mexico\n"+noBol+","+noBol+","+noBol+"\n"+terminalEnt+","+terminalEnt+","+terminalEnt+"\n"+fechaIn+","+fechaIn+","+fechaIn+"\n"+horaEnt+","+horaEnt+","+horaEnt)
+		
+		#Generic.text('Bienvenido \n'+str(nom_plaza)+'\n')
+		Generic.set(align=u'center',font=u'B')
+		Generic.image("/home/pi/Documents/eum/app/expedidora/logoPT.png")
+		Generic.set(align=u'center',font=u'A', text_type=u'B', width=1, height=1)
+		Generic.text('\n')		
+		Generic.set(align=u'left',font=u'B')
+		print("ACAAAAA",pol)
+		Generic.text(str(pol))
+		Generic.set(align=u'center',font=u'A',text_type=u'B')
+		Generic.text('Fol:'+str(noBol)+'  '+fechaIn+' '+horaEnt +'  Entrada:'+terminalEnt+"\n")
+		content="M,"+terminalEnt+noBol+","+terminalEnt+","+fechaIn+","+horaEnt
+		Generic.set(align=u'center',font=u'B')
+		Generic.qr(content,ec=0,size=4)
+		
+		#codigoGenerar.construirCodigoEntrada(str(noBol),terminalEnt,fechaIn,horaEnt )
+		#Generic.qr(content,ec=0,size=3,model=2,native=False,center=False)
 		Generic.cut()
+		#codQR=imagen.cambiarTamQR(PATH_CODIGOS_QR)
+		#Generic.image(codQR)
 		print("QR bien impresa")
 		return "ack"
 	except Exception as error:
-		print("ERROR AL IMPRIMIR QR")
+		print("ERROR AL IMPRIMIR QR",error)
 		return "No se pudo imprimir"
 		
-def imprimirQR2(noBol,terminalEnt,fechaIn,horaEnt):
+def  imprimirQR2(noBol,terminalEnt,fechaIn,horaEnt):
+	
+	Generic = instanciarImpresora()
+	Generic.text('Expedidora #'+terminalEnt+'\n')
+	Generic.text('Folio:'+str(noBol)+'   '+fechaIn+' '+horaEnt +'\n')
+	codigoGenerar.construirCodigoEntrada(noBol,terminalEnt,fechaIn,horaEnt)
+	codQR=imagen.cambiarTamQR(PATH_CODIGOS_QR)
+	Generic.text('Expedidora #'+PATH_NUMERO_TERMINAL+'\n')
+	Generic.text('Folio: GM'+str(noBol)+' '+fechaIn+' '+horaEnt +'\n')
+	Generic.image(codQR)
+
+def cutter():
 	try:
 		Generic = instanciarImpresora()
-		if Generic == "No esta conectada la impresora":
-			return Generic
-		Generic.set(align=u'center',font=u'B')
-		Generic.image("/home/pi/Documents/eum/app/expedidora/logoPT.png")
-		#Generic.set(align=u'left', font=u'B',width=2,height=2)
-		#Generic.text('Bienvenido \n'+str("SAMS SATELITE")+'\n')
-		Generic.set(align=u'center', font=u'B')
-		pol="   La empresa no se hace responsable por objetos personales,\n   fallas mecanicas y/o electricas, siniestros ocasionados por\n   derrumbes, temblores, terremotos o fenomenos naturales, asi \n   como robo de accesorios o vandalismo en su vehiculo o robo \n   con violencia y portador de arma de fuego. \n  Solo por robo total de acuerdo a los terminos del seguro contratado\n   Boleto Perdido.\n   Se entregara el  vehiculo  a quien acredite la  propiedad.\n   El seguro contratado no aplica a motocicletas.\n   Costo del boleto perdido es de $150.00 \n   Al recibir este boleto acepta las condiciones del seguro contra\n   robo total. PARKING TIP S.A. de C.V. / R.F.C PTI120210571\n   Escobillera 13 Col. Paseos de Churubusco CDMX C.P 09030\n"	
-
-		"""pol="Las dos primeras horas $5.00 con boleto sellado\n$10.00 hora o fraccion adicional\nLa empresa no se hace responsable por objetos\npersonales,fallas mecanicas  y/o  electricas,\nsiniestros ocasionados por derrumbes,temblores,\nterremotos o fenomenos naturales,asi como ro-\nbo de accesorios o vandalismo en su vehiculo.\nbo de accesorios o vandalismo en su vehiculo.\nPor robo total de acuerdo a los terminos  del\nseguro contratado.Boleto Perdido.Se entregara\nel  vehiculo  a quien acredite la  propiedad.\nEl seguro contratado no aplica a motocicletas.\nCosto del boleto perdido es de $100.00\nAl recibir este boleto acepta las condiciones\ndel seguro contra robo total. PARKING TIP S.A\nDE  C.V.  -R.F.C PTI120210571. Escobillera 13\nCol.Paseos de Churubusco Iztapalapa CDMX C.P.\n09030 Horario de Lunes-Domingo de 7 a 22 hrs\n"
-"""
-		Generic.text('\n'+pol)
-		Generic.set(align=u'center', font=u'B')
-		Generic.text('Expedidora #'+terminalEnt+'\n')
-		Generic.text('Folio:'+str(noBol)+'   '+fechaIn+' '+horaEnt +'\n')
-		#Generic.set(align=u'center', font=u'B')
-		#Generic.qr("Estacionamientos unicos de Mexico\n"+noBol+"\n"+terminalEnt+"\n"+fechaIn+"\n"+horaEnt,ec=0,size=4)
-		Generic.qr("M,"+noBol+","+terminalEnt+","+fechaIn+","+horaEnt,ec=0,size=5)
 		Generic.cut()
 		print("QR bien impresa")
 		return "ack"
 	except Exception as error:
 		print("ERROR AL IMPRIMIR QR",error)
 		return "No se pudo imprimir"
-
+		
 def footer():
 	try:
 		Generic = instanciarImpresora()
@@ -135,4 +160,4 @@ def footer():
 
 #imprime= commands.getoutput("lp -d SANEI_SK_Series /home/pi/Documents/eum/impresora/pruebas/test.pdf")
 #imprimirHeader()
-#imprimirQR2("28","1","07/09/2017","09:42:00")
+#imprimirQR6()
