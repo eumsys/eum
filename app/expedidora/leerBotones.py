@@ -34,6 +34,7 @@ def configurarPinesGPIO():
 	GPIO.setup(16,GPIO.IN)#APAGAR
 	GPIO.setup(11,GPIO.IN)#AYUDA
 	GPIO.setmode(GPIO.BCM)"""
+	GPIO.setmode(GPIO.BCM)
 	GPIO.setup(9,GPIO.OUT) #LEVANTA
 	GPIO.setup(10,GPIO.IN)# MASA
 	GPIO.setup(22,GPIO.IN)# TICKET
@@ -151,3 +152,5 @@ def leerMasa():
 	pin=GPIO.input(10)
 	print (pin)
 	return pin
+
+configurarPinesGPIO()
