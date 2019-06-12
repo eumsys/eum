@@ -111,7 +111,7 @@ def imprimirQR22(noBol,terminalEnt,fechaIn,horaEnt,plaza,localidad,pol):
 		Generic.text(str(pol))
 		Generic.set(align=u'center',font=u'A',text_type=u'B')
 		Generic.text('Fol:'+str(noBol)+'  '+fechaIn+' '+horaEnt +'  Entrada:'+terminalEnt+"\n")
-		content="M,"+terminalEnt+noBol+","+terminalEnt+","+fechaIn+","+horaEnt
+		content="M,"+noBol+","+terminalEnt+","+fechaIn+","+horaEnt
 		Generic.set(align=u'center',font=u'B')
 		Generic.qr(content,ec=0,size=4)
 		
