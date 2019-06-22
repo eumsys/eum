@@ -32,7 +32,7 @@
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
     <rect>
-     <x>330</x>
+     <x>320</x>
      <y>137</y>
      <width>1331</width>
      <height>761</height>
@@ -70,7 +70,7 @@ background-color:transparent;</string>
     <number>0</number>
    </property>
    <property name="currentIndex">
-    <number>7</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QLabel" name="label_27">
@@ -373,7 +373,7 @@ color: rgb(255, 255, 255);</string>
     <widget class="QPushButton" name="pushButton_28">
      <property name="geometry">
       <rect>
-       <x>789</x>
+       <x>779</x>
        <y>770</y>
        <width>241</width>
        <height>21</height>
@@ -390,7 +390,7 @@ color: rgb(255, 255, 255);</string>
     <widget class="QGroupBox" name="groupBox">
      <property name="geometry">
       <rect>
-       <x>220</x>
+       <x>210</x>
        <y>-30</y>
        <width>861</width>
        <height>781</height>
@@ -406,7 +406,7 @@ border:none;</string>
      <widget class="QLabel" name="label_53">
       <property name="geometry">
        <rect>
-        <x>100</x>
+        <x>90</x>
         <y>120</y>
         <width>621</width>
         <height>91</height>
@@ -429,10 +429,13 @@ color:rgb(255, 255, 255)</string>
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;¡ BIENVENIDO !&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_54">
+     <widget class="QLabel" name="botonTicket">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
-        <x>330</x>
+        <x>320</x>
         <y>560</y>
         <width>201</width>
         <height>181</height>
@@ -451,11 +454,76 @@ color:rgb(255, 255, 255)</string>
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="QPushButton" name="bscan">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>680</x>
+        <y>140</y>
+        <width>71</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>24</pointsize>
+        <weight>75</weight>
+        <italic>false</italic>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:transparent;
+color:rgb(7, 7, 7);
+border-radius:25%</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../../iconos/Salida2.png</normaloff>../../iconos/Salida2.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lscan">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>250</y>
+        <width>301</width>
+        <height>33</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>OpenHandCursor</cursorShape>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::WheelFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:transparent;
+color:rgb(61, 88, 175);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </widget>
     <widget class="QGroupBox" name="gcobrar_2">
      <property name="geometry">
       <rect>
-       <x>150</x>
+       <x>140</x>
        <y>300</y>
        <width>1041</width>
        <height>161</height>
@@ -498,7 +566,7 @@ color:rgb(101, 179, 0)</string>
      <widget class="QWidget" name="layoutWidget_12">
       <property name="geometry">
        <rect>
-        <x>180</x>
+        <x>170</x>
         <y>10</y>
         <width>661</width>
         <height>143</height>
@@ -565,6 +633,7 @@ color:rgb(117, 117, 117)</string>
     <zorder>pushButton_27</zorder>
     <zorder>pushButton_28</zorder>
     <zorder>gcobrar_2</zorder>
+    <zorder>lscan_3</zorder>
    </widget>
    <widget class="QWidget" name="page_11">
     <widget class="QPushButton" name="bentrar">
@@ -3961,7 +4030,7 @@ border-radius:40%</string>
    </property>
    <property name="geometry">
     <rect>
-     <x>1560</x>
+     <x>1550</x>
      <y>890</y>
      <width>71</width>
      <height>61</height>
@@ -3974,6 +4043,9 @@ border-radius:40%</string>
      <italic>false</italic>
      <bold>true</bold>
     </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
    </property>
    <property name="styleSheet">
     <string notr="true">background:transparent;
@@ -4010,6 +4082,9 @@ border-radius:25%</string>
      <italic>false</italic>
      <bold>true</bold>
     </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
    </property>
    <property name="styleSheet">
     <string notr="true">background:transparent;
@@ -4079,6 +4154,9 @@ border-radius:130%</string>
      <italic>false</italic>
      <bold>true</bold>
     </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
    </property>
    <property name="styleSheet">
     <string notr="true">background:transparent;
@@ -4553,6 +4631,9 @@ border-radius:25%</string>
        <bold>true</bold>
       </font>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color:transparent;
 color:rgb(255, 255, 255);
@@ -4581,9 +4662,10 @@ border-radius:130%</string>
     <zorder>label_97</zorder>
     <zorder>label_24</zorder>
     <zorder>bpanelconfb</zorder>
+    <zorder>lscan_3</zorder>
    </widget>
    <zorder>groupBox_45</zorder>
-   <zorder>bpanelconfb</zorder>
+   <zorder>lscan</zorder>
   </widget>
   <widget class="QPushButton" name="bwifi">
    <property name="enabled">
@@ -4591,7 +4673,7 @@ border-radius:130%</string>
    </property>
    <property name="geometry">
     <rect>
-     <x>1550</x>
+     <x>1540</x>
      <y>50</y>
      <width>71</width>
      <height>71</height>
@@ -4605,6 +4687,9 @@ border-radius:130%</string>
      <italic>false</italic>
      <bold>true</bold>
     </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color:transparent;
@@ -4632,6 +4717,8 @@ border-radius:130%</string>
   <zorder>bcan2</zorder>
   <zorder>bapagar</zorder>
   <zorder>bwifi</zorder>
+  <zorder>lscan_3</zorder>
+  <zorder>lscan</zorder>
  </widget>
  <resources/>
  <connections/>

@@ -1,4 +1,5 @@
 import time
+from datetime import datetime, timedelta
 import leerBotones as botones
 import generarFolio as folio
 #import codigoQR as qr
@@ -24,7 +25,8 @@ from PyQt5.QtWidgets import QMainWindow,QApplication, QDialog, QGridLayout, QMes
 
 from Conexiones.Conexiones import Conexiones
 from Pila.Pila import Pila
-
+import requests
+import json
 
 limite_impresiones = 1000
 boleto_previo = True
@@ -61,7 +63,7 @@ ser.stopbits = serial.STOPBITS_ONE
 ser.bytesize = serial.EIGHTBITS
 ser.timeout = .005
 
-
+leido = ""
 conexion_activa=False
 camInicial=''
 USUARIO=''
@@ -136,11 +138,12 @@ class Ui_ventanaAcceso(QDialog):
 		self.bcan2.setShortcut("ESCAPE")
 		self.bcan3.setShortcut("ESCAPE")
 		self.bsalirConfig.setShortcut("ESCAPE")
+		self.bscan.setShortcut("Return")
 		self.bescritorio.clicked.connect(self.modoEscritorio)
 		self.leerBotones()
 		panelConf=0
 		#self.hilos2()
-		
+		self.bscan.clicked.connect(self.scan)
 		
 	################MODS########
 		self.bconfirmarIP.clicked.connect(self.cambiaIp)
@@ -172,6 +175,35 @@ class Ui_ventanaAcceso(QDialog):
 		self.bsi.clicked.connect(self.corte)
 		self.bfindeturno.clicked.connect(self.imprimeCorte)
 		self.logsDeApagado(2)
+		
+	def scan(self):
+		global leido
+		#thread3 = Thread(target=leerCodQR, args = ())
+		text=self.lscan.text()
+		print("leido: ",text)
+		text2char=text[:2]
+		if('CH' == text2char):
+			text=text.replace("'","-")
+			text=text.replace("Ñ",":")
+			#textSplit=text.split(',')
+			#os.system("sudo nice -n -19 python3 archimp.py")
+			#os.system("sudo nice -n -19 python3 archimp.py")
+			try:
+				#print(str(textSplit[3])+" "+str(textSplit[4]),'datetime...')
+				#fecha = datetime.strptime(str(textSplit[3])+" "+str(textSplit[4]), '%d-%m-%Y %H:%M:%S')
+				leido = text
+				self.lscan.setText('')
+			except Exception as e:
+				print(e,'datetime incorrecto')
+				self.lscan.setText('')
+				pass
+			#p=subprocess.Popen(['/home/pi/scanner/dsreader -l 1 -s 20 > /home/pi/Documents/ticket.txt'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
+			
+			#so=os.popen('~/bin/dsreader -l 1 -s 20 > /home/pi/Documents/ticket.txt')
+		else:
+			mensajeBoletoUsado = 1
+			self.lscan.setText('')
+			print('boleto invalido',text,text2char)
 		
 	def nada(self):
 		pass
@@ -724,7 +756,7 @@ class Ui_ventanaAcceso(QDialog):
 		QtCore.QTimer.singleShot(500, self.contadorSegundos)
 			
 	def leerBotones(self):
-		global regreso,boleto_previo, espera, limite_impresiones,teclaF3,ser,panelConf,avanza,errImpresora,segundos,comienzaConteo,sensor
+		global regreso,boleto_previo, espera, limite_impresiones,teclaF3,ser,panelConf,avanza,errImpresora,segundos,comienzaConteo,sensor,leido
 		##HABILITAR DESHAB ANCHO PAPEL
 		
 		if(self.cimpresora2.currentIndex()==1):
@@ -732,6 +764,8 @@ class Ui_ventanaAcceso(QDialog):
 		else:
 			self.cpapel2.setEnabled(True)
 		print("PAPEL:",self.cpapel2.currentIndex())
+		#botonTicket (MASA) DESHABILITADO
+		self.botonTicket.setEnabled(False)
 		re.setReset()
 		self.mostrarFechayHora()
 		if self.pantalla == 0:
@@ -785,10 +819,12 @@ class Ui_ventanaAcceso(QDialog):
 			else:
 				if botones.leerMasa() == 1:
 					if self.f1 == False:
-						print("------Preguntar Botones --------")	
+						print("------ PRESENCIA AUTOMOVIL --------")	
 						
+						#Habilitando icono presencia
 						self.f1 = botones.leerBotonesEntrada()
-						
+						self.botonTicket.setEnabled(True)
+							
 						#self.f1 = teclaF3
 						if(not panelConf):
 							self.cambia(1)
@@ -1288,14 +1324,69 @@ def activarAyuda():
 	
 	
 def pollearConexion():
-	global conexion_activa
+	global conexion_activa,leido
 	try:
 		conexion_activa = conexion.activo()
 		print("conexion:",conexion_activa)
+		if(conexion_activa):
+			#Validando candado
+			if(leido != ""):
+				
+				try:
+					print("leido endpoint:",leido)
+					folio = leido.split(" ")
+					folio = folio[0]
+					print("leido endpoint2:",folio)
+					folio  = folio[3:]
+					print("Folio:",folio)
+					endpoint="https://parkingtip.pythonanywhere.com/api/suscripciones/"+str(4)+"/?clave="+str(folio)
+					r = requests.get(endpoint)
+					data = json.loads(r.text)[0]
+					print("data: ",data)
+					if(r.status_code==200):
+						vigencia=data["activo"]
+						nombre=data["nombre"]
+						print("vigencia:", endpoint, vigencia,nombre)
+						if(vigencia):
+							print("Abriendo a locatario/pensionado",r.status_code)
+							botones.abrirBarrera()
+							leido = ""
+						else:
+							print("Candado expirado")
+							leido = ""
+						leido = ""
+					else: 
+						print("endpoint inalcanzable")
+						#self.cambia(2)
+					
+				except:
+					leido = ""
+					#botones.abrirBarrera()
+					print("error endpoint suscrpicion")
+		else:
+			if(leido != ""):
+				botones.abrirBarrera()
+				print("error endpoint suscrpicion")
+				leido = ""
 	except:
+		leido = ""
 		print("ocurrio un error")
 
 def pollConexion():
+	time.sleep(6)
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	os.system("xdotool key Tab")
+	os.system("xdotool key Tab")
 	while(1):
 		pollearConexion()
 		time.sleep(1)
@@ -1323,3 +1414,4 @@ if __name__ == "__main__":
 	hilos()
 	conexion = Conexiones()
 	cola = Pila()
+	
