@@ -62,12 +62,13 @@ def abrir():
 	
 def leerBobina2Subida():
 	bobina2Subida=GPIO.input(27)	#5
-	print ("		Esperando regreso=",bobina2Subida)
+	#print ("		Esperando regreso=",bobina2Subida)
 	if bobina2Subida == 1:
+		#print ("	Auto sobre sensor 2 =",bobina2Subida)
 		return True
 	else:
+		#print ("	Auto dejo sensor 2 =",bobina2Subida)
 		return False
-	pass
 	
 def botonApagarGPIO():
 	btn=GPIO.input(16)	#5
@@ -78,24 +79,24 @@ def botonApagarGPIO():
 	pass
 
 def abrirBarrera():
-	print ("		Barrera abierta... ")
+	#print ("		Auto sobre sensor 2 ")
 	bobina2Bajada=GPIO.input(27) #5 Leeo para esperar la señal de bajada
 	if bobina2Bajada == 1:
-		print ("	Presencia regreso=",bobina2Bajada)
-		return False
+		print ("	Auto sobre sensor 2 =",bobina2Bajada)
+		#return False
 	else:
-		print ("	Ciclo completado =",bobina2Bajada)
-		return True
+		print ("	Auto dejo sensor 2 =",bobina2Bajada)
+		#return True
 
 def CerrarBarrera():
 	print ("		Esperando a cerrar barrera... ")
 	bobina2Bajada=GPIO.input(27) #5 Leeo para esperar la señal de bajada
 	if bobina2Bajada == 1: #cambiar po ceros
 		print ("	Presencia regreso=",bobina2Bajada)
-		return False
+		#return False
 	else:
 		print ("	Ciclo completado =",bobina2Bajada)
-		return True
+		#return True
 
 #def leerBotonesEntrada():
 #	valorentrada1=GPIO.input(26)

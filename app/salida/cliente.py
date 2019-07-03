@@ -38,6 +38,10 @@ def autorizaSalida(s, operacion, mensaje):
 				##### Aqui va mensaje hacia el cliente indicando que el tiempo de salida se agoto, por lo tanto requiere volver a pagar
 				print("salida no autorizada, boleto obsoleto")
 				respuesta = "boleto obsoleto"
+			elif (datosDecoded == "Boleto no encontrado"):
+				##### Aqui va mensaje hacia el cliente indicando que el tiempo de salida se agoto, por lo tanto requiere volver a pagar
+				print("salida no autorizada, boleto no encontrado")
+				respuesta = "boleto no encontrado"
 			else:
 				print("Pago no realizado, favor de realizar su pago")
 				respuesta = "pago no realizado"

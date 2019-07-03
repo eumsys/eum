@@ -16,11 +16,13 @@ from threading import Thread
 import sys
 from escposprinter import *
 from datetime import datetime, timedelta
+from Conexiones.Conexiones import Conexiones
+from Pila.Pila import Pila
 import requests
 import json
 
-sucursal_id=4
-
+sucursal_id = 4
+conexion_activa = False
 
 GPIO.setmode(GPIO.BCM)
 espera = 0
@@ -39,11 +41,18 @@ pantalla_cont = 0
 iface=0
 activa=True
 camInicial=''
-gerencia=False
+gerencia=False 
+segundos = 0
+contadorMensaje = 0
+mensajePrincipal = ""
+estado = 1
 
 configuracion = []
 
 
+
+leido = ""
+validacion = ""
 USUARIO=''
 host=''
 ip=''
@@ -54,7 +63,8 @@ user="eum"
 pswd="pi"
 tolerancia=0
 fechaIn	=fechaUTC.fechaConFormato()
-horaEnt=fechaUTC.tiempoConFormato()
+horaEnt = fechaUTC.tiempoConFormato()
+leyendaCandado = ""
 
 horaDeApagado=confFH.getHora()
 
@@ -69,6 +79,7 @@ class Ui_ventanaAcceso(QDialog):
 		self.stackedWidget.setCurrentIndex(0)
 		self.configurarPinesGPIO()
 		self.leerBotones()
+		self.mostrarIconoWifi()
 		self.bapagar.clicked.connect(lambda:self.apagarRasp())
 		self.breiniciar.clicked.connect(lambda:self.reiniciarRasp())
 		#self.bcamara.clicked.connect(lambda:self.cam())
@@ -100,8 +111,32 @@ class Ui_ventanaAcceso(QDialog):
 		self.bconfirmarplaza.clicked.connect(self.setConfig)
 		self.panelConfig()
 		self.datosEstacionamiento()
+		self.contadorSegundos()
 		
 		
+		
+	def contadorSegundos(self):
+		global segundos,contadorMensaje,mensajePrincipal
+		if(contadorMensaje==1):
+			segundos=segundos+1
+			if(segundos==3): #3 MINUTOS TOLERANCIA
+				v=0
+				contadorMensajes=0
+				self.avisoInserta.setText(mensajePrincipal)
+
+		QtCore.QTimer.singleShot(1000,self.contadorSegundos)
+		
+		
+	def mostrarIconoWifi(self):
+		global conexion_activa
+		try:
+			if(conexion_activa):
+				self.bwifi.setEnabled(True)
+			else:
+				self.bwifi.setEnabled(False)
+		except:
+			print("ocurrio un error")
+		QtCore.QTimer.singleShot(5000, self.mostrarIconoWifi)
 		
 	
 	def validaLogin(self):
@@ -267,6 +302,7 @@ class Ui_ventanaAcceso(QDialog):
 		
 		
 	def scan(self):
+		global leido
 		#thread3 = Thread(target=leerCodQR, args = ())
 		text=self.lscan.text()
 		text=text.replace("'","-")
@@ -274,15 +310,18 @@ class Ui_ventanaAcceso(QDialog):
 		
 		
 		if("CHT" in text):
+			leido = text
 			self.lscan.setText('')
 			print(text)
-			leerArch = open("datos.txt", "w")
-			leerArch.write(text)
-			leerArch.close()
+			#leerArch = open("datos.txt", "w")
+			#leerArch.write(text)
+			#leerArch.close()
 			
 		else:
 			#os.system("sudo nice -n -19 python3 archimp.py")
-			try:
+			leido = text
+			self.lscan.setText('')
+			"""try:
 				
 				text=text.split(',')
 				leerArch = open("datos.txt", "w")
@@ -294,6 +333,7 @@ class Ui_ventanaAcceso(QDialog):
 
 				print(e,text)
 				pass
+			"""
 
 
 	def configurarPinesGPIO(self):
@@ -311,7 +351,7 @@ class Ui_ventanaAcceso(QDialog):
 		botones.abrir()		
 
 	def leerBotones(self):
-		global espera,pantalla_cont,reproduccion,red,green,blue,rrr,iface,tolerancia,gerencia,sucursal_id
+		global leyendaCandado,espera,pantalla_cont,reproduccion,red,green,blue,rrr,iface,tolerancia,gerencia,sucursal_id, leido, validacion, estado
 		
 		if(red<50):
 			rrr=1
@@ -337,265 +377,178 @@ class Ui_ventanaAcceso(QDialog):
 				iface=0
 				self.apagarRasp()
 			#self.apagarRasp()
-			if pantalla_cont > 0:
+			if pantalla_cont != 0:
 				pantalla_cont = pantalla_cont + 1
 				print(pantalla_cont)
-				if pantalla_cont == 30:
+				if pantalla_cont == 60:
 					self.stackedWidget.setCurrentIndex(0)
 					self.lboleto.setText("---> Inserte su boleto <---")
 					pantalla_cont = 0
 			#if botones.leerMasa() == 1:
-			if 1:
-				if self.error == 0 and botones.leerAyuda() == 1:
-					#Agregar dato desde la BD
-					mensaje_envio = str(idSal) + "," + str(1) + "," + str("iniciado") + ","
-					validacion = cliente.configSocket("log salida", mensaje_envio)
-					self.error = 1
-					mixer.init()
-					mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensajeayuda.mp3')
-					mixer.music.play()
-					#self.stackedWidget.setCurrentIndex(8)
-					print("dentro del error")
-				elif self.error == 1 and botones.leerAyuda() == 0:
-					print("dentro del contador:")
-					print(espera)
-					espera = espera + 1
-					if espera == 25:
-						espera = 0
-						self.error = 0
-						#self.stackedWidget.setCurrentIndex(1)
-				elif self.error == 0 and botones.leerAyuda() == 0:
-					if self.mensaje == 1:
-						archivo = open("datos.txt", "w")
-						archivo.close()
-						self.mensaje = 0
-						#self.stackedWidget.setCurrentIndex(1)
-						mixer.init()
-						mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje1.mp3')
-						mixer.music.play()
-					if os.stat("datos.txt").st_size != 0:
-						archivo = open("datos.txt", "r")
-						contenido = archivo.readlines()
-						banner2 = False
-						#IF para validar que el boleto se pudo leer de manera correcta
-						for linea in contenido:
-							if "M" in str(linea) or (str("CHT") in str(linea)):
-									banner2 = True
-						archivo.close()
-						if banner2 == True:
-							os.system("sudo wmctrl -a 'zbar'")
-							print("ticket detectado")
-							self.f1 = True
-							archivo = open("datos.txt", "r")
-							contenido = archivo.readlines()
-							i = 0
-							banner = False
-							tam = len(contenido)
-							for linea in contenido:
-								if i == 1:
-									idBol = linea
-								if i == 2:
-									idExp = linea
-								if i == 3:
-									fecBol = linea
-								if i == 4:
-									horBol = linea
-								if "M" in str(linea):
-									banner = True
-								if (str("CHT") in str(linea)):
-									gerencia=True
-								if banner == True:
-									i+=1
-							archivo.close()
-							aux = ""
-							i = 0
-							if(gerencia==False):
-								idExp = int(idExp)
-								idBol = int(idBol)
-								for dat in fecBol:
-									if i < 10:
-										aux = aux + dat
-									i += 1
-								fecBol = aux
-								aux = ""
-								i = 0
-								for dat in horBol:
-									if i < 8:
-										aux = aux + dat
-									i += 1
-								horBol = aux
-								i = 0
-								aux = ""
-								for dat in fecBol:
-									if i > 5:
-										aux = aux + dat
-									i += 1
-								aux = aux + "-"
-								i = 0
-								for dat in fecBol:
-									if i > 2 and i < 5:
-										aux = aux + dat
-									i += 1
-								aux = aux + "-"
-								i = 0
-								for dat in fecBol:
-									if i < 2:
-										aux = aux + dat
-									i += 1
-								fecBol = aux
-								print(str(idExp) + " " + str(idBol) + " " + fecBol + " " + horBol)
-								fechaConc = str(fecBol)+ " " + str(horBol)
-								archivo = open("datos.txt", "w")
-								archivo.close()
-								#pass
-						else:
-							self.mensaje = 9
-			elif botones.leerMasa() == 0:
-				self.mensaje = 1
-				self.stackedWidget.setCurrentIndex(0)
-		if self.f1 == True and self.f2 == False:
-				''' Operacion 1.- Autorizacion de salida'''
-				if gerencia==False:
-					mensaje_envio = str(idBol) + "," + str(idExp) + "," + fechaConc + "," + str(1)
-					validacion = cliente.configSocket("autorizacion salida", mensaje_envio)
-					print(validacion)
-					print(validacion,fechaConc)
-					print(validacion,fechaConc)
-					dh=self.restar_hora(horBol.split(':',2),fecBol.split('-'))
+			
+			if "M," in leido:
+				print("ticket leido:",leido)
+				gerencia = False
+				leido = leido.split(",")
+				idBol = leido [1]
+				idExp = leido [2]
+				fecBol = leido [3]
+				horBol = leido [4]
+				fechaAMD=fecBol.split('-',2)
+				fechaAMD=fechaAMD[2]+"-"+fechaAMD[1]+"-"+fechaAMD[0]
+				print("exp:"+str(idExp) + " " + "idBol:"+str(idBol) + " " + "fec:"+fechaAMD + " " + "horaBol:"+horBol)
+				fechaConc = str(fechaAMD)+ " " + str(horBol)
+				leido = ""
+				
+				mensaje_envio = str(idBol) + "," + str(idExp) + "," + fechaConc + "," + str(1)
+				validacion = cliente.configSocket("autorizacion salida", mensaje_envio)
+				print("VALIDACION: ",validacion)
+				print(validacion,fechaConc)
+				print(validacion,fechaConc)
+				dh=self.restar_hora(horBol.split(':',2),fecBol.split('-'))
+				
+				try:
 					
-					try:
-						
-						dias=dh[0]
-						horas=dh[1]
-						minutos=dh[2]
-						#horas=horas+(dias*24)
-						#tiempoEstacionado=horas
-						#print("DHDHDHDHDHDHDHDHDHD",dh)
-						if(dias==0):
-							if(minutos<tolerancia):
-								
-								validacion="finalizado"
-								botones.abrir()
-								print("abrido")
-					except Exception as error:
-						print("Errrr  Toleeee",error)
-						pass
-				nombre=""
-				if gerencia==True:
-					archivo = open("datos.txt", "w")
-					archivo.close()
-					print("Qr Data", linea,"Sid", sucursal_id)
-					folio = str(linea[3:4])
-					endpoint="https://parkingtip.pythonanywhere.com/api/suscripciones/"+str(sucursal_id)+"/?clave="+str(folio)
-					try:
-						r = requests.get(endpoint)
-						data = json.loads(r.text)[0]
-						if(r.status_code==200):
-							vigencia=data["activo"]
-							nombre=data["nombre"]
-							print("dataaaa",data, endpoint, vigencia,nombre)
-							if(vigencia):
-								print("Candado vigente, puede salir")
-								validacion = cliente.configSocket("gerencia", folio)
-								print("Abriendo")
-								validacion="salida excepcion"
-								gerencia=False
-							else:
-								print("Candado expirado")
-								validacion="Candado Expirado"
-						else:
-							print("Cliente no encontrado")
-					except:
-						print("error endpoint suscrpicion")
-						validacion = "Candado Expirado"
-						
-					
+					dias=dh[0]
+					horas=dh[1]
+					minutos=dh[2]
+					#horas=horas+(dias*24)
+					#tiempoEstacionado=horas
+					#print("DHDHDHDHDHDHDHDHDHD",dh)
+					if(dias==0):
+						if(minutos<tolerancia):
+							
+							validacion="finalizado"
+							botones.abrir()
+							print("abrido")
+				except Exception as error:
+					print("Errrr  Toleeee",error)
+					pass
 					
 				
+
+
+
 				
-				
-				
-				
-				
-				
-				
-				#self.lboleto.setText(validacion)
-				if validacion == "finalizado":
-					self.f2 = self.f3 = True
-				elif validacion == "salida excepcion":
-					self.f2 = self.f3 = True
-				elif validacion == "volver a pagar":
-					self.lboleto.setText("---> 	Tiempo de salida excedido <---")
-					mixer.init()
-					mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje4.mp3')
-					mixer.music.play()
-					self.f1 = False
-					#self.stackedWidget.setCurrentIndex(4)
-					pantalla_cont = 1
-				elif validacion == "pago no realizado":
-					self.lboleto.setText("---> Favor de pagar su boleto... <---")
-					mixer.init()
-					mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje2.mp3')
-					mixer.music.play()
-					self.f1 = False
-					#self.stackedWidget.setCurrentIndex(2)
-					pantalla_cont = 1
-				elif validacion == "boleto no encontrado":
-					mixer.init()
-					self.lboleto.setText("---> Favor de pagar su boleto <---")
-					mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje2.mp3')
-					#mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje7.mp3')
-					mixer.music.play()
-					self.f1 = False
-					#self.stackedWidget.setCurrentIndex(7)
-					pantalla_cont = 1
-				elif validacion == "boleto obsoleto":
-					self.lboleto.setText("---> Boleto usado <---")
-					mixer.init()
-					mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje3.mp3')
-					mixer.music.play()
-					self.f1 = False
-					#self.stackedWidget.setCurrentIndex(3)
-					pantalla_cont = 1
-				elif validacion == "sin comunicacion servidor":
-					mixer.init()
-					mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje5.mp3')
-					mixer.music.play()
-					self.f1 = False
-					#self.stackedWidget.setCurrentIndex(5)
-					pantalla_cont = 1
-				elif validacion == "Candado Expirado":
-					self.lboleto.setText("Lo siento, renueva tu candado")
-					self.f1 = False
-					#self.stackedWidget.setCurrentIndex(5)
-					pantalla_cont = 1
+			#self.lboleto.setText(validacion)
+			if validacion == "finalizado":
+				self.f1 = self.f2 = self.f3 = True
+				leyendaCandado = "VUELVA PRONTO"
+			elif validacion == "salida candado":
+				self.f1 = self.f2 = self.f3 = True
+			elif validacion == "volver a pagar":
+				self.lboleto.setText("---> 	Tiempo de salida excedido <---")
+				mixer.init()
+				mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje4.mp3')
+				mixer.music.play()
+				self.f1 = False
+				#self.stackedWidget.setCurrentIndex(4)
+				validacion = ""
+				pantalla_cont = 30
+			elif validacion == "pago no realizado":
+				self.lboleto.setText("---> Favor de pagar su boleto... <---")
+				mixer.init()
+				mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje2.mp3')
+				mixer.music.play()
+				self.f1 = False
+				validacion = ""
+				pantalla_cont = 30
+				#self.stackedWidget.setCurrentIndex(2)
+			elif validacion == "error":
+				"""
+				este bloque representa las acciones frente a una desconexion
+				"""
+				self.f1 = self.f2 = self.f3 = True
+				leyendaCandado = "VUELVA PRONTO s/c"
+				#self.stackedWidget.setCurrentIndex(2)
+				validacion = "finalizado"
+			elif validacion == "boleto no encontrado":
+				mixer.init()
+				self.lboleto.setText("(1)Un momento, ya lo atendemos")
+				mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje2.mp3')
+				#mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje7.mp3')
+				mixer.music.play()
+				self.f1 = False
+				validacion = ""
+				pantalla_cont = 1
+			elif validacion == "boleto obsoleto":
+				self.lboleto.setText("---> Boleto usado <---")
+				mixer.init()
+				mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje3.mp3')
+				mixer.music.play()
+				self.f1 = False
+				#self.stackedWidget.setCurrentIndex(3)
+				validacion = ""
+				pantalla_cont = 30
+			elif validacion == "sin comunicacion servidor":
+				mixer.init()
+				mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje5.mp3')
+				mixer.music.play()
+				self.f1 = False
+				#self.stackedWidget.setCurrentIndex(5)
+				validacion = ""
+				pantalla_cont = 30
+			elif validacion == "Candado Expirado":
+				self.f1 = self.f2 = self.f3 = True
+			
+			
+		
 		if self.f1 == True and self.f2 == True:
 			#self.stackedWidget.setCurrentIndex(6)
-			pantalla_cont = 1
+			pantalla_cont = 30
 			if reproduccion == 0:
 				if(validacion=="finalizado"):
-					self.lboleto.setText("VUELVA PRONTO")
+					time.sleep(0.5)
+					botones.abrir()
+				elif(validacion=="salida candado"):
+					time.sleep(0.5)
+					botones.abrir()
 				else:
-					self.lboleto.setText("Hasta pronto "+nombre)
-				#mixer.init()
-				#mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensajeboleto.mp3')
-				#mixer.music.play()
-				#time.sleep(3.2)
-				#mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje6.mp3')
-				#mixer.music.play()
+					estado = 3
+				self.lboleto.setText(leyendaCandado)
+				
 				reproduccion = 1
-			if self.f3 == True and self.f4 == False and self.f5 == False  and self.f6 == False:
+				
+			print("estado:",estado)
+			if(estado == 1):
+				
+				if(botones.leerBobina2Subida()):
+					print("Auto sobre segundo sensor")
+					estado = 2
+				else :
+					print("Esperando regreso")
+					estado = 1
+					
+			if(estado == 2):
+				if(botones.leerBobina2Subida() == False):
+					print("Esperando que el auto abandone segundo sensor")
+					estado = 3
+				else :
+					print("Auto sobre segundo sensor")
+					estado = 2
+					
+			if(estado == 3):
+				print("Secuencia finalizada")
+				self.f1 = self.f2 = self.f3 = self.f4 = self.f5 = self.f6 = self.f7 = False
+				leido = ""
+				estado = 1
+				validacion = ""
+				reproduccion = 0
+					
+			"""if self.f3 == True:
 				if self.f7 == False:
 					time.sleep(0.5)
 					botones.abrir()
 					self.f7 = True
 				self.f4 = botones.leerBobina2Subida()
 				if self.f4 == True:
-					self.f3 = False
-			if self.f3 == False and self.f4 == True and self.f5 == False and self.f6 == False:
-				self.f5 = botones.abrirBarrera()
-				if self.f5 == True:
-					self.f4 = False
+					print("Auto sobre el sensor")
+					self.f5 = botones.leerBobina2Subida()
+					print("Auto sobre el sensor2, self5",self.f5)
+					if self.f5 == False:		
+						self.f4 = False
+						self.f3 = False
+						print("Reestablezco secuencia")
 			if self.f3 == False and self.f4 == False and self.f5 == True and self.f6 == False:
 				self.f6 = botones.CerrarBarrera()
 				if self.f6 == True:
@@ -604,6 +557,7 @@ class Ui_ventanaAcceso(QDialog):
 				print ("Ya cerre barrera restablesco fs")
 				self.f1 = self.f2 = self.f3 = self.f4 = self.f5 = self.f6 = self.f7 = False
 				reproduccion = 0
+			"""
 		QtCore.QTimer.singleShot(100, self.leerBotones)
 
 	def fechaLabel(self):
@@ -622,7 +576,7 @@ class Ui_ventanaAcceso(QDialog):
 		aux_dif=str(resultado)
 		print("res:",h1,h2,resultado,type(str(resultado)))
 		return str(resultado)"""
-		fechaBoleto = datetime.strptime(str(fechab[0]) + str(fechab[1]) + str(fechab[2]), '%Y%m%d').date()
+		fechaBoleto = datetime.strptime(str(fechab[0]) + str(fechab[1]) + str(fechab[2]), '%d%m%Y').date()
 		horaBoleto = datetime.strptime(str(horab[0]) +':'+str(horab[1]) +':'+ str(horab[2]), '%H:%M:%S').time()
 		fechaActual=datetime.now().date()
 		horaActual=datetime.now().time()
@@ -681,11 +635,11 @@ def obtenerIdSal():
 def hilos():
 	thread = Thread(target = activarFuncion, args=())
 	thread1 = Thread(target = activarCamara, args=())
-	#thread4 = Thread(target=buscaCamara, args=())
+	thread2 = Thread(target = pollConexion, args=())
 
 	try:
 		thread.start()
-		#thread4.start()
+		thread2.start()
 		thread1.start()
 	except Exception:
 		pass
@@ -758,8 +712,80 @@ def activarCamara():
 		mensajeTolerancia=1
 		print("Error al crear el socket: ",e)
 	
+def pollConexion():
+	time.sleep(6)
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	print("TAB TAB......")
+	os.system("xdotool key Tab")
+	os.system("xdotool key Tab")
+	os.system("xdotool key Tab")
+	while(1):
+		pollearConexion()
+		time.sleep(1)
 	
+
+def pollearConexion():
+	global conexion_activa, leido, leyendaCandado, validacion
+	conexion_activa = conexion.activo()
+	print("conexion:",conexion_activa)
+	if(1):
+		#Validando candado
+		if("CHT" in leido):
+			try:
+				print("leido endpoint:",leido)
+				folio = leido.split(" ")
+				folio = folio[0]
+				print("leido endpoint2:",folio)
+				folio  = folio[3:]
+				print("Folio:",folio)
+				endpoint="https://parkingtip.pythonanywhere.com/api/suscripciones/"+str(4)+"/?clave="+str(folio)
+				r = requests.get(endpoint)
+				print("STATUS_CODE: ",r.status_code,r)
+				try:
+					data = json.loads(r.text)[0]
+					print("data: ",data)
+					vigencia=data["activo"]
+					nombre=data["nombre"]
+					leyendaCandado = "Hasta pronto"+nombre
+					print("vigencia:", endpoint, vigencia,nombre)
+					if(vigencia):
+						validacion = "salida candado"
+						print("Abriendo a locatario/pensionado",r.status_code)
+					else:
+						leyendaCandado = "Candado expirado"
+						validacion = "Candado Expirado"
+						print("Candado Expirado")
+				except: 
+					print("endpoint inalcanzable",r.status_code)
+					leyendaCandado = "Endpoint inalcanzable: "+str(r.status_code)
+					validacion = "Candado Expirado"
+					print("Candado Expirado")
+				leido = ""
+			except:
+				leyendaCandado = "... S/C ..."
+				print("Sin conexion al exterior")
+				validacion = "salida candado"
+
+	else:
+		if(leido != ""):
+			#botones.abrirBarrera()
+			validacion = "finalizado"
+			print("Sin conexion al servidor")
+			leido = ""
+
 	
+
+
+
 
 def activarFuncion():
 	import sys
@@ -771,8 +797,9 @@ def activarFuncion():
 if __name__ == "__main__":
 	hilos()
 	obtenerIdSal()
+	conexion = Conexiones()
+	cola = Pila()
 	time.sleep(3)
-	#os.system("sudo wmctrl -r 'Dialog' -e 0,0,430,1900,50")
 
 	
 	
