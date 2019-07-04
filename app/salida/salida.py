@@ -387,7 +387,7 @@ class Ui_ventanaAcceso(QDialog):
 			#if botones.leerMasa() == 1:
 			
 			if "M," in leido:
-				print("ticket leido:",leido)
+				print("ticket leido:",leidod)
 				gerencia = False
 				leido = leido.split(",")
 				idBol = leido [1]
@@ -758,6 +758,13 @@ def pollearConexion():
 					leyendaCandado = "Hasta pronto"+nombre
 					print("vigencia:", endpoint, vigencia,nombre)
 					if(vigencia):
+						try:
+							if(conexion_activa):
+								validacion = cliente.configSocket("gerencia", folio)
+								print("registro gerencia: ",validacion)
+						except:
+							print("error al insertar gerencia: ")
+						
 						validacion = "salida candado"
 						print("Abriendo a locatario/pensionado",r.status_code)
 					else:
