@@ -387,7 +387,7 @@ class Ui_ventanaAcceso(QDialog):
 			#if botones.leerMasa() == 1:
 			
 			if "M," in leido:
-				print("ticket leido:",leidod)
+				print("ticket leido:",leido)
 				gerencia = False
 				leido = leido.split(",")
 				idBol = leido [1]
