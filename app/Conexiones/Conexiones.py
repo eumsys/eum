@@ -18,10 +18,11 @@ print(rutaUsuario)
 
 
 
-raiz =  os.path.join(os.path.dirname(os.path.abspath(__file__)))
+raiz =  os.path.join(os.path.dirname(os.path.abspath(__file__)),"..")
 sys.path.append(raiz)
 
-import cliente as Servidor
+import Conexiones.cliente as Servidor
+
 class Conexiones:
 	"""Clase utilizada para guardar los datos 
 	en caso un intento de conexion fallido
