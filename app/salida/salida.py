@@ -456,7 +456,7 @@ class Ui_ventanaAcceso(QDialog):
 				leido = ""
 				
 				mensaje_envio = str(idBol) + "," + str(idExp) + "," + fechaConc + "," + str(1)
-				validacion = cliente.configSocket("autorizacion salida", mensaje_envio)
+				validacion = Servidor.configSocket("autorizacion salida", mensaje_envio)
 				print("VALIDACION: ",validacion)
 				print(validacion,fechaConc)
 				print(validacion,fechaConc)
@@ -790,8 +790,8 @@ def pollConexion():
 
 def pollearConexion():
 	global conexion_activa, leido, leyendaCandado, validacion, sucursal
-	conexion_activa = conexion.activo()
-	#conexion_activa = conexion.pollConexion(0)
+	#conexion_activa = conexion.activo()
+	conexion_activa = conexion.pollConexion(0)
 	print("conexion:",conexion_activa)
 	if(1):
 		#Validando candado
@@ -818,7 +818,7 @@ def pollearConexion():
 					if(vigencia):
 						try:
 							if(conexion_activa):
-								validacion = cliente.configSocket("gerencia", folio)
+								validacion = Servidor.configSocket("gerencia", folio)
 								print("registro gerencia: ",validacion)
 						except:
 							print("error al insertar gerencia: ")
