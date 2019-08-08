@@ -2,26 +2,52 @@
 import time
 import leerBotones as botones
 import RPi.GPIO as GPIO
-import leerConfiguracionFechaHora as confFH
 import configuracionEXP as archivoConfiguracion
 import fechaUTC
 import os
 import sys
 import psycopg2
 from pygame import mixer
-import cliente as cliente
+#import cliente as cliente
 from PyQt5 import QtCore, QtGui, uic
 from PyQt5.QtWidgets import QMainWindow,QApplication, QDialog, QGridLayout, QMessageBox,QLabel, QPushButton, QLineEdit,QSpinBox, QTableWidget,QTableWidgetItem,QComboBox,QCheckBox
 from threading import Thread
 import sys
 from escposprinter import *
 from datetime import datetime, timedelta
-from Conexiones.Conexiones import Conexiones
+#from Conexiones.Conexiones import Conexiones
 from Pila.Pila import Pila
 import requests
 import json
 
-sucursal_id = 4
+
+
+ruta =  os.path.join(os.path.dirname(os.path.abspath(__file__)))
+ruta = ruta + "/"
+def obtenerUsuario(ruta):
+	lista = ruta.split("/")
+	return "/"+lista[1]+"/"+lista[2]+"/"	
+rutaUsuario = obtenerUsuario(ruta)
+print(rutaUsuario)
+
+
+raiz =  os.path.join(os.path.dirname(os.path.abspath(__file__)),"..")
+sys.path.append(raiz)
+
+import Conexiones.cliente as Servidor
+from Conexiones.Conexiones import Conexiones
+import leerBotones as botones
+
+PATH_ARCHIVO_CONFIGURACION_TERMINAL_SERIAL="/home/pi/Desktop/numeroSerial.txt"
+
+
+
+
+equipo = 0
+sucursal = 0 
+tipo = 0
+tolerancia=0
+
 conexion_activa = False
 
 GPIO.setmode(GPIO.BCM)
@@ -56,17 +82,14 @@ validacion = ""
 USUARIO=''
 host=''
 ip=''
-noEquipo = 0
 plaza = ""
 localidad = ""
 user="eum"
 pswd="pi"
-tolerancia=0
 fechaIn	=fechaUTC.fechaConFormato()
 horaEnt = fechaUTC.tiempoConFormato()
 leyendaCandado = ""
 
-horaDeApagado=confFH.getHora()
 
 class Ui_ventanaAcceso(QDialog):
 
@@ -75,13 +98,15 @@ class Ui_ventanaAcceso(QDialog):
 	def __init__(self):
 		QDialog.__init__(self)
 		iface=1
-		gui = uic.loadUi("/home/pi/Documents/eum/app/salida/ventanas/rb.ui", self)
+		gui = uic.loadUi(ruta+"Interfaces/rb.ui", self)
 		self.stackedWidget.setCurrentIndex(0)
+		self.obtenerConfiguracion()
+		self.logPrender()
+		self.mostrarIconoWifi()
 		self.configurarPinesGPIO()
 		self.leerBotones()
-		self.mostrarIconoWifi()
 		self.bapagar.clicked.connect(lambda:self.apagarRasp())
-		self.breiniciar.clicked.connect(lambda:self.reiniciarRasp())
+		self.breiniciar.clicked.connect(lambda: self.reiniciarRasp())
 		#self.bcamara.clicked.connect(lambda:self.cam())
 		self.balza.clicked.connect(self.alza)
 		self.datosEstacionamiento()
@@ -114,7 +139,37 @@ class Ui_ventanaAcceso(QDialog):
 		self.contadorSegundos()
 		
 		
-		
+	def obtenerConfiguracion(self):
+		global equipo, sucursal, tipo
+		#os.system("cp "+ruta+"/../")
+		try:
+			infile = open(rutaUsuario+"eum.conf", 'r')
+			c=infile.readline()
+			print(rutaUsuario,c)
+			arr=c.split(',')
+			equipo=int(arr[0])
+			sucursal=int(arr[1])
+			tipo=int(arr[2])
+			infile.close()
+			print("Configuracion encontrada: ",equipo,sucursal,tipo)
+		except:
+			print("Configuracion no encontrada ")
+			equipo=1
+			sucursal=1
+			tipo=0
+			infile = open(rutaUsuario+"eum.conf", "w")
+			infile. write(str(equipo)+","+str(sucursal)+","+str(tipo))
+			infile. close()
+
+	def logPrender(self):
+		try:
+			prendido = conexion.logPrendido()
+			print("Se registro log de prendido")
+		except:
+			print("Error al registrar log de prendido")
+			
+			
+			
 	def contadorSegundos(self):
 		global segundos,contadorMensaje,mensajePrincipal
 		if(contadorMensaje==1):
@@ -163,16 +218,16 @@ class Ui_ventanaAcceso(QDialog):
 		os.system("sudo date -s '"+b+"' ")
 		
 	def setConfig(self):
-		global plaza,localidad,noEquipo,host,ip,pol,pol1,pol2,pol3,pol4,pol5,impresora,anchoPapel
+		global plaza,localidad,equipo,host,ip,pol,pol1,pol2,pol3,pol4,pol5,impresora,anchoPapel
 		lenn=0
 		plaza=str(self.lnom.text())
 		localidad=str(self.lloc.text())
-		noEquipo=str(self.leq.text())
+		equipo=str(self.leq.text())
 		
 		
 		print(plaza,localidad)
-		dat=plaza+","+localidad+","+str(noEquipo)
-		infile = open("/home/pi/Documents/eum/app/salida/archivos_config/datos.txt", 'w')
+		dat=plaza+","+localidad+","+str(equipo)
+		infile = open(ruta+"archivos_config/datos.txt", 'w')
 		c=infile.write(dat)
 		
 		self.datosEstacionamiento()
@@ -180,11 +235,11 @@ class Ui_ventanaAcceso(QDialog):
 
 		
 	def datosEstacionamiento(self):
-		global plaza,localidad,noEquipo,host,ip,pol,pol1,pol2,pol3,pol4,pol5,impresora,anchoPapel
+		global plaza,localidad,equipo,host,ip,pol,pol1,pol2,pol3,pol4,pol5,impresora,anchoPapel
 		lenn=0
 		self.lnom.setText(plaza)
 		self.lloc.setText(localidad)
-		self.leq.setText(str(noEquipo))
+		self.leq.setText(str(equipo))
 		self.nomPlaza.setText(plaza)
 		self.nomLoc.setText(localidad)
 		self.lhost.setText(host)
@@ -192,16 +247,16 @@ class Ui_ventanaAcceso(QDialog):
 		
 		
 	def panelConfig(self):
-		global plaza,localidad,noEquipo,host,ip,sucursal_id
-		infile = open('/home/pi/Documents/eum/app/salida/archivos_config/datos.txt','r')
+		global plaza,localidad,equipo,host,ip,sucursal
+		infile = open(ruta+'archivos_config/datos.txt','r')
 		datos= infile.readline()
 		arr=datos.split(',')
 		plaza=arr[0]
 		localidad=arr[1]
-		noEquipo=arr[2]
+		equipo=arr[2]
 		infile.close()
 		
-		infile = open('/home/pi/Documents/eum/app/salida/archivos_config/red.txt','r')
+		infile = open(ruta+'archivos_config/red.txt','r')
 		datos= infile.readline()
 		arr=datos.split(',')
 		host=arr[0]
@@ -210,7 +265,7 @@ class Ui_ventanaAcceso(QDialog):
 		
 		infile = open('/home/pi/Documents/eum/sys/sucursal.txt','r')
 		datos= infile.readline()
-		sucursal_id=datos
+		#sucursal=datos
 		infile.close()
 		
 		
@@ -266,7 +321,7 @@ class Ui_ventanaAcceso(QDialog):
 		host=self.lhost.text()
 		ip=self.lip.text()
 
-		self.sustituye("/home/pi/Documents/eum/app/salida/cliente.py","192.168","host = '"+host+"'")
+		self.sustituye(ruta+"cliente.py","192.168","host = '"+host+"'")
 		self.sustituye("/etc/dhcpcd.conf","ip_address","static ip_address="+ip+"/24")
 		ip=ip.split(".")
 		ip=ip[0]+"."+ip[1]+"."+ip[2]+".1"
@@ -279,7 +334,7 @@ class Ui_ventanaAcceso(QDialog):
 		
 		print(plaza,localidad)
 		dat=host+","+ip
-		infile = open("/home/pi/Documents/eum/app/salida/archivos_config/red.txt", 'w')
+		infile = open(ruta+"archivos_config/red.txt", 'w')
 		c=infile.write(dat)
 		
 		self.datosEstacionamiento()
@@ -351,7 +406,7 @@ class Ui_ventanaAcceso(QDialog):
 		botones.abrir()		
 
 	def leerBotones(self):
-		global leyendaCandado,espera,pantalla_cont,reproduccion,red,green,blue,rrr,iface,tolerancia,gerencia,sucursal_id, leido, validacion, estado
+		global leyendaCandado,espera,pantalla_cont,reproduccion,red,green,blue,rrr,iface,tolerancia,gerencia,sucursal, leido, validacion, estado
 		
 		if(red<50):
 			rrr=1
@@ -439,7 +494,7 @@ class Ui_ventanaAcceso(QDialog):
 			elif validacion == "volver a pagar":
 				self.lboleto.setText("---> 	Tiempo de salida excedido <---")
 				mixer.init()
-				mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje4.mp3')
+				mixer.music.load(ruta+'sonidos/mensaje4.mp3')
 				mixer.music.play()
 				self.f1 = False
 				#self.stackedWidget.setCurrentIndex(4)
@@ -448,7 +503,7 @@ class Ui_ventanaAcceso(QDialog):
 			elif validacion == "pago no realizado":
 				self.lboleto.setText("---> Favor de pagar su boleto... <---")
 				mixer.init()
-				mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje2.mp3')
+				mixer.music.load(ruta+'sonidos/mensaje2.mp3')
 				mixer.music.play()
 				self.f1 = False
 				validacion = ""
@@ -465,8 +520,8 @@ class Ui_ventanaAcceso(QDialog):
 			elif validacion == "boleto no encontrado":
 				mixer.init()
 				self.lboleto.setText("(1)Un momento, ya lo atendemos")
-				mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje2.mp3')
-				#mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje7.mp3')
+				mixer.music.load(ruta+'sonidos/mensaje2.mp3')
+				#mixer.music.load(ruta+'sonidos/mensaje7.mp3')
 				mixer.music.play()
 				self.f1 = False
 				validacion = ""
@@ -474,7 +529,7 @@ class Ui_ventanaAcceso(QDialog):
 			elif validacion == "boleto obsoleto":
 				self.lboleto.setText("---> Boleto usado <---")
 				mixer.init()
-				mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje3.mp3')
+				mixer.music.load(ruta+'sonidos/mensaje3.mp3')
 				mixer.music.play()
 				self.f1 = False
 				#self.stackedWidget.setCurrentIndex(3)
@@ -482,7 +537,7 @@ class Ui_ventanaAcceso(QDialog):
 				pantalla_cont = 30
 			elif validacion == "sin comunicacion servidor":
 				mixer.init()
-				mixer.music.load('/home/pi/Documents/eum/app/salida/sonidos/mensaje5.mp3')
+				mixer.music.load(ruta+'sonidos/mensaje5.mp3')
 				mixer.music.play()
 				self.f1 = False
 				#self.stackedWidget.setCurrentIndex(5)
@@ -734,20 +789,23 @@ def pollConexion():
 	
 
 def pollearConexion():
-	global conexion_activa, leido, leyendaCandado, validacion
+	global conexion_activa, leido, leyendaCandado, validacion, sucursal
 	conexion_activa = conexion.activo()
+	#conexion_activa = conexion.pollConexion(0)
 	print("conexion:",conexion_activa)
 	if(1):
 		#Validando candado
 		if("CHT" in leido):
 			try:
 				print("leido endpoint:",leido)
-				folio = leido.split(" ")
+				folio = leido.replace(" ","")
+				folio = folio.split("P")
 				folio = folio[0]
 				print("leido endpoint2:",folio)
 				folio  = folio[3:]
 				print("Folio:",folio)
-				endpoint="https://parkingtip.pythonanywhere.com/api/suscripciones/"+str(4)+"/?clave="+str(folio)
+				print("Sucursal:",sucursal)
+				endpoint="https://parkingtip.pythonanywhere.com/api/suscripciones/"+str(sucursal)+"/?clave="+str(folio)
 				r = requests.get(endpoint)
 				print("STATUS_CODE: ",r.status_code,r)
 				try:
