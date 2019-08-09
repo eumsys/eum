@@ -406,7 +406,7 @@ class Ui_ventanaAcceso(QDialog):
 		botones.abrir()		
 
 	def leerBotones(self):
-		global leyendaCandado,espera,pantalla_cont,reproduccion,red,green,blue,rrr,iface,tolerancia,gerencia,sucursal, leido, validacion, estado
+		global conexion_activa,leyendaCandado,espera,pantalla_cont,reproduccion,red,green,blue,rrr,iface,tolerancia,gerencia,sucursal, leido, validacion, estado
 		
 		if(red<50):
 			rrr=1
@@ -454,9 +454,11 @@ class Ui_ventanaAcceso(QDialog):
 				print("exp:"+str(idExp) + " " + "idBol:"+str(idBol) + " " + "fec:"+fechaAMD + " " + "horaBol:"+horBol)
 				fechaConc = str(fechaAMD)+ " " + str(horBol)
 				leido = ""
-				
 				mensaje_envio = str(idBol) + "," + str(idExp) + "," + fechaConc + "," + str(1)
-				validacion = Servidor.configSocket("autorizacion salida", mensaje_envio)
+				if conexion_activa:
+					validacion = Servidor.configSocket("autorizacion salida", mensaje_envio)
+				else:
+					validacion = "error"
 				print("VALIDACION: ",validacion)
 				print(validacion,fechaConc)
 				print(validacion,fechaConc)
