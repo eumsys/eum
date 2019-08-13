@@ -23,7 +23,7 @@ import time
 
 def configurarPinesGPIO():
 	GPIO.setmode(GPIO.BCM)
-	GPIO.setup(16,GPIO.IN)
+	GPIO.setup(18,GPIO.IN)
 	GPIO.setup(5,GPIO.IN)
 	GPIO.setup(26,GPIO.IN)
 	GPIO.setup(20,GPIO.OUT)
@@ -61,7 +61,7 @@ def leerBotonesEntrada():
 	pass
 	
 def botonCancelar():
-	bnCancelar=GPIO.input(16)
+	bnCancelar=GPIO.input(18)
 	return bnCancelar
 	pass
 	
