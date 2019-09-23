@@ -1,9 +1,9 @@
 [Desktop Entry]
 Type=Application
 Encoding=UTF-8
-Name=Config
+Name=Inicio
 Comment=Configuracion del equipo
-Exec=python3 /home/pi/Documents/eum/app/Config/main.py
-Icon=/home/cajero/Documentos/eum/app/iconos/iconosCajero/Dinero.png
+Exec=python3 /home/pi/Documents/eum/app/cajeroW/cajeroRed.py
+Icon=/home/pi/Documents/eum/app/iconos/logo2.png
 Terminal=true
 StartupNotify=false

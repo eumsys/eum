@@ -8,21 +8,10 @@ from urllib.request import urlopen
 
 
 
-ruta =  os.path.join(os.path.dirname(os.path.abspath(__file__)))
-ruta = ruta + "/"
-def obtenerUsuario(ruta):
-	lista = ruta.split("/")
-	return "/"+lista[1]+"/"+lista[2]+"/"	
-rutaUsuario = obtenerUsuario(ruta)
-print(rutaUsuario)
-
-
-
-raiz =  os.path.join(os.path.dirname(os.path.abspath(__file__)),"..")
+raiz =  os.path.join(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(raiz)
 
-import Conexiones.cliente as Servidor
-
+import cliente as Servidor
 class Conexiones:
 	"""Clase utilizada para guardar los datos 
 	en caso un intento de conexion fallido
@@ -31,7 +20,7 @@ class Conexiones:
 	def __init__(self):
 		self.items = []
 		cola = Pila()
-		self.obtenerConfiguracion()
+
 
 	def activo(self):
 		conexionServ=1
@@ -45,24 +34,26 @@ class Conexiones:
 			return conexionServ
 	
 	def obtenerConfiguracion(self):
-		#global equipo, sucursal, tipo
+		global equipo, sucursal, tipo
 		try:
-			infile = open(rutaUsuario+"eum.conf", 'r')
+			infile = open(usuario+"eum.conf", 'r')
 			c=infile.readline()
 			arr=c.split(',')
-			self.__equipo=int(arr[0])
-			self.__sucursal=int(arr[1])
-			self.__tipo=int(arr[2])
+			equipo=int(arr[0])
+			sucursal=int(arr[1])
+			tipo=int(arr[2])
 			infile.close()
 		except:
-			self.__equipo=1
-			self.__sucursal=1
-			self.__tipo=0
-			infile = open(rutaUsuario+"eum.conf", "w")
-			infile. write(str(self.__equipo)+","+str(self.__sucursal)+","+str(self.__tipo))
+			equipo=1
+			sucursal=1
+			tipo=0
+			infile = open(usuario+"eum.conf", "w")
+			infile. write(str(equipo)+","+str(sucursal)+","+str(tipo))
 			infile. close()
-		print("equipo,sucursal,tipo ",self.__equipo,self.__sucursal,self.__tipo)
-
+		print("equipo,sucursal,tipo ",equipo,sucursal,tipo)
+		self.equipo.setValue(equipo)
+		self.sucursal.setValue(sucursal)
+		self.tipo.setCurrentIndex(tipo)
 		
 		
 	
@@ -77,9 +68,8 @@ class Conexiones:
 
 
 	def pollConexion(self,tipo):
-		timestamp=datetime.now()	
-		print("equipo.......",self.__equipo,self.__tipo)	
-		mensaje=str("2")+","+str(tipo)+","+str(self.__tipo)+str(self.__equipo)
+		timestamp=datetime.now()		
+		mensaje=str("2")+","+str(tipo)+","+str(21)
 		resultado=Servidor.configSocket("log", mensaje)
 		if(resultado==-1):
 			return False
@@ -87,7 +77,7 @@ class Conexiones:
 			return True
 
 	def logPrendido(self):
-		mensaje=str("2")+","+str("1")+","+str(self.__tipo)+str(self.__equipo)
+		mensaje=str("2")+","+str("1")+","+str(21)
 		resultado=Servidor.configSocket("log", mensaje)
 		if(resultado==-1):
 			return False

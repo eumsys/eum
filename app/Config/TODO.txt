@@ -1,0 +1,3 @@
+Dar permisos bashrc en ejecucion
+
+error al no encontrar eum.conf

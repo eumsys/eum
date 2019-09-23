@@ -173,11 +173,6 @@ color:rgb(59, 59, 59)</string>
      </property>
      <item>
       <property name="text">
-       <string>. . . </string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
        <string>Boletera</string>
       </property>
      </item>
