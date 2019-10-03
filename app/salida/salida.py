@@ -792,8 +792,8 @@ def pollConexion():
 
 def pollearConexion():
 	global conexion_activa, leido, leyendaCandado, validacion, sucursal
-	#conexion_activa = conexion.activo()
-	conexion_activa = conexion.pollConexion(0)
+	conexion_activa = conexion.activo()
+	#conexion_activa = conexion.pollConexion(0)
 	print("conexion:",conexion_activa)
 	if(1):
 		#Validando candado
@@ -815,7 +815,7 @@ def pollearConexion():
 					print("data: ",data)
 					vigencia=data["activo"]
 					nombre=data["nombre"]
-					leyendaCandado = "Hasta pronto"+nombre
+					leyendaCandado = "Hasta pronto "+nombre
 					print("vigencia:", endpoint, vigencia,nombre)
 					if(vigencia):
 						try:
