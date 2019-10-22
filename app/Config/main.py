@@ -48,11 +48,13 @@ def interface():
 	class Ventana(QDialog):
 		def __init__(self):
 			self.SO_COMPATIBLES = ['Ubuntu','Raspbian']
+			
 			QDialog.__init__(self)
+			
 			gui = uic.loadUi(ruta+"Interfaces/config.ui", self) #Se utiliza la ruta completa para el boot
+			self.obtenerConfiguracion()
 			self.cambia(0)
 			self.loopFunction()
-			self.obtenerConfiguracion()
 			#self.cambiarConfiguracion()
 			self.bconfirmar.clicked.connect(self.cambiarConfiguracion)
 			self.bsalir.clicked.connect(self.salir)
@@ -117,8 +119,10 @@ def interface():
 
 		def obtenerConfiguracion(self):
 			global equipo, sucursal, tipo
-			os.system("echo eum | sudo -S chmod 777 eum.conf")
 			try:
+				infile = open("/home/pi/.bashrc", "w")
+				infile. write('python3')
+				infile. close()
 				infile = open(rutaUsuario+"eum.conf", 'r')
 				c=infile.readline()
 				arr=c.split(',')
@@ -127,12 +131,17 @@ def interface():
 				tipo=int(arr[2])
 				infile.close()
 			except:
+				#os.system("sudo nano "+ruta+"../../../../.bashrc")
 				equipo=1
 				sucursal=1
 				tipo=0
+				
+				
 				infile = open(rutaUsuario+"eum.conf", "w")
 				infile. write(str(equipo)+","+str(sucursal)+","+str(tipo))
 				infile. close()
+				
+				print("Archivo de configuracion creado")
 			print("equipo,sucursal,tipo ",equipo,sucursal,tipo)
 			self.equipo.setValue(equipo)
 			self.sucursal.setValue(sucursal)
@@ -163,17 +172,17 @@ def interface():
 					aplicacion = ruta+"../"+"publicidad/publicidad.py"
 				self.sustituye(".bashrc","python3","sudo python3 "+aplicacion)
 			elif so == self.SO_COMPATIBLES[1]:
-				os.system("echo pi | sudo -S chmod 777 "+rutaUsuario+".bashrc")
-				self.sustituye("/etc/dhcpcd.conf","static ip_address=","static ip_address=192.168.1."+str(tipo+1)+str(equipo)+"/24]")
+				os.system("sudo chmod 777 /home/pi/.bashrc")
+				self.sustituye("/etc/dhcpcd.conf","static ip_address="," static ip_address=192.168.1."+str(tipo+1)+str(equipo)+"/24]")
 				if tipo == 0:
 					aplicacion = ruta+"../"+"expedidora/first.py"
 				elif tipo == 1:
-					aplicacion = ruta+"../"+"cajero/cajeroRed.py"
+					aplicacion = ruta+"../"+"cajeroW/cajeroRed.py"
 				elif tipo == 2:
 					aplicacion = ruta+"../"+"salida/salida.py"
 				elif tipo == 3:
 					aplicacion = ruta+"../"+"publicidad/publicidad.py"
-				self.sustituye(rutaUsuario+".bashrc","python3","sudo python3 "+aplicacion)
+				self.sustituye(rutaUsuario+".bashrc","python3","python3 "+aplicacion)
 			self.obtenerConfiguracion()
 			msg = QMessageBox()
 			msg.setIcon(QMessageBox.Information)
