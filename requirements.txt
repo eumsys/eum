@@ -3,5 +3,9 @@
 # scipy>=0.9
 
 #Ejecutar script de creacion y configuracion de la BD
- psql -U postgres -f build.sql 
+# psql -U postgres -f build.sql 
+
+Pillow==6.2.1
+reportLab==3.5.18
+fpdf==1.7.2 
 

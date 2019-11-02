@@ -1,0 +1,22 @@
+Estacionamientos Unicos de Mexico
+
+27-10-2019 Ciudad de Mexico
+
+Comprobante de pago de estacionamiento
+
+Hora de entrada: 12:00:00
+
+Hora de Pago: 12:30:00
+
+Estancia Total: 30:00 minutos
+
+Importe: $4.16 Mxn
+
+Iva: $5.00
+
+Folio: #1232123
+
+Factura enviando este folio al correo:  
+asistencia@parkingtip.com.mx
+
+
