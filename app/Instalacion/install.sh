@@ -30,29 +30,31 @@ progress_bar()
 
 # Verificando archivo .bashrc
 if [ -e ~/.bashrc ];
+    echo "Configurando arranque..."
+    progress_bar 20
     then
-        echo "Sí, sí existe."
-        chmod 777 ~/.bashrc
+        sudo chmod 777 ~/.bashrc
     else
-        echo "No,no existe"
         touch ~/.bashrc 
+        sudo chmod 777 ~/.bashrc
 fi
 
 
 # Verificando archivo de configuracion
-if [ -e ~/opt/app/config/config.ini ];
+echo "Cargando configuracion por Default...(1)"
+progress_bar 20
+
+
+if [ -e /opt/app/config/config.ini ];
     then
-        echo "Sí, sí existe ~/Documents/eum/app/Config/config.ini"
+        echo "config.ini ya existe"
         #cat ~/Documents/eum/app/Config/config.ini
         #chmod 777 ~/.bashrc
     else
         if [ -d /opt/app/config/ ];
             then
-                echo "Cargando configuracion por Default...(1)"
-                progress_bar 20
                 mv ~/Documents/eum/app/Config/config.ini /opt/app/config/
             else
-                echo "Cargando configuracion por Default...(2)"
                 sudo mkdir -p /opt/app/config
                 sudo mv ~/Documents/eum/app/Config/config.ini /opt/app/config/
         fi
@@ -67,7 +69,6 @@ git status
 
 # Instalando requeriments.txt
 #cd ~/Documents/eum/
-pwd
 if [ -e ~/Documents/eum/requirements.txt ];
     then
         echo "Instalando librerias..."
@@ -81,5 +82,5 @@ fi
 # Actualizando BD
 echo "Actualizando BD..."
 progress_bar 20
-cd ~/Documents/eum/app/cajeroW//BD
+cd ~/Documents/eum/app/cajeroW/BD
 sudo PGPASSWORD='Postgres3UMsd6' -u postgres psql -f build.sql
