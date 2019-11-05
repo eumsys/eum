@@ -1332,7 +1332,7 @@ def interface():
 			#conexion_activa = conexion.obtenerLogs()
 			#print("conexion:",conexion_activa)
 			try:
-				conexion_activa = conexion.pollConexion(2)
+				conexion_activa = conexion.activo()
 				#conexion_activa = conexion.obtenerLogs()
 				print("conexion:",conexion_activa)
 			except:
