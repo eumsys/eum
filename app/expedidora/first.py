@@ -488,8 +488,8 @@ class Ui_ventanaAcceso(QDialog):
 		
 		
 		if(impresora==0):
-			#self.sustituye("/home/pi/.config/lxsession/LXDE-pi/autostart","@usr/bin/python3","@usr/bin/python3 /home/pi/Documents/eum/app/expedidora/firstMMM.py")
-			self.sustituye("/home/pi/.bashrc","python3","sudo python3 /home/pi/Documents/eum/app/expedidora/firstMMM.py")
+			#self.sustituye("/home/pi/.config/lxsession/LXDE-pi/autostart","@usr/bin/python3","@usr/bin/python3 /home/pi/Documents/eum/app/expedidora/first.py")
+			self.sustituye("/home/pi/.bashrc","python3","sudo python3 /home/pi/Documents/eum/app/expedidora/first.py")
 			if(anchoPapel==1):
 				lista=pol.split("\n")
 				pol=""
@@ -520,7 +520,7 @@ class Ui_ventanaAcceso(QDialog):
 					pol=pol+linea
 				print("POOOOL",pol)
 		else:
-			self.sustituye("/home/pi/.bashrc","python3","sudo python3 /home/pi/Documents/eum/app/expedidoraEpson/firstMMM.py")
+			self.sustituye("/home/pi/.bashrc","python3","sudo python3 /home/pi/Documents/eum/app/expedidoraEpson/first.py")
 					
 		print(plaza,localidad)
 		dat=plaza+","+localidad+","+str(terminalEnt)+","+str(impresora)+","+str(anchoPapel)
