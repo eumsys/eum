@@ -15,6 +15,16 @@ from datetime import datetime, date, timedelta
 import time
 
 
+ruta =  os.path.join(os.path.dirname(os.path.abspath(__file__)))
+ruta = ruta + "/"
+def obtenerUsuario(ruta):
+	lista = ruta.split("/")
+	return "/"+lista[1]+"/"+lista[2]+"/"	
+rutaUsuario = obtenerUsuario(ruta)
+print(rutaUsuario)
+
+
+
 #fecha_hoy = '2017-11-26'
 fecha_hoy = str(date.today())
 
@@ -63,7 +73,7 @@ class PDF():
 
     def generarPdf(self):
         #self.pdf.output('reportes/'+self.nombre+'_'+self.fecha2[:10]+'.pdf','F')
-        self.pdf.output('reportes/'+self.nombre+''+self.fecha1[10:].replace(':','.')+'_'+self.fecha2[:10]+'.pdf','F')
+        self.pdf.output(ruta+'reportes/'+self.nombre+''+self.fecha1[10:].replace(':','.')+'_'+self.fecha2[:10]+'.pdf','F')
 
     def establecerRangoFechas(self,fecha1,fecha2):
         self.fecha1 = fecha1
