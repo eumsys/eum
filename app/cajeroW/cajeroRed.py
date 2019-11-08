@@ -3132,7 +3132,10 @@ def count(ser, estadoConexion):
 		"""
 		Se obtiene los datos de la operacion para su registro
 		"""
-		datosOperacion=str(fo) + "," + str(pe) + "," + fechaAMD +" "+h
+		print(fechaAMD,type(fechaAMD))
+		#fechaAMD = time.strftime("%Y-%m-%d %H:%M:%S")
+		print(fechaAMD,type(fechaAMD))
+		datosOperacion=str(fo) + "," + str(pe) + "," + fechaAMD+" "+str(h)
 		datosOperacionBD=str(fo) + "," + str(pe) + "," + "'"+str(fechaAMD)+" "+str(h)
 		descripcionMonedas = obtenerDescripcion(monedasPago)
 		descripcionBilletes = obtenerDescripcion(billetesPago)
@@ -3234,9 +3237,11 @@ def registrarPagoActual(cp, NoCajero, aux_cambio, aux_tarifa, costillo, datosOpe
 			#s.send("1;1;20.00;2:5,1:10;0:0;2,5".encode('utf-8'))
 	else:
 		respuestaServidor = 0
-		
 	try:
 		#REGISTRA PAGO EN BD INTERNA
+		fechaAMD = time.strftime("%Y-%m-%d %H:%M:%S")
+		print(fechaAMD,type(fechaAMD))
+		datosOperacionBD=str(fo) + "," + str(pe) + "," + "'"+str(fechaAMD)
 		consu="insert into \"PAGOS\"(\"idBoleto\",expedidora,\"fechaExpedicion\",codigo,registrado,monto,cambio,monedas,billetes, cambio_entregado, tipo) values("+datosOperacionBD+"'"+","+str(CODIGO_ERROR)+","+str(respuestaServidor)+","+str(aux_tarifa)+","+str(aux_cambio)+",'"+str(descripcionMonedas)+"','"+str(descripcionBilletes)+"','"+str(descripcionMonedasCambio)+"',"+str(0)+")"
 		cur.execute(consu)
 		conn.commit()
