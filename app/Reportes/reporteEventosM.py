@@ -71,9 +71,9 @@ class PDF():
         self.pdf.cell(30,10,nombre)
         self.pdf.ln()
 
-    def generarPdf(self):
+    def generarPdf(self,idCajero):
         #self.pdf.output('reportes/'+self.nombre+'_'+self.fecha2[:10]+'.pdf','F')
-        self.pdf.output(ruta+'reportes/'+self.nombre+''+self.fecha1[10:].replace(':','.')+'_'+self.fecha2[:10]+'.pdf','F')
+        self.pdf.output(ruta+'reportes/C'+str(idCajero)+self.nombre+''+self.fecha1[10:].replace(':','.')+'_'+self.fecha2[:10]+'.pdf','F')
 
     def establecerRangoFechas(self,fecha1,fecha2):
         self.fecha1 = fecha1
@@ -366,7 +366,7 @@ def incidencias(pdf):
 
 
 
-    pdf.generarPdf()
+    pdf.generarPdf(obtenerIdCajero())
 
 def consultaBD(tipoQuery,query):
     if tipoQuery == 1:
@@ -383,6 +383,20 @@ def consultaBD(tipoQuery,query):
         for reg in cursor:
             importe += str(reg[1])+"x"+str(reg[0])+" "
         return importe
+
+def obtenerIdCajero():
+    NoCajero = 1
+    try:
+        infile = open(rutaUsuario+"eum.conf", 'r')
+        NoCajero=infile.readline()
+        NoCajero=NoCajero.split(",")
+        NoCajero=NoCajero[0]
+        print("Cajero ",NoCajero)
+        infile.close()
+    except:
+        print("No se pudo obtener el idCajero: id=1")
+        NoCajero = 1
+    return NoCajero
 
 def resumenBoletaje(pdf):
     """pdf1=FPDF()
@@ -424,7 +438,7 @@ def resumenBoletaje(pdf):
     noRegistrados = consultaBD(3,queryNoRegistrados)
     
     tablaCorteCajero.dibujarTabla()
-    pdf.generarPdf()
+    pdf.generarPdf(obtenerIdCajero())
 
 
 def cortePorCajero(pdf,tablaCorteCajero,numero):
