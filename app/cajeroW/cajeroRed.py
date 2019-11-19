@@ -381,8 +381,9 @@ def interface():
 				#os.system("sudo nice -n -19 python3 archimp.py")
 				
 				try:
-					print(str(text[3])+" "+str(text[4]),'datetime...')
-					fecha = datetime.strptime(str(text[3])+" "+str(text[4]), '%d-%m-%Y %H:%M:%S')
+					if codigo == 'M':
+						print(str(text[3])+" "+str(text[4]),'datetime...')
+						fecha = datetime.strptime(str(text[3])+" "+str(text[4]), '%d-%m-%Y %H:%M:%S')
 					leerArch = open("/home/pi/Documents/ticket.txt", "w")
 					leerArch.write(str(text[0])+"\n"+str(text[1])+"\n"+str(text[2])+"\n"+str(text[3])+"\n"+str(text[4])[:8])
 					leerArch.close()
