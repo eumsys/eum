@@ -14,6 +14,7 @@ cursor = connection.cursor()
 from datetime import datetime, date, timedelta
 import time
 
+
 ruta =  os.path.join(os.path.dirname(os.path.abspath(__file__)))
 ruta = ruta + "/"
 def obtenerUsuario(ruta):
@@ -21,6 +22,7 @@ def obtenerUsuario(ruta):
 	return "/"+lista[1]+"/"+lista[2]+"/"	
 rutaUsuario = obtenerUsuario(ruta)
 print(rutaUsuario)
+
 
 
 #fecha_hoy = '2017-11-26'
@@ -72,7 +74,6 @@ class PDF():
     def generarPdf(self,idCajero):
         #self.pdf.output('reportes/'+self.nombre+'_'+self.fecha2[:10]+'.pdf','F')
         self.pdf.output(ruta+'reportes/C'+str(idCajero)+self.nombre+''+self.fecha1[10:].replace(':','.')+'_'+self.fecha2[:10]+'.pdf','F')
-
 
     def establecerRangoFechas(self,fecha1,fecha2):
         self.fecha1 = fecha1
@@ -397,7 +398,6 @@ def obtenerIdCajero():
         NoCajero = 1
     return NoCajero
 
-
 def resumenBoletaje(pdf):
     """pdf1=FPDF()
     pdf1.add_page()
@@ -546,7 +546,7 @@ def main (argv):
     #if(tipo == 'm'):
         #pdfIncidenciasM = PDF('Incidencias Matutinon\n',"2017-11-26 07:00:00","2017-11-26 07:01:00",'')
     pdfResumenBoletaje = PDF('Resumen Boletaje Matutino',datetime_matutino_hoy_inicio,datetime_matutino_hoy_fin,'')
-    pdfIncidencias = PDF('Incidencias',datetime_vespertino_hoy_inicio,datetime_vespertino_hoy_fin,'')
+    pdfIncidencias = PDF('Incidencias',datetime_nocturno_ayer_inicio,datetime_matutino_hoy_inicio,'')
     incidencias(pdfIncidencias)
     #resumenBoletaje(pdfResumenBoletaje)
     '''    

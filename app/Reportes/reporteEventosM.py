@@ -481,9 +481,9 @@ def main (argv):
     horario_inicio = ""
     horario_fin = ""
 
-    horario_matutino = "00:00:00"
-    horario_vespertino = "15:00:00"
-    horario_nocturno = "23:59:59"
+    horario_matutino = "06:30:00"
+    horario_vespertino = "14:30:00"
+    horario_nocturno = "22:30:00"
 
     #fecha_hoy = str(date.today())
     fecha_ayer = str(datetime.strptime(fecha_hoy,"%Y-%m-%d").date() - timedelta(days=1))
