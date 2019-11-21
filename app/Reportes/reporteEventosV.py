@@ -71,7 +71,10 @@ class PDF():
 
     def generarPdf(self,idCajero):
         #self.pdf.output('reportes/'+self.nombre+'_'+self.fecha2[:10]+'.pdf','F')
-        self.pdf.output(ruta+'reportes/C'+str(idCajero)+self.nombre+''+self.fecha1[10:].replace(':','.')+'_'+self.fecha2[:10]+'.pdf','F')
+        nombre_archivo = "C"+str(idCajero)+"_"+self.fecha1[10:].replace(':','.').replace(' ','')+'_'+self.fecha2[:10]+'.pdf'
+        print("generando pdf: ",nombre_archivo)
+        self.pdf.output(ruta+'reportes/'+nombre_archivo,'F')
+        os.system("./"+ruta.replace(rutaUsuario,"")+"reportes.sh "+nombre_archivo)
 
 
     def establecerRangoFechas(self,fecha1,fecha2):
