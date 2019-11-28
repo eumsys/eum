@@ -1349,7 +1349,7 @@ def pollearConexion():
 						print("vigencia:", endpoint, vigencia,nombre)
 						if(vigencia):
 							print("Abriendo a locatario/pensionado",r.status_code)
-							botones.abrirBarrera()
+							botones.abrir()
 							leido = ""
 						else:
 							print("Candado expirado")
@@ -1365,7 +1365,7 @@ def pollearConexion():
 					print("error endpoint suscrpicion")
 		else:
 			if(leido != ""):
-				botones.abrirBarrera()
+				botones.abrir()
 				print("error endpoint suscrpicion")
 				leido = ""
 	except:
