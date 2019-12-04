@@ -549,7 +549,7 @@ def main (argv):
     #if(tipo == 'm'):
         #pdfIncidenciasM = PDF('Incidencias Matutinon\n',"2017-11-26 07:00:00","2017-11-26 07:01:00",'')
     pdfResumenBoletaje = PDF('Resumen Boletaje Matutino',datetime_matutino_hoy_inicio,datetime_matutino_hoy_fin,'')
-    pdfIncidencias = PDF('Incidencias',datetime_nocturno_ayer_inicio,datetime_matutino_hoy_inicio,'')
+    pdfIncidencias = PDF('Incidencias',datetime_matutino_ayer_inicio,datetime_matutino_hoy_inicio,'')
     incidencias(pdfIncidencias)
     #resumenBoletaje(pdfResumenBoletaje)
     '''    
