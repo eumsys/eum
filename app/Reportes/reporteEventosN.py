@@ -71,9 +71,9 @@ class PDF():
         self.pdf.cell(30,10,nombre)
         self.pdf.ln()
 
-    def generarPdf(self,idCajero):
+    def generarPdf(self,idCajero,idSucursal):
         #self.pdf.output('reportes/'+self.nombre+'_'+self.fecha2[:10]+'.pdf','F')
-        nombre_archivo = "C"+str(idCajero)+"_"+self.fecha1[10:].replace(':','.').replace(' ','')+'_'+self.fecha2[:10]+'.pdf'
+        nombre_archivo = "S"+str(idSucursal)+"_"+"C"+str(idCajero)+"_"+self.fecha1[10:].replace(':','.').replace(' ','')+'_'+self.fecha2[:10]+'.pdf'
         print("generando pdf: ",nombre_archivo)
         self.pdf.output(ruta+'reportes/'+nombre_archivo,'F')
         os.system("./"+ruta.replace(rutaUsuario,"")+"reportes.sh "+nombre_archivo)
@@ -369,7 +369,7 @@ def incidencias(pdf):
 
 
 
-    pdf.generarPdf(obtenerIdCajero())
+    pdf.generarPdf(obtenerIdCajero(),obtenerIdSucursal())
 
 def consultaBD(tipoQuery,query):
     if tipoQuery == 1:
@@ -400,6 +400,21 @@ def obtenerIdCajero():
         print("No se pudo obtener el idCajero: id=1")
         NoCajero = 1
     return NoCajero
+
+def obtenerIdSucursal():
+    idSucursal = 1
+    try:
+        infile = open(rutaUsuario+"eum.conf", 'r')
+        idSucursal=infile.readline()
+        idSucursal=idSucursal.split(",")
+        idSucursal=idSucursal[1]
+        print("Sucursal ",idSucursal)
+        infile.close()
+    except:
+        print("No se pudo obtener el idSucursal; id=1")
+        idSucursal = 1
+    return idSucursal
+
 
 def resumenBoletaje(pdf):
     """pdf1=FPDF()
@@ -441,7 +456,7 @@ def resumenBoletaje(pdf):
     noRegistrados = consultaBD(3,queryNoRegistrados)
     
     tablaCorteCajero.dibujarTabla()
-    pdf.generarPdf(obtenerIdCajero())
+    pdf.generarPdf(obtenerIdCajero(),obtenerIdSucursal())
 
 
 def cortePorCajero(pdf,tablaCorteCajero,numero):
