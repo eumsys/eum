@@ -2,9 +2,10 @@
  
 # Argument 1: file name (example: music.mp3)
  
-APIKEY="o.UhzqdgL1bswz77nXOk5SGuSqFojZISDt"
+#APIKEY="o.UhzqdgL1bswz77nXOk5SGuSqFojZISDt"
 #APIKEY="o.RNbyIs5Twa0gmXB4fasUNLYsqW1WIVcZ"
- 
+APIKEY="o.n5kMUyS6ewQUU3IOx0DTb3WV2sJFxki5"
+
 FILENAME=$(basename ${1})
 FILEDIR=$(dirname ${1})
 CUDIR=$(pwd)
