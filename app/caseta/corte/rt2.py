@@ -22,7 +22,7 @@ import requests
 import json
 import os,sys
 
-sucursal="7"
+sucursal="11"
 fechaHoy=time.strftime("%Y-%m-%d")
 horaHoy=time.strftime("%H:%M:%S")
 PATH_NOMBRE_PLAZA=str(archivoConfiguracion.getName()).replace('\n','')
@@ -33,7 +33,7 @@ conn = psycopg2.connect(database='caseta',user='postgres',password='Postgres3UMd
 cur = conn.cursor()
 
 
-tipos=[0,0,0,0,0,0,0,0]
+tipos=[0,0,0,0,0,0,0,0,0]
 #Generic = printer.Usb(0x0519,0x0001)
 #Generic = printer.Usb(0x04b8,0x0202)
 
@@ -214,7 +214,7 @@ def checale(fecha1,fecha2,turno,folio):
 			
 		#Generic.text('Pagos '+str(reg[0])+' --> '+str(rega[1])+'\n')
 		print("TIPOSSSSSSSSSSSSSSSSS1",tipos)
-		print("TIPOSSSSSSSSSSSSSSSSS2",rega[0],rega[1])
+		print("TIPOSSSSSSSSSSSSSSSSS2",rega[0],rega[1], int(rega[0])-1,(rega[1]))
 		
 		tipos[int(rega[0])-1]=(rega[1])
 		print("TIPOSSSSSSSSSSSSSSSSS3",tipos)
@@ -271,9 +271,9 @@ def checale(fecha1,fecha2,turno,folio):
 			payload = {
 			"turno": turno,
 			"boletaje": "0",
-			"recuperados": str(tipos[5]),
-			"sellados": "0",
-			"noSellados": str(sinSello),
+			"recuperados": str(int(tipos[5])+int(tipos[8])+int(tipos[1])),
+			"sellados": str(tipos[5]),
+			"noSellados": str(tipos[8]),
 			"incompletos": str(tipos[6]),
 			"propina": str(tipos[4]),
 			"sinpropina": str(tipos[7]),
