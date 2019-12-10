@@ -49,7 +49,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
 ;border-radius:10%;</string>
    </property>
    <property name="currentIndex">
-    <number>23</number>
+    <number>21</number>
    </property>
    <widget class="QWidget" name="page_5">
     <widget class="QPushButton" name="bperdido">
@@ -13612,7 +13612,7 @@ border-radius:40%;</string>
       </property>
       <property name="font">
        <font>
-        <family>Ubuntu</family>
+        <family>Roboto Condensed</family>
         <pointsize>18</pointsize>
         <weight>50</weight>
         <italic>false</italic>
@@ -13719,7 +13719,7 @@ border-radius:30%;</string>
       </property>
       <property name="font">
        <font>
-        <family>Ubuntu</family>
+        <family>Roboto Condensed</family>
         <pointsize>18</pointsize>
         <weight>50</weight>
         <italic>false</italic>
@@ -13746,7 +13746,7 @@ color:white
       </property>
       <property name="font">
        <font>
-        <family>Ubuntu</family>
+        <family>Roboto Condensed</family>
         <pointsize>18</pointsize>
         <weight>50</weight>
         <italic>false</italic>
@@ -15264,136 +15264,205 @@ border-radius:40%;</string>
     </widget>
    </widget>
    <widget class="QWidget" name="page_17">
-    <widget class="QPushButton" name="bnotodobien">
+    <widget class="QGroupBox" name="groupBox_5">
      <property name="geometry">
       <rect>
-       <x>880</x>
-       <y>860</y>
-       <width>271</width>
-       <height>61</height>
+       <x>360</x>
+       <y>90</y>
+       <width>1081</width>
+       <height>971</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <family>Ubuntu Mono</family>
-       <pointsize>16</pointsize>
-       <weight>75</weight>
-       <italic>false</italic>
-       <bold>true</bold>
-       <underline>false</underline>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Ayuda</string>
-     </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
-     <property name="whatsThis">
-      <string extracomment="help"/>
-     </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgb(240, 240, 240);
+      <string notr="true">background-color:transparent;
+color:rgb(255, 255, 255);
+border-radius:40%</string>
+     </property>
+     <property name="title">
+      <string/>
+     </property>
+     <widget class="QPushButton" name="bdatosnoenviados">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>390</x>
+        <y>850</y>
+        <width>331</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Sans</family>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+        <underline>false</underline>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>Ayuda</string>
+      </property>
+      <property name="toolTipDuration">
+       <number>3</number>
+      </property>
+      <property name="whatsThis">
+       <string extracomment="help"/>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(/home/pi/Documents/eum/app/iconos/Pago Cancelado.png); 
+</string>
+      </property>
+      <property name="text">
+       <string>Datos no enviados</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../iconos/iconosCajero/Pago Cancelado.png</normaloff>../iconos/iconosCajero/Pago Cancelado.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="breintentar">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>750</y>
+        <width>271</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Sans</family>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+        <underline>false</underline>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>Ayuda</string>
+      </property>
+      <property name="toolTipDuration">
+       <number>3</number>
+      </property>
+      <property name="whatsThis">
+       <string extracomment="help"/>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:rgb(240, 240, 240);
 color:rgb(93, 93, 93);
 border-radius:10%</string>
-     </property>
-     <property name="text">
-      <string>Volver</string>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>../iconos/cancel.png</normaloff>../iconos/cancel.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>40</width>
-       <height>40</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btodobien">
-     <property name="geometry">
-      <rect>
-       <x>600</x>
-       <y>860</y>
-       <width>251</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Ubuntu Mono</family>
-       <pointsize>16</pointsize>
-       <weight>75</weight>
-       <italic>false</italic>
-       <bold>true</bold>
-       <underline>false</underline>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Ayuda</string>
-     </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
-     <property name="whatsThis">
-      <string extracomment="help"/>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color:rgb(240, 240, 240);
+      </property>
+      <property name="text">
+       <string>Reintentar</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../iconos/i2.png</normaloff>../iconos/i2.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btodobien">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>750</y>
+        <width>251</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Sans</family>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+        <underline>false</underline>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>Ayuda</string>
+      </property>
+      <property name="toolTipDuration">
+       <number>3</number>
+      </property>
+      <property name="whatsThis">
+       <string extracomment="help"/>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:rgb(240, 240, 240);
 color:rgb(93, 93, 93);
 border-radius:10%</string>
-     </property>
-     <property name="text">
-      <string>Datos Enviados</string>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>../iconos/tick.png</normaloff>../iconos/tick.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>40</width>
-       <height>40</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="lll">
-     <property name="geometry">
-      <rect>
-       <x>550</x>
-       <y>230</y>
-       <width>641</width>
-       <height>601</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="font">
-      <font>
-       <family>Ubuntu Mono</family>
-       <pointsize>16</pointsize>
-       <weight>75</weight>
-       <italic>false</italic>
-       <bold>true</bold>
-       <underline>false</underline>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Ayuda</string>
-     </property>
-     <property name="toolTipDuration">
-      <number>3</number>
-     </property>
-     <property name="whatsThis">
-      <string extracomment="help"/>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color:rgb(240, 240, 240);
+      </property>
+      <property name="text">
+       <string>Finalizado</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../iconos/iconosCajero/Pago Exitoso.png</normaloff>../iconos/iconosCajero/Pago Exitoso.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="lll">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>120</y>
+        <width>641</width>
+        <height>601</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <family>Ubuntu Mono</family>
+        <pointsize>16</pointsize>
+        <weight>75</weight>
+        <italic>false</italic>
+        <bold>true</bold>
+        <underline>false</underline>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>Ayuda</string>
+      </property>
+      <property name="toolTipDuration">
+       <number>3</number>
+      </property>
+      <property name="whatsThis">
+       <string extracomment="help"/>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:rgb(240, 240, 240);
 color:rgb(93, 93, 93);
 border-radius:10%;
 background-image: url(/home/pi/Documents/eum/app/iconos/outputQR2.png); 
@@ -15401,17 +15470,69 @@ background-atachment:fixed;
 background-repeat:no-repeat;
 background-position:center;
 </string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>50</width>
-       <height>50</height>
-      </size>
-     </property>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="bdatosenviados">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>870</y>
+        <width>331</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Sans</family>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+        <underline>false</underline>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>Ayuda</string>
+      </property>
+      <property name="toolTipDuration">
+       <number>3</number>
+      </property>
+      <property name="whatsThis">
+       <string extracomment="help"/>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(/home/pi/Documents/eum/app/iconos/Pago Cancelado.png); 
+</string>
+      </property>
+      <property name="text">
+       <string>Datos enviados</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../iconos/iconosCajero/Pago Exitoso.png</normaloff>../iconos/iconosCajero/Pago Exitoso.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+     </widget>
     </widget>
+    <zorder>groupBox_5</zorder>
+    <zorder>lll</zorder>
    </widget>
    <widget class="QWidget" name="page_39">
     <widget class="QLabel" name="valvol_4">
@@ -17794,9 +17915,9 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
     <property name="geometry">
      <rect>
       <x>-50</x>
-      <y>160</y>
+      <y>140</y>
       <width>491</width>
-      <height>1041</height>
+      <height>1061</height>
      </rect>
     </property>
     <property name="font">
@@ -17873,27 +17994,6 @@ color:rgb(101, 179, 0)</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="nomPlaza_3">
-        <property name="font">
-         <font>
-          <family>Roboto</family>
-          <pointsize>14</pointsize>
-          <weight>50</weight>
-          <italic>true</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color:transparent;
-color:rgb(101, 179, 0);
-color:rgb(255, 255, 255)</string>
-        </property>
-        <property name="text">
-         <string>Salude Amablemente</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="2">
        <spacer name="horizontalSpacer_58">
         <property name="font">
@@ -17934,6 +18034,27 @@ color:rgb(255, 255, 255)</string>
         </property>
        </spacer>
       </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="nomPlaza_3">
+        <property name="font">
+         <font>
+          <family>Sans</family>
+          <pointsize>12</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color:transparent;
+color:rgb(101, 179, 0);
+color:rgb(255, 255, 255)</string>
+        </property>
+        <property name="text">
+         <string>Salude Amablemente</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
     <widget class="QWidget" name="layoutWidget_13">
@@ -17941,7 +18062,7 @@ color:rgb(255, 255, 255)</string>
       <rect>
        <x>110</x>
        <y>90</y>
-       <width>341</width>
+       <width>364</width>
        <height>31</height>
       </rect>
      </property>
@@ -17971,10 +18092,10 @@ color:rgb(255, 255, 255)</string>
        <widget class="QLabel" name="nomPlaza_6">
         <property name="font">
          <font>
-          <family>Roboto</family>
-          <pointsize>14</pointsize>
+          <family>Sans</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
-          <italic>true</italic>
+          <italic>false</italic>
           <bold>false</bold>
          </font>
         </property>
@@ -18030,194 +18151,6 @@ color:rgb(255, 255, 255)</string>
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="layoutWidget_14">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>260</y>
-       <width>341</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Verdana</family>
-       <weight>50</weight>
-       <bold>false</bold>
-      </font>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_33">
-      <item row="0" column="3">
-       <widget class="QLabel" name="label_51">
-        <property name="font">
-         <font>
-          <family>Verdana</family>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="nomPlaza_7">
-        <property name="font">
-         <font>
-          <family>Roboto</family>
-          <pointsize>14</pointsize>
-          <weight>50</weight>
-          <italic>true</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color:transparent;
-color:rgb(101, 179, 0);
-color:rgb(255, 255, 255)</string>
-        </property>
-        <property name="text">
-         <string>mientras escannea el ticket</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <spacer name="horizontalSpacer_64">
-        <property name="font">
-         <font>
-          <family>Verdana</family>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="0" column="0">
-       <spacer name="horizontalSpacer_65">
-        <property name="font">
-         <font>
-          <family>Verdana</family>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="layoutWidget_15">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>230</y>
-       <width>341</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Verdana</family>
-       <weight>50</weight>
-       <bold>false</bold>
-      </font>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_31">
-      <item row="0" column="3">
-       <widget class="QLabel" name="label_49">
-        <property name="font">
-         <font>
-          <family>Verdana</family>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="nomPlaza_8">
-        <property name="font">
-         <font>
-          <family>Roboto</family>
-          <pointsize>14</pointsize>
-          <weight>50</weight>
-          <italic>true</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color:transparent;
-color:rgb(101, 179, 0);
-color:rgb(255, 255, 255)</string>
-        </property>
-        <property name="text">
-         <string>Promueva nuestros beneficios</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <spacer name="horizontalSpacer_60">
-        <property name="font">
-         <font>
-          <family>Verdana</family>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="0" column="0">
-       <spacer name="horizontalSpacer_61">
-        <property name="font">
-         <font>
-          <family>Verdana</family>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </widget>
     <widget class="QWidget" name="layoutWidget_18">
      <property name="geometry">
       <rect>
@@ -18253,10 +18186,10 @@ color:rgb(255, 255, 255)</string>
        <widget class="QLabel" name="nomPlaza_11">
         <property name="font">
          <font>
-          <family>Roboto</family>
-          <pointsize>14</pointsize>
+          <family>Sans</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
-          <italic>true</italic>
+          <italic>false</italic>
           <bold>false</bold>
          </font>
         </property>
@@ -18266,7 +18199,7 @@ color:rgb(101, 179, 0);
 color:rgb(255, 255, 255)</string>
         </property>
         <property name="text">
-         <string>y reciba el pago</string>
+         <string>y registre el pago</string>
         </property>
        </widget>
       </item>
@@ -18323,7 +18256,8 @@ color:rgb(255, 255, 255)</string>
      </property>
      <property name="font">
       <font>
-       <family>Verdana</family>
+       <family>Sans</family>
+       <pointsize>12</pointsize>
        <weight>50</weight>
        <bold>false</bold>
       </font>
@@ -18347,10 +18281,10 @@ color:rgb(255, 255, 255)</string>
        <widget class="QLabel" name="nomPlaza_12">
         <property name="font">
          <font>
-          <family>Roboto</family>
-          <pointsize>14</pointsize>
+          <family>Sans</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
-          <italic>true</italic>
+          <italic>false</italic>
           <bold>false</bold>
          </font>
         </property>
@@ -18409,10 +18343,10 @@ color:rgb(255, 255, 255)</string>
     <widget class="QLabel" name="label_106">
      <property name="geometry">
       <rect>
-       <x>130</x>
-       <y>-140</y>
-       <width>271</width>
-       <height>341</height>
+       <x>240</x>
+       <y>-10</y>
+       <width>71</width>
+       <height>71</height>
       </rect>
      </property>
      <property name="font">
@@ -18443,7 +18377,7 @@ color:white</string>
       <enum>Qt::PlainText</enum>
      </property>
      <property name="pixmap">
-      <pixmap>../iconos/tickIcon.png</pixmap>
+      <pixmap>../iconos/iconosCajero/1Saludo_B.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -18455,10 +18389,10 @@ color:white</string>
     <widget class="QLabel" name="label_107">
      <property name="geometry">
       <rect>
-       <x>80</x>
-       <y>30</y>
-       <width>391</width>
-       <height>341</height>
+       <x>240</x>
+       <y>170</y>
+       <width>71</width>
+       <height>71</height>
       </rect>
      </property>
      <property name="font">
@@ -18489,7 +18423,7 @@ color:white</string>
       <enum>Qt::PlainText</enum>
      </property>
      <property name="pixmap">
-      <pixmap>../iconos/monIcon.png</pixmap>
+      <pixmap>../iconos/iconosCajero/2Beneficios_B.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -18501,10 +18435,10 @@ color:white</string>
     <widget class="QLabel" name="label_108">
      <property name="geometry">
       <rect>
-       <x>80</x>
-       <y>220</y>
-       <width>391</width>
-       <height>341</height>
+       <x>240</x>
+       <y>340</y>
+       <width>71</width>
+       <height>81</height>
       </rect>
      </property>
      <property name="font">
@@ -18535,7 +18469,7 @@ color:white</string>
       <enum>Qt::PlainText</enum>
      </property>
      <property name="pixmap">
-      <pixmap>../iconos/monIcon.png</pixmap>
+      <pixmap>../iconos/iconosCajero/3Cobro_B.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -18579,10 +18513,10 @@ color:white</string>
        <widget class="QLabel" name="nomPlaza_10">
         <property name="font">
          <font>
-          <family>Roboto</family>
-          <pointsize>14</pointsize>
+          <family>Sans</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
-          <italic>true</italic>
+          <italic>false</italic>
           <bold>false</bold>
          </font>
         </property>
@@ -18592,7 +18526,7 @@ color:rgb(101, 179, 0);
 color:rgb(255, 255, 255)</string>
         </property>
         <property name="text">
-         <string>agradezca el pago</string>
+         <string>entregue el cambio</string>
         </property>
        </widget>
       </item>
@@ -18641,10 +18575,10 @@ color:rgb(255, 255, 255)</string>
     <widget class="QLabel" name="label_109">
      <property name="geometry">
       <rect>
-       <x>130</x>
-       <y>400</y>
-       <width>271</width>
-       <height>341</height>
+       <x>240</x>
+       <y>710</y>
+       <width>81</width>
+       <height>91</height>
       </rect>
      </property>
      <property name="font">
@@ -18675,7 +18609,7 @@ color:white</string>
       <enum>Qt::PlainText</enum>
      </property>
      <property name="pixmap">
-      <pixmap>../iconos/tickIcon.png</pixmap>
+      <pixmap>../iconos/iconosCajero/5Agradecer_B.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -18719,10 +18653,10 @@ color:white</string>
        <widget class="QLabel" name="nomPlaza_14">
         <property name="font">
          <font>
-          <family>Roboto</family>
-          <pointsize>14</pointsize>
+          <family>Sans</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
-          <italic>true</italic>
+          <italic>false</italic>
           <bold>false</bold>
          </font>
         </property>
@@ -18732,7 +18666,7 @@ color:rgb(101, 179, 0);
 color:rgb(255, 255, 255)</string>
         </property>
         <property name="text">
-         <string>Despida al cliente y </string>
+         <string>Levante pluma y/o</string>
         </property>
        </widget>
       </item>
@@ -18813,10 +18747,10 @@ color:rgb(255, 255, 255)</string>
        <widget class="QLabel" name="nomPlaza_17">
         <property name="font">
          <font>
-          <family>Roboto</family>
-          <pointsize>14</pointsize>
+          <family>Sans</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
-          <italic>true</italic>
+          <italic>false</italic>
           <bold>false</bold>
          </font>
         </property>
@@ -18826,7 +18760,7 @@ color:rgb(101, 179, 0);
 color:rgb(255, 255, 255)</string>
         </property>
         <property name="text">
-         <string>Agradezca el pago</string>
+         <string>agradezca el pago</string>
         </property>
        </widget>
       </item>
@@ -18907,10 +18841,10 @@ color:rgb(255, 255, 255)</string>
        <widget class="QLabel" name="nomPlaza_18">
         <property name="font">
          <font>
-          <family>Roboto</family>
-          <pointsize>14</pointsize>
+          <family>Sans</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
-          <italic>true</italic>
+          <italic>false</italic>
           <bold>false</bold>
          </font>
         </property>
@@ -18966,13 +18900,201 @@ color:rgb(255, 255, 255)</string>
       </item>
      </layout>
     </widget>
+    <widget class="QWidget" name="layoutWidget_22">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>240</y>
+       <width>341</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Verdana</family>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_38">
+      <item row="0" column="3">
+       <widget class="QLabel" name="label_63">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="nomPlaza_21">
+        <property name="font">
+         <font>
+          <family>Sans</family>
+          <pointsize>12</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color:transparent;
+color:rgb(101, 179, 0);
+color:rgb(255, 255, 255)</string>
+        </property>
+        <property name="text">
+         <string>Promueva nuestros beneficios</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <spacer name="horizontalSpacer_74">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="0">
+       <spacer name="horizontalSpacer_75">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_23">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>270</y>
+       <width>341</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Verdana</family>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_44">
+      <item row="0" column="3">
+       <widget class="QLabel" name="label_64">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="nomPlaza_22">
+        <property name="font">
+         <font>
+          <family>Sans</family>
+          <pointsize>12</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color:transparent;
+color:rgb(101, 179, 0);
+color:rgb(255, 255, 255)</string>
+        </property>
+        <property name="text">
+         <string>mientras registra el ticket</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <spacer name="horizontalSpacer_86">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="0">
+       <spacer name="horizontalSpacer_87">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
     <widget class="QLabel" name="label_110">
      <property name="geometry">
       <rect>
-       <x>130</x>
-       <y>590</y>
-       <width>271</width>
-       <height>341</height>
+       <x>250</x>
+       <y>520</y>
+       <width>71</width>
+       <height>71</height>
       </rect>
      </property>
      <property name="font">
@@ -19003,7 +19125,7 @@ color:white</string>
       <enum>Qt::PlainText</enum>
      </property>
      <property name="pixmap">
-      <pixmap>../iconos/tickIcon.png</pixmap>
+      <pixmap>../iconos/iconosCajero/4Cambio_B.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -19012,7 +19134,6 @@ color:white</string>
       <bool>false</bool>
      </property>
     </widget>
-    <zorder>label_110</zorder>
     <zorder>label_109</zorder>
     <zorder>label_108</zorder>
     <zorder>label_107</zorder>
@@ -19020,14 +19141,15 @@ color:white</string>
     <zorder>label_99</zorder>
     <zorder>layoutWidget_12</zorder>
     <zorder>layoutWidget_13</zorder>
-    <zorder>layoutWidget_14</zorder>
-    <zorder>layoutWidget_15</zorder>
     <zorder>layoutWidget_18</zorder>
     <zorder>layoutWidget_19</zorder>
     <zorder>layoutWidget_16</zorder>
     <zorder>layoutWidget_17</zorder>
     <zorder>layoutWidget_20</zorder>
     <zorder>layoutWidget_21</zorder>
+    <zorder>layoutWidget_22</zorder>
+    <zorder>layoutWidget_23</zorder>
+    <zorder>label_110</zorder>
    </widget>
    <widget class="QPushButton" name="bpanelconf_2">
     <property name="geometry">

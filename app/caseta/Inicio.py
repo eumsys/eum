@@ -23,6 +23,8 @@ import psycopg2, psycopg2.extras
 import leerBotones as botones
 import RPi.GPIO as GPIO
 
+from Corte.Corte import Corte
+
 PATH_ARCHIVO_CONFIGURACION_TERMINAL_SERIAL="/home/pi/Desktop/numeroSerial.txt"
 
 
@@ -176,7 +178,7 @@ def interface():
 			self.bsalirntarifas.clicked.connect(lambda:self.cambia(0))
 			self.bconfirmartarifa.clicked.connect(self.tarifaConfirmada)
 			self.btodobien.clicked.connect(self.todobien)
-			self.bnotodobien.clicked.connect(lambda:self.cambia(17))
+			self.breintentar.clicked.connect(lambda:self.cambia(17))
 			self.bquitar.clicked.connect(self.elimina2)
 			self.bhabilitar.clicked.connect(self.habilitaTarifa)
 			#self.bconfirmavol.clicked.connect(self.volConfirmado)
@@ -271,7 +273,7 @@ def interface():
 			#self.bcamara.clicked.connect(self.camara)
 			self.bcamara.clicked.connect(self.scan)
 			self.bcamara.setShortcut("Return")
-			self.bnotodobien.clicked.connect(lambda:self.cambia(17))
+			self.breintentar.clicked.connect(lambda:self.cambia(17))
 			#self.bmanual.clicked.connect(self.manual)
 			self.bconfirmaPropina.clicked.connect(lambda:self.verificarPropina(5))
 			self.bcortecaja.clicked.connect(self.imprimeCorteCaja)
@@ -300,6 +302,7 @@ def interface():
 			self.bcortesia3.clicked.connect(lambda:self.abrirBarrera(2))
 			self.bcancelarPago3.clicked.connect(self.cancelandoPago)
 
+			
 	################MODS########
 			self.bapagar.clicked.connect(lambda:self.apagarRasp())
 			self.breiniciar.clicked.connect(lambda:self.reiniciarRasp())
@@ -535,7 +538,40 @@ def interface():
 		def imprimeCorteCaja(self):
 			global val
 			valor = 1
-			os.system("sudo python3 /home/pi/Documents/eum/app/caseta/corte/rt2.py")
+			
+			
+			
+			fecha=datetime.now().date()
+			fec=str(fecha.year)+"/"+str(fecha.month)+"/"+str(fecha.day)
+			
+			
+			horaEnt=time.strftime("%H:%M:%S")
+			infile = open("/home/pi/Documents/eum/app/caseta/archivos_config/fechaDeCorte.txt", 'r')
+			c=infile.readline()
+			infile.close()
+			c=c.split(',')
+			
+			fecha2=fec+" "+str(horaEnt)
+			fecha1=c[0]
+			turno=c[1]
+			folio=c[2]
+			print(fecha1,fecha2)
+			
+			
+			
+			corte =  Corte()
+			datos = corte.obtenerCorte(fecha1,fecha2,str(folio))
+			result = corte.enviarDatosApi(datos[0],datos[1],datos[2],turno)
+			if result:
+				self.breintentar.setEnabled(False)
+				self.bdatosnoenviados.setVisible(False)
+				self.bdatosenviados.setVisible(True)
+			else:
+				self.breintentar.setEnabled(True)
+				self.bdatosnoenviados.setVisible(True)
+				self.bdatosenviados.setVisible(False)
+			
+			#os.system("sudo python3 /home/pi/Documents/eum/app/caseta/corte/rt2.py")
 			self.lll.setStyleSheet("background-image: url(/home/pi/Documents/eum/app/iconos/outputQR2.png); background-attachment: fixed;background-repeat:no-repeat;background-position:center;")
 			self.cambia(21)
 
