@@ -785,7 +785,7 @@ def interface():
 					print(consu)
 					cur.execute(consu)
 					conn.commit()
-					#self.abrela()
+					self.abrela()
 			if(tipo==3):
 				consu="insert into \"BOLETO\" (folio,tipo,costo,tarifa,cajero,estado,pago,expedidora,\"fechaExpedicion\",expedido) values("+str(fo)+","+str(tipo)+",100,"+str(tarifaSeleccionada)+","+str(NoCajero)+",2,1,'"+str(pe)+"','"+fec+" "+horaHoy+"','"+fecBoleto+"')"
 				#consu="insert into \"BOLETO\"(tipo,costo,tarifa,cajero,estado,pago,expedidora,\"fechaExpedicion\") values("+str(tipo)+",100,"+str(tarifaSeleccionada)+","+str(NoCajero)+",2,1,'"+str(pe)+"','"+fe+" "+horaHoy+"')"
@@ -815,7 +815,7 @@ def interface():
 					print(consu)
 					cur.execute(consu)
 					conn.commit()
-					#self.abrela()
+					self.abrela()
 				
 					
 			if(tipo==6):
@@ -840,7 +840,7 @@ def interface():
 					print(consu)
 					cur.execute(consu)
 					conn.commit()
-					#self.abrela()
+					self.abrela()
 					
 			
 					
@@ -854,7 +854,7 @@ def interface():
 					print(consu)
 					cur.execute(consu)
 					conn.commit()
-					#self.abrela()
+					self.abrela()
 					
 			#self.valvol.text()=="$"
 			
@@ -880,7 +880,7 @@ def interface():
 					print(consu)
 					cur.execute(consu)
 					conn.commit()
-					#self.abrela()
+					self.abrela()
 					
 					
 			contador = 0
