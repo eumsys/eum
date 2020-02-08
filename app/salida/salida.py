@@ -137,6 +137,7 @@ class Ui_ventanaAcceso(QDialog):
 		self.panelConfig()
 		self.datosEstacionamiento()
 		self.contadorSegundos()
+		self.lboleto.setText("---> Muestre su boleto <---")
 		
 		
 	def obtenerConfiguracion(self):
