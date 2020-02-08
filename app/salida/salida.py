@@ -516,12 +516,12 @@ class Ui_ventanaAcceso(QDialog):
 				este bloque representa las acciones frente a una desconexion
 				"""
 				self.f1 = self.f2 = self.f3 = True
-				leyendaCandado = "VUELVA PRONTO s/c"
+				leyendaCandado = "Disculpe la molestia, ya lo atendemos s/c"
 				#self.stackedWidget.setCurrentIndex(2)
-				validacion = "finalizado"
+				validacion = ""
 			elif validacion == "boleto no encontrado":
 				mixer.init()
-				self.lboleto.setText("(1)Un momento, ya lo atendemos")
+				self.lboleto.setText("Favor de pagar su boleto")
 				mixer.music.load(ruta+'sonidos/mensaje2.mp3')
 				#mixer.music.load(ruta+'sonidos/mensaje7.mp3')
 				mixer.music.play()
