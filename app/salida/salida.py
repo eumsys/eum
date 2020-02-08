@@ -437,7 +437,7 @@ class Ui_ventanaAcceso(QDialog):
 				print(pantalla_cont)
 				if pantalla_cont == 60:
 					self.stackedWidget.setCurrentIndex(0)
-					self.lboleto.setText("---> Inserte su boleto <---")
+					self.lboleto.setText("---> Muestre su boleto <---")
 					pantalla_cont = 0
 			#if botones.leerMasa() == 1:
 			
