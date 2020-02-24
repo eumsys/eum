@@ -564,26 +564,8 @@ def main (argv):
     #if(tipo == 'm'):
         #pdfIncidenciasM = PDF('Incidencias Matutinon\n',"2017-11-26 07:00:00","2017-11-26 07:01:00",'')
     pdfResumenBoletaje = PDF('Resumen Boletaje Matutino',datetime_matutino_hoy_inicio,datetime_matutino_hoy_fin,'')
-
-
-
-    infile = open(ruta+"fechaDeCorte.txt", 'r')
-    fecha_tmp=infile.readline()
-    infile.close()
-    
-    #fecha_actual = str(datetime.strptime(fecha_hoy.date(),"%Y-%m-%d") )
-    hora_actual = time.strftime("%H:%M:%S")
-    fecha_hora_actual = fecha_hoy + " " + hora_actual
-    pdfIncidencias = PDF('Incidencias',fecha_tmp,fecha_hora_actual,'')
+    pdfIncidencias = PDF('Incidencias',datetime_matutino_ayer_inicio,datetime_matutino_hoy_inicio,'')
     incidencias(pdfIncidencias)
-
-    print("fechas:: ",fecha_tmp,fecha_hoy,fecha_hora_actual)
-    infile = open(ruta+"fechaDeCorte.txt", 'w')
-    infile.write(str(fecha_hora_actual))
-    infile.close()
-
-
-
     #resumenBoletaje(pdfResumenBoletaje)
     '''    
     elif(tipo == 'v'):
