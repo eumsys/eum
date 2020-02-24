@@ -350,9 +350,9 @@ def interface():
 			
 		def enviarReporte(self):
 			print("Enviando reportes")
-			self.secuenciaCobro(1)
+			self.cambia(0)
 			os.system(ruta+"../Reportes/run.sh")
-			
+
 		def testTicket(self):
 			#thread3 = Thread(target=leerCodQR, args = ())
 			self.lscan.setText("M,60,1,21'06'2019,10Ñ30Ñ12.")
