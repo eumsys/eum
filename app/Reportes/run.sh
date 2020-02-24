@@ -31,5 +31,5 @@ progress_bar()
 
 #cd ~/Documentos/eumArd/app/Reportes/reportes
 
-python3 ~/Documents/eum/app/Reportes/reporteEventosN.py
-scp -r ~/Documents/eum/app/Reportes/reportes/ cajero@192.168.1.129:~/Reportes/
+python3 /home/pi/Documents/eum/app/Reportes/reporteEventosN.py
+scp -r /home/pi/Documents/eum/app/Reportes/reportes/ tijuana@192.168.1.129:~/Reportes/
