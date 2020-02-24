@@ -312,7 +312,9 @@ def interface():
 			self.bsalirCambiarFecha.clicked.connect(lambda:self.cambia(17))
 			self.bsucursal.clicked.connect(lambda:self.cambia(16))
 			self.bred.clicked.connect(lambda:self.cambia(15))
-			self.breporte.clicked.connect(lambda:self.cambia(0))
+			self.breporte.clicked.connect(self.enviarReporte)
+			self.breporte.setShortcut('F7')
+			self.bpanelconf.setShortcut('F7')
 			self.bhora.clicked.connect(lambda:self.cambia(19))
 			
 			self.lerror1.setVisible(False)
@@ -340,11 +342,17 @@ def interface():
 			self.binicio2.setShortcut("F1")
 			self.binicio3.setShortcut("F1")
 			
+			
 			#self.lscan.textChanged.connect(self.validacionScan)
 			self.bcam.clicked.connect(self.scan)
 			self.bcam.setShortcut("Return")
 			
-		
+			
+		def enviarReporte(self):
+			print("Enviando reportes")
+			self.secuenciaCobro(1)
+			os.system(ruta+"../Reportes/run.sh")
+			
 		def testTicket(self):
 			#thread3 = Thread(target=leerCodQR, args = ())
 			self.lscan.setText("M,60,1,21'06'2019,10Ñ30Ñ12.")

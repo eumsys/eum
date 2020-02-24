@@ -9,3 +9,4 @@ Pillow==6.2.1
 reportLab==3.5.18
 fpdf==1.7.2 
 
+# sudo apt-get install qt4-designer
