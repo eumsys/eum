@@ -818,11 +818,15 @@ class Ui_ventanaAcceso(QDialog):
 					boleto_previo = False
 			else:
 				if botones.leerMasa() == 1:
+				# -------------Puente sensor de masa
+				#if 1:
 					if self.f1 == False:
 						print("------ PRESENCIA AUTOMOVIL --------")	
 						
 						#Habilitando icono presencia
-						self.f1 = botones.leerBotonesEntrada()
+						#self.f1 = botones.leerBotonesEntrada()
+						# -------------Puente boton ticket
+						self.f1 = 1
 						self.botonTicket.setEnabled(True)
 							
 						#self.f1 = teclaF3
